@@ -29,6 +29,8 @@
 		D6102D6915A254C900B2F814 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6102D6815A254C900B2F814 /* CoreMotion.framework */; };
 		D6102D7915A2924500B2F814 /* LJFlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6102D7815A2924500B2F814 /* LJFlipsideViewController.m */; };
 		D6102D7C15A2926500B2F814 /* LJFlipsideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6102D7B15A2926500B2F814 /* LJFlipsideViewController.xib */; };
+		D6102D8015A296A400B2F814 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6102D7E15A296A400B2F814 /* ReportViewController.m */; };
+		D6102D8115A296A400B2F814 /* ReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6102D7F15A296A400B2F814 /* ReportViewController.xib */; };
 		D66EAA1F158E69C0004AE8E5 /* DocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */; };
 		D66EAA21158E6EFA004AE8E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,9 @@
 		D6102D7715A2924500B2F814 /* LJFlipsideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJFlipsideViewController.h; sourceTree = "<group>"; };
 		D6102D7815A2924500B2F814 /* LJFlipsideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJFlipsideViewController.m; sourceTree = "<group>"; };
 		D6102D7B15A2926500B2F814 /* LJFlipsideViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LJFlipsideViewController.xib; sourceTree = "<group>"; };
+		D6102D7D15A296A400B2F814 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
+		D6102D7E15A296A400B2F814 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
+		D6102D7F15A296A400B2F814 /* ReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReportViewController.xib; sourceTree = "<group>"; };
 		D66EAA1D158E69C0004AE8E5 /* DocumentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentManager.h; sourceTree = "<group>"; };
 		D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentManager.m; sourceTree = "<group>"; };
 		D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -164,6 +169,9 @@
 				6390470B0F7C4B3B00F2FB94 /* GraphView.h */,
 				6390470C0F7C4B3B00F2FB94 /* GraphView.m */,
 				D6102D7B15A2926500B2F814 /* LJFlipsideViewController.xib */,
+				D6102D7D15A296A400B2F814 /* ReportViewController.h */,
+				D6102D7E15A296A400B2F814 /* ReportViewController.m */,
+				D6102D7F15A296A400B2F814 /* ReportViewController.xib */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -229,6 +237,7 @@
 				18AD69C111D559E7005232E4 /* Icon@2x.png in Resources */,
 				18AD69C211D559E7005232E4 /* iTunesArtwork in Resources */,
 				D6102D7C15A2926500B2F814 /* LJFlipsideViewController.xib in Resources */,
+				D6102D8115A296A400B2F814 /* ReportViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +255,7 @@
 				6390470D0F7C4B3B00F2FB94 /* GraphView.m in Sources */,
 				D66EAA1F158E69C0004AE8E5 /* DocumentManager.m in Sources */,
 				D6102D7915A2924500B2F814 /* LJFlipsideViewController.m in Sources */,
+				D6102D8015A296A400B2F814 /* ReportViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
