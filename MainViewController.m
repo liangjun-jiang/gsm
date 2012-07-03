@@ -3,8 +3,6 @@
 #import "MainViewController.h"
 #import "GraphView.h"
 #import "AccelerometerFilter.h"
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
 #import "DocumentManager.h"
 #import <CoreMotion/CoreMotion.h>
 #import "ReportViewController.h"
@@ -14,7 +12,7 @@
 #define kLocalizedResume	NSLocalizedString(@"Resume","resume taking samples")
 #define kLocalizedShare		NSLocalizedString(@"Share","share the data")
 
-@interface MainViewController()<MFMailComposeViewControllerDelegate>{
+@interface MainViewController(){
     NSMutableArray *rawDataArray;
     NSMutableString *rawDataString;
     
@@ -51,6 +49,7 @@
 {
     LJFlipsideViewController *ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
     ljfvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    ljfvc.delegate = self;
     [self presentModalViewController:ljfvc animated:YES];
     
     
@@ -67,8 +66,23 @@
 	isPaused = NO;
 	useAdaptive = NO;
 	[self changeFilter:[LowpassFilter class]];
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / kUpdateFrequency];
-	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+
+//	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / kUpdateFrequency];
+//	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+    
+    motionManager = [[CMMotionManager alloc] init];
+    
+    motionManager.deviceMotionUpdateInterval = 1.0/60.0;
+    
+    if (motionManager.deviceMotionAvailable) {
+        [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
+            [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
+            
+        }];
+    } else {
+        NSLog(@"Device Motion is not available!");
+        motionManager = nil;
+    }
 	
 	[unfiltered setIsAccessibilityElement:YES];
 	[unfiltered setAccessibilityLabel:NSLocalizedString(@"unfilteredGraph", @"")];
@@ -95,17 +109,17 @@
 }
 
 // UIAccelerometerDelegate method, called when the device accelerates.
--(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
-{
-	// Update the accelerometer graph view
-	if(!isPaused)
-	{
-		[filter addAcceleration:acceleration];
-        
-		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
-		[filtered addX:filter.x y:filter.y z:filter.z];
-	}
-}
+//-(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+//{
+//	// Update the accelerometer graph view
+//	if(!isPaused)
+//	{
+//		[filter addAcceleration:acceleration];
+//        
+//		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
+//		[filtered addX:filter.x y:filter.y z:filter.z];
+//	}
+//}
 
 -(void)changeFilter:(Class)filterClass
 {
@@ -128,16 +142,26 @@
 		// If we're paused, then resume and set the title to "Pause"
 		isPaused = NO;
 		pause.title = kLocalizedPause;
+        
+        // We show the report immediately
+        [motionManager stopDeviceMotionUpdates];
+        ReportViewController *rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
+        rvc.delegate = self;
+        [self presentModalViewController:rvc animated:YES];
+        
 	}
 	else
 	{
 		// If we are not paused, then pause and set the title to "Resume"
 		isPaused = YES;
 		pause.title = kLocalizedResume;
+        
+        // We start the motionManager
+        [motionManager startDeviceMotionUpdates];
 	}
 	
 	// Inform accessibility clients that the pause/resume button has changed.
-	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+//	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
     
 }
 
@@ -195,13 +219,14 @@
         mSensor.title = @"Accelerometer";
         [motionManager stopDeviceMotionUpdates];
         ReportViewController *rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
+        rvc.delegate = self;
         [self presentModalViewController:rvc animated:YES];
         
 
     }
     
     // Inform accessibility clients that the pause/resume button has changed.
-    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+//    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
     
 }
 
@@ -209,126 +234,18 @@
 - (void)performLogDeviceMotion: (CMDeviceMotion *)motion{
     
     // Refer to: http://en.wikipedia.org/wiki/File:Rollpitchyawplain.png
+
     // to get the concept of roll, yaw and pitch
-//    CMAttitude *attitude = motion.attitude;
-//    NSLog(@"attitude roll:%f radiants, attitude pitch:%f radians, attitude yaw:%f radians", attitude.roll, attitude.pitch, attitude.yaw);
-    
     CMRotationRate rotationRate = motion.rotationRate;
     NSLog(@"rotation x: %f rad/sec, rotation y:%f rad/sec, rotation z:%f rad/sec",rotationRate.x, rotationRate.y, rotationRate.z);
-    
-//    CMAcceleration acceration = motion.userAcceleration; 
-//    NSLog(@"rotation x: %f m/s^2, rotation y:%f m/s^2, rotation z:%f m/s^2",acceration.x, acceration.y, acceration.z);
-    
-//    [filter addAcceleration:attitude];
-//    [filter addAttitude:attitude];
-    [filter addRotation:rotationRate];
-    //        NSMutableString *tempDataString = [NSMutableString stringWithString:@""];
-    //
-    //        NSString *tempString = [NSString stringWithFormat:@"%f %f %f",acceleration.x, acceleration.y,acceleration.z];
-    //        [tempDataString appendString:tempString];
-    //        
-    //        NSLog(@"%@",tempDataString); 
-    //Red line: x, Green line: y, Blue line: z
-//    [unfiltered addX:attitude.roll y:attitude.pitch z:attitude.yaw];
-    [unfiltered addRotationX:rotationRate.x y:rotationRate.y z:rotationRate.z];
-//    [unfiltered add
-    //        NSLog(@"filter x=%f, y=%f, z=%f",filter.x, filter.y,filter.z);
-//    [filtered addX:filter.x y:filter.y z:filter.z];
-    [filtered addRotationX:rotationRate.x y:rotationRate.y z:rotationRate.z];
+    [unfiltered addRotationX:rotationRate.x*MULTIPLIER y:rotationRate.y*MULTIPLIER z:rotationRate.z*MULTIPLIER];
+
+    [filtered addRotationX:rotationRate.x*MULTIPLIER y:rotationRate.y*MULTIPLIER z:rotationRate.z*MULTIPLIER];
     
     
 }
 
 
-// TODO: CHANGE TO ICLOUD
-#pragma mark -
-- (void)writeToFile:(NSMutableString *)mutableString withFileName:(NSString *)fileName
-{
-    
-    NSError *error;
-    
-    NSString *documentsDirectory = [NSHomeDirectory() 
-                                    stringByAppendingPathComponent:@"Documents"];
-    
-    NSString *filePath = [documentsDirectory 
-                          stringByAppendingPathComponent:fileName];
-    
-    
-    // Write to the file
-    [mutableString writeToFile:filePath atomically:YES
-                    encoding:NSUTF8StringEncoding error:&error];
-}
-
-- (IBAction)share:(id)sender
-{
-    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-    if (mailClass != nil)
-    {
-        // We must always check whether the current device is configured for sending emails
-        if ([mailClass canSendMail])
-        {
-            [self displayComposerSheet];
-        }
-    }
-
-}
-
-
-- (void)displayComposerSheet{
-    
-    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-    picker.mailComposeDelegate = self;
-    
-    [picker setSubject:@"Your data!"];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMddyyyyhhmmss"];
-    NSString *fileName = [NSString stringWithFormat:@"%@.csv",[formatter stringFromDate:[NSDate date]]];
-    NSMutableString *tempStr = [NSMutableString stringWithString:@"here is my test!"];
-    NSLog(@"what's raw data string:%@",rawDataString);
-    [self writeToFile:tempStr withFileName:fileName];
-    
-    if ([DocumentManager filePathInDocument:fileName]) {
-        NSData *fileData = [NSData dataWithContentsOfFile:[DocumentManager filePathInDocument:fileName]];
-        
-        [picker addAttachmentData:fileData mimeType:@"application/octet-stream" fileName:fileName];
-        
-        // Fill out the email body text
-        NSString *emailBody = @"Raw data!";
-        [picker setMessageBody:emailBody isHTML:NO];
-        
-        [self presentModalViewController:picker animated:YES];
-    }
-    
-    
-    
-}
-
-// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
-{   
-    //    message.hidden = NO;
-    // Notifies users about errors associated with the interface
-    switch (result)
-    {
-        case MFMailComposeResultCancelled:
-            //            message.text = @"Result: canceled";
-            break;
-        case MFMailComposeResultSaved:
-            //            message.text = @"Result: saved";
-            break;
-        case MFMailComposeResultSent:
-            //            message.text = @"Result: sent";
-            break;
-        case MFMailComposeResultFailed:
-            //            message.text = @"Result: failed";
-            break;
-        default:
-            //            message.text = @"Result: not sent";
-            break;
-    }
-    [self dismissModalViewControllerAnimated:YES];
-}
 
 
 @end

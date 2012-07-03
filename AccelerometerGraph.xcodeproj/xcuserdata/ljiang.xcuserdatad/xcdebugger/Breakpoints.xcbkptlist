@@ -2,19 +2,4 @@
 <Bucket
    type = "1"
    version = "1.0">
-   <FileBreakpoints>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ReportViewController.m"
-         timestampString = "362981477.569701"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "16"
-         endingLineNumber = "16"
-         landmarkName = "@synthesize delegate = _delegate, mTableView = _mTableView;"
-         landmarkType = "19">
-      </FileBreakpoint>
-   </FileBreakpoints>
 </Bucket>

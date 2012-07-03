@@ -7,8 +7,10 @@
 //
 
 #import "ReportViewController.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface ReportViewController ()
+@interface ReportViewController ()<MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -121,6 +123,97 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+
+// TODO: CHANGE TO ICLOUD
+#pragma mark -
+- (void)writeToFile:(NSMutableString *)mutableString withFileName:(NSString *)fileName
+{
+    
+    NSError *error;
+    
+    NSString *documentsDirectory = [NSHomeDirectory() 
+                                    stringByAppendingPathComponent:@"Documents"];
+    
+    NSString *filePath = [documentsDirectory 
+                          stringByAppendingPathComponent:fileName];
+    
+    
+    // Write to the file
+    [mutableString writeToFile:filePath atomically:YES
+                      encoding:NSUTF8StringEncoding error:&error];
+}
+
+- (IBAction)share:(id)sender
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    if (mailClass != nil)
+    {
+        // We must always check whether the current device is configured for sending emails
+        if ([mailClass canSendMail])
+        {
+            [self displayComposerSheet];
+        }
+    }
+    
+}
+
+
+- (void)displayComposerSheet{
+    
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+    
+    [picker setSubject:@"Your data!"];
+    
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"MMddyyyyhhmmss"];
+//    NSString *fileName = [NSString stringWithFormat:@"%@.csv",[formatter stringFromDate:[NSDate date]]];
+//    NSMutableString *tempStr = [NSMutableString stringWithString:@"here is my test!"];
+//    NSLog(@"what's raw data string:%@",rawDataString);
+//    [self writeToFile:tempStr withFileName:fileName];
+//    
+//    if ([DocumentManager filePathInDocument:fileName]) {
+//        NSData *fileData = [NSData dataWithContentsOfFile:[DocumentManager filePathInDocument:fileName]];
+//        
+//        [picker addAttachmentData:fileData mimeType:@"application/octet-stream" fileName:fileName];
+//        
+//        // Fill out the email body text
+//        NSString *emailBody = @"Raw data!";
+//        [picker setMessageBody:emailBody isHTML:NO];
+//        
+//        [self presentModalViewController:picker animated:YES];
+//    }
+    
+    
+    
+}
+
+// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
+{   
+    //    message.hidden = NO;
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            //            message.text = @"Result: canceled";
+            break;
+        case MFMailComposeResultSaved:
+            //            message.text = @"Result: saved";
+            break;
+        case MFMailComposeResultSent:
+            //            message.text = @"Result: sent";
+            break;
+        case MFMailComposeResultFailed:
+            //            message.text = @"Result: failed";
+            break;
+        default:
+            //            message.text = @"Result: not sent";
+            break;
+    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

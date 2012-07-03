@@ -70,28 +70,6 @@
 								<reference key="IBUIToolbar" ref="97412129"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="573294349">
-								<string key="IBUITitle">Accelerometer</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="97412129"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="370463434">
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIToolbar" ref="97412129"/>
-								<int key="IBUISystemItemIdentifier">5</int>
-							</object>
-							<object class="IBUIBarButtonItem" id="783763966">
-								<string key="IBUITitle">Share</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIStyle">1</int>
-								<reference key="IBUIToolbar" ref="97412129"/>
-							</object>
-							<object class="IBUIBarButtonItem" id="902685157">
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIToolbar" ref="97412129"/>
-								<int key="IBUISystemItemIdentifier">5</int>
-							</object>
 						</object>
 					</object>
 					<object class="IBUIView" id="927728037">
@@ -339,22 +317,6 @@
 					<int key="connectionID">99</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">share</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="783763966"/>
-					</object>
-					<int key="connectionID">102</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">sensor</string>
-						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="573294349"/>
-					</object>
-					<int key="connectionID">108</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">pauseOrResume:</string>
 						<reference key="source" ref="665808368"/>
@@ -379,22 +341,6 @@
 						<int key="IBEventType">13</int>
 					</object>
 					<int key="connectionID">96</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">share:</string>
-						<reference key="source" ref="783763966"/>
-						<reference key="destination" ref="841351856"/>
-					</object>
-					<int key="connectionID">103</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">changeSensor:</string>
-						<reference key="source" ref="573294349"/>
-						<reference key="destination" ref="841351856"/>
-					</object>
-					<int key="connectionID">107</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -482,10 +428,6 @@
 							<reference ref="479912090"/>
 							<reference ref="752007920"/>
 							<reference ref="665808368"/>
-							<reference ref="783763966"/>
-							<reference ref="902685157"/>
-							<reference ref="573294349"/>
-							<reference ref="370463434"/>
 						</object>
 						<reference key="parent" ref="245598487"/>
 					</object>
@@ -505,26 +447,6 @@
 						<reference key="parent" ref="97412129"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">101</int>
-						<reference key="object" ref="783763966"/>
-						<reference key="parent" ref="97412129"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">104</int>
-						<reference key="object" ref="902685157"/>
-						<reference key="parent" ref="97412129"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">105</int>
-						<reference key="object" ref="573294349"/>
-						<reference key="parent" ref="97412129"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">106</int>
-						<reference key="object" ref="370463434"/>
-						<reference key="parent" ref="97412129"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">109</int>
 						<reference key="object" ref="605861796"/>
 						<reference key="parent" ref="245598487"/>
@@ -539,10 +461,6 @@
 					<string>-1.IBPluginDependency</string>
 					<string>-2.CustomClassName</string>
 					<string>-2.IBPluginDependency</string>
-					<string>101.IBPluginDependency</string>
-					<string>104.IBPluginDependency</string>
-					<string>105.IBPluginDependency</string>
-					<string>106.IBPluginDependency</string>
 					<string>109.IBPluginDependency</string>
 					<string>14.IBPluginDependency</string>
 					<string>16.IBPluginDependency</string>
@@ -563,10 +481,6 @@
 					<string>MainViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

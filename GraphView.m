@@ -425,9 +425,11 @@ void DrawGridlines(CGContextRef context, CGFloat x, CGFloat width)
 
 -(void)addRotationX:(float)x y:(float)y z:(float)z{
     // First, add the new acceleration value to the current segment
-    x = x/10;
-    y = y/10;
-    z = z/10;
+    
+    // we normalize the data so it can fit in the screen
+    x = x/40;
+    y = y/40;
+    z = z/40;
 	if([current addX:x y:y z:z])
 	{
 		// If after doing that we've filled up the current segment, then we need to
