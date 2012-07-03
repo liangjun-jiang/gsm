@@ -64,13 +64,13 @@
     
     }
 
-@property(nonatomic, retain) IBOutlet GraphView *unfiltered;
-@property(nonatomic, retain) IBOutlet GraphView *filtered;
-@property(nonatomic, retain) IBOutlet UIBarButtonItem *pause;
-@property(nonatomic, retain) IBOutlet UIBarButtonItem *share;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *sensor;
+@property(nonatomic) IBOutlet GraphView *unfiltered;
+@property(nonatomic) IBOutlet GraphView *filtered;
+@property(nonatomic) IBOutlet UIBarButtonItem *pause;
+@property(nonatomic) IBOutlet UIBarButtonItem *share;
+@property (nonatomic) IBOutlet UIBarButtonItem *sensor;
 
-@property(nonatomic, retain) IBOutlet UILabel *filterLabel;
+@property(nonatomic) IBOutlet UILabel *filterLabel;
 
 
 
@@ -78,5 +78,7 @@
 -(IBAction)filterSelect:(id)sender;
 -(IBAction)adaptiveSelect:(id)sender;
 -(IBAction)changeSensor:(id)sender;
+
+-(IBAction)discloseSetting:(id)sender;
 
 @end

@@ -14,9 +14,14 @@
 - (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller;
 @end
 
-@interface LJFlipsideViewController : UITableViewController
+@interface LJFlipsideViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+{
+    
+}
 
-@property (assign, nonatomic) id <LJFlipsideViewControllerDelegate> delegate;
+@property (unsafe_unretained, nonatomic) id <LJFlipsideViewControllerDelegate> delegate;
+@property (unsafe_unretained, nonatomic) IBOutlet UITableView *mTable;
+
 
 - (IBAction)done:(id)sender;
 

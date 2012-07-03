@@ -65,8 +65,8 @@
     CMMotionManager *motionManager;
 
 }
-@property (nonatomic,retain) NSMutableArray *rawDataArray;
-@property (nonatomic,retain) NSMutableString *rawDataString;
+@property (nonatomic) NSMutableArray *rawDataArray;
+@property (nonatomic) NSMutableString *rawDataString;
 @property (nonatomic, strong) CMMotionManager *motionManager;
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
@@ -91,11 +91,8 @@
 {
     LJFlipsideViewController *ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
     ljfvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController presentViewController:ljfvc animated:YES completion:^{
-        
-        
-    }];
-    [ljfvc release];
+    [self presentModalViewController:ljfvc animated:YES];
+    
     
 }
 
@@ -105,13 +102,7 @@
 {
 	[super viewDidLoad];
     
-    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [infoButton addTarget:self action:@selector(discloseSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-    [self.navigationItem setRightBarButtonItem:modalButton animated:YES];
-    [infoButton release];
-    
-	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
+  	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
     share.possibleTitles = [NSSet setWithObjects:kLocalizedShare, nil];
 	isPaused = NO;
 	useAdaptive = NO;
@@ -170,7 +161,6 @@
 	if(filterClass != [filter class])
 	{
 		// And if it is, release the old one and create a new one.
-		[filter release];
 		filter = [[filterClass alloc] initWithSampleRate:kUpdateFrequency cutoffFrequency:5.0];
 		// Set the adaptive flag
 		filter.adaptive = useAdaptive;
@@ -385,15 +375,5 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
--(void)dealloc
-{
-	// clean up everything.
-    [rawDataArray release];
-	[unfiltered release];
-	[filtered release];
-	[filterLabel release];
-	[pause release];
-	[super dealloc];
-}
 
 @end

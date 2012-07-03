@@ -71,7 +71,7 @@
 
 
 @property(nonatomic, getter=isAdaptive) BOOL adaptive;
-@property(nonatomic, readonly) NSString *name;
+@property(unsafe_unretained, nonatomic, readonly) NSString *name;
 
 @end
 
