@@ -13,14 +13,12 @@
 @end
 
 @implementation ReportViewController
+@synthesize delegate = _delegate, mTableView = _mTableView;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (IBAction)done:(id)sender
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    [self.delegate reportViewControllerDidFinish:self];
+    
 }
 
 - (void)viewDidLoad

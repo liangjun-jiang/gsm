@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReportViewController : UITableViewController
+@class ReportViewController;
 
+@protocol ReportViewControllerDelegate
+- (void)reportViewControllerDidFinish:(ReportViewController *)controller;
+@end
+
+@interface ReportViewController : UIViewController
+
+@property (unsafe_unretained, nonatomic) id <ReportViewControllerDelegate> delegate;
+@property (nonatomic, strong) IBOutlet UITableView *mTableView;
+
+-(IBAction)done:(id)sender;
 @end

@@ -48,10 +48,11 @@
 #import <UIKit/UIKit.h>
 
 #import "LJFlipsideViewController.h"
+#import "ReportViewController.h"
 @class GraphView;
 @class AccelerometerFilter;
 
-@interface MainViewController : UIViewController<UIAccelerometerDelegate, LJFlipsideViewControllerDelegate>
+@interface MainViewController : UIViewController<UIAccelerometerDelegate, LJFlipsideViewControllerDelegate, ReportViewControllerDelegate>
 {
 	GraphView *unfiltered;
 	GraphView *filtered;
