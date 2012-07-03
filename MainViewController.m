@@ -81,10 +81,36 @@
 @synthesize rawDataArray,rawDataString;
 @synthesize motionManager;
 
+- (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
+- (void)discloseSetting:(id)sender
+{
+    LJFlipsideViewController *ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
+    ljfvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self.navigationController presentViewController:ljfvc animated:YES completion:^{
+        
+        
+    }];
+    [ljfvc release];
+    
+}
+
+
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
+    
+    UIButton* infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [infoButton addTarget:self action:@selector(discloseSetting:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *modalButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+    [self.navigationItem setRightBarButtonItem:modalButton animated:YES];
+    [infoButton release];
+    
 	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
     share.possibleTitles = [NSSet setWithObjects:kLocalizedShare, nil];
 	isPaused = NO;
