@@ -10,7 +10,15 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface ReportViewController ()<MFMailComposeViewControllerDelegate>
+@interface ReportViewController ()<MFMailComposeViewControllerDelegate>{
+    
+    int count;
+    NSMutableArray *countableSwings;
+    float max;
+    float mean;
+    float standardDeviation;
+    
+}
 
 @end
 
@@ -26,6 +34,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Let's do some math here
+    // We use an array to keep track of the 
+    
+    max = 0.0;
+    mean = 0.0;
+    standardDeviation = 0.0;
+    
+    max = [self calculateMax:self.rawData];
+    mean = [self calculateMean:self.rawData];
+    standardDeviation = sqrtf([self calculateVariance:self.rawData withMean:mean]);
+    
+    countableSwings = [self calculateCountableFromRawData:self.rawData withThreshold:max];
+    
 
 }
 
@@ -35,6 +57,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     self.rawData = nil;
+    countableSwings = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -55,16 +78,13 @@
     
     switch (section) {
         case 0:
-            return @"Number of swing attempted";
+            return @"Number of Swing counted";
             break;
         case 1:
-            return @"";
+            return @"Distribution";
             break;
         case 2:
-            return @"What't the graph & data says";
-            break;
-        case 3:
-            return @"How the model is built";
+            return @"Counted Club Speed [MPH]";
             break;
         default:
             break;
@@ -86,10 +106,8 @@
             return 3;
             break;
         case 2:
-            return 2;
+            return [countableSwings count];
             break;
-        case 3:
-            return 1;
         default:
             break;
     }
@@ -101,10 +119,47 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    NSUInteger section = [indexPath section];
+    NSUInteger row = [indexPath row];
+    
     // Configure the cell...
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+    switch (section) {
+        case  0:
+            switch (row) {
+                case 0:
+                    cell.textLabel.text = [NSString stringWithFormat:@"%d", [countableSwings count]];
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case 1:
+            switch (row) {
+                case 0:
+                    cell.textLabel.text = [NSString stringWithFormat:@"Max: %.2f [MPH]",max];
+                    break;
+                case 1:
+                    cell.textLabel.text = [NSString stringWithFormat:@"Mean: %.2f [MPH]",mean];
+                    break;
+                case 2:
+                    cell.textLabel.text = [NSString stringWithFormat:@"Standard Deviation: %.2f [MPH]",standardDeviation];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            cell.textLabel.text = [NSString stringWithFormat:@"%.2f",[[countableSwings objectAtIndex:row] floatValue]];
+            break;
+        default:
+            break;
+    }
+    
+    
     return cell;
 }
 
@@ -129,6 +184,53 @@
     }
 }
 
+#pragma mark - help methods
+- (float )calculateMax:(NSMutableArray *)mData{
+    float localMax = 0.0;
+    
+    for (NSNumber *number in mData){
+        if ([number floatValue] > localMax) {
+            localMax = [number floatValue];
+        }
+    }
+    
+    return localMax;
+}
+
+
+// we use +/- 20% of the max to get other peak values
+- (NSMutableArray *)calculateCountableFromRawData:(NSMutableArray *)mData withThreshold:(float)mMax
+{
+    NSMutableArray *localArray = [NSMutableArray array];
+    for (NSNumber *number in mData) {
+        if ([number floatValue] > 0.80*mMax)
+            [localArray addObject:number];
+    }
+    
+    return localArray;
+    
+}
+
+- (float)calculateMean:(NSMutableArray *)mData
+{
+    
+    float sum = 0.0;
+    for (NSNumber *number in mData){
+        sum  += [number floatValue];
+    }
+    
+    return sum / [mData count];
+}
+
+- (float)calculateVariance:(NSMutableArray *)mData withMean:(float)mMean
+{
+    float sum = 0.0;
+    for (NSNumber *number in mData) {
+        sum += fabsf(mMean - [number floatValue])*fabsf(mMean - [number floatValue]);
+    }
+    
+    return sum / [mData count];
+}
 
 // TODO: CHANGE TO ICLOUD
 #pragma mark -

@@ -133,8 +133,9 @@ AAgACAAIAAEAAQABAAE</bytes>
 									<int key="IBUIStyle">1</int>
 									<reference key="IBUINavigationItem" ref="90502492"/>
 								</object>
-								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="754744277">
+								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="499186942">
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+									<int key="IBUIStyle">1</int>
 									<reference key="IBUINavigationItem" ref="90502492"/>
 									<int key="IBUISystemItemIdentifier">9</int>
 								</object>
@@ -186,7 +187,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">sendFeedback:</string>
-						<reference key="source" ref="754744277"/>
+						<reference key="source" ref="499186942"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">18</int>
@@ -233,7 +234,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<reference key="object" ref="90502492"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="39956205"/>
-							<reference ref="754744277"/>
+							<reference ref="499186942"/>
 						</array>
 						<reference key="parent" ref="803368167"/>
 					</object>
@@ -249,7 +250,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">17</int>
-						<reference key="object" ref="754744277"/>
+						<reference key="object" ref="499186942"/>
 						<reference key="parent" ref="90502492"/>
 					</object>
 				</array>
