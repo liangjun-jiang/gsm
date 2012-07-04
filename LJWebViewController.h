@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class LJWebViewController;
+
+@protocol WebViewControllerDelegate
+- (void)webViewControllerDidFinish:(LJWebViewController *)controller;
+@end
+
 @interface LJWebViewController : UIViewController
 
 
 @property (nonatomic, strong) IBOutlet UIWebView *webView;
+@property (unsafe_unretained, nonatomic) id <WebViewControllerDelegate> delegate;
+
 @end

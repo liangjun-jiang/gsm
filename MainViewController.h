@@ -4,10 +4,11 @@
 
 #import "LJFlipsideViewController.h"
 #import "ReportViewController.h"
+#import "LJWebViewController.h"
 @class GraphView;
 @class AccelerometerFilter;
 
-@interface MainViewController : UIViewController<UIAccelerometerDelegate, LJFlipsideViewControllerDelegate, ReportViewControllerDelegate>
+@interface MainViewController : UIViewController<UIAccelerometerDelegate, LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate>
 {
 	GraphView *unfiltered;
 	GraphView *filtered;

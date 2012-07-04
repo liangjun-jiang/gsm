@@ -43,20 +43,25 @@
     [self dismissModalViewControllerAnimated:YES];
     
 }
+
+- (void)webViewControllerDidFinish:(LJWebViewController *)controller
+{
+    [self dismissModalViewControllerAnimated:YES];
+    
+}
+
 - (void)discloseSetting:(id)sender
 {
     LJFlipsideViewController *ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
     ljfvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     ljfvc.delegate = self;
     [self presentModalViewController:ljfvc animated:YES];
-    
-    
 }
-
 
 - (void)discloseInfo:(id)sender
 {
     LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
+    web.delegate = self;
     [self presentModalViewController:web animated:YES];
     
 }

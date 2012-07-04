@@ -16,7 +16,14 @@
 @end
 
 @implementation LJWebViewController
-@synthesize webView = _webView;
+@synthesize webView = _webView, delegate = _delegate;
+
+- (IBAction)done:(id)sender
+{
+    [_delegate webViewControllerDidFinish:self];
+    
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
