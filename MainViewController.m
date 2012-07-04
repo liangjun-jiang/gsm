@@ -227,6 +227,8 @@
     
     [unfiltered addRotationX:fx y:fy z:fz];
 
+    
+    
     [filtered addRotationX:fx y:fy z:fz];
     
 }

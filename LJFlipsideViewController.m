@@ -13,6 +13,7 @@
     
 }
 
+@property (nonatomic, strong) NSArray *handed;
 @property (nonatomic, strong) NSArray *positions;
 @property (nonatomic, strong) NSArray *clubs;
 @property (nonatomic, strong) NSString *currentPosition;
@@ -25,7 +26,7 @@
 
 @synthesize delegate = _delegate;
 @synthesize mTable = _mTable;
-@synthesize positions = _positions, clubs = _clubs, currentClub = _currentClub, currentPosition = _currentPosition;
+@synthesize handed = _handed, positions = _positions, clubs = _clubs, currentClub = _currentClub, currentPosition = _currentPosition;
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -35,8 +36,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    _handed = [NSArray arrayWithObjects:@"Left-handed",@"Right-handed", nil];
     _positions = [NSArray arrayWithObjects:@"Wrist",@"Upper Arm", nil];
-    _clubs = [NSArray arrayWithObjects:@"Driver",@"3-Wood",@"5-Wood",@"7-Iron", nil];
+    
+    NSString *file = [[NSBundle mainBundle] pathForResource:@"Clubs" ofType:@"plist"];
+    _clubs = [NSArray arrayWithContentsOfFile:file];
+//    _clubs = [NSArray arrayWithObjects:@"Driver",@"3-Wood",@"5-Wood",@"7-Iron", nil];
     
 }
 
@@ -62,20 +67,45 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     
-    return (section == 0)? @"Device Position":@"Club Selection";
-    
+    switch (section) {
+        case 0:
+            return @"You are";
+            break;
+        case 1:
+            return @"You put device around";
+            break;
+        case 2:
+            return @"You are praticing";
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return (section == 0)?[_positions count]:[_clubs count];
+    switch (section) {
+        case 0:
+            return [_handed count];
+            break;
+        case 1:
+            return [_positions count];
+            break;    
+        case 2:
+            return [_clubs count];
+            break;    
+        default:
+            break;
+    }
     
+    return 0;
 }
 
 
@@ -95,12 +125,20 @@
     
     switch (indexPath.section) {
         case 0:
+            cell.textLabel.text = [_handed objectAtIndex:indexPath.row];
+            if (indexPath.row == 0) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+            break;
+        case 1:
+            cell.textLabel.text = [_positions objectAtIndex:indexPath.row];
             if (indexPath.row == 1) {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
             break;
-            
         default:
+            cell.textLabel.text = [[_clubs objectAtIndex:indexPath.row] objectForKey:@"name"];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@" inch", [[_clubs objectAtIndex:indexPath.row] objectForKey:@"length"]];
             if (indexPath.row == 0) {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
@@ -140,6 +178,7 @@
     if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
         oldCell.accessoryType = UITableViewCellAccessoryNone;
     }
+    [tableView reloadData];
 }
 
 @end

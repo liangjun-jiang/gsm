@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>item 1</key>
+	<dict>
+		<key>length</key>
+		<string>44</string>
+		<key>name</key>
+		<string>Driver</string>
+	</dict>
+	<key>item 2</key>
+	<dict>
+		<key>length</key>
+		<string>42.5</string>
+		<key>name</key>
+		<string>3 Wood</string>
+	</dict>
+	<key>item 3</key>
+	<dict>
+		<key>length</key>
+		<string>41.5</string>
+		<key>name</key>
+		<string>5 Wood</string>
+	</dict>
+	<key>item 4</key>
+	<dict>
+		<key>length</key>
+		<string>38.5</string>
+		<key>name</key>
+		<string>3 Iron</string>
+	</dict>
+	<key>item 5</key>
+	<dict>
+		<key>length</key>
+		<string>38.0</string>
+		<key>name</key>
+		<string>4 Iron</string>
+	</dict>
+	<key>item 6</key>
+	<dict>
+		<key>length</key>
+		<string>37.5</string>
+		<key>name</key>
+		<string>5 Iron</string>
+	</dict>
+	<key>item 7</key>
+	<dict>
+		<key>length</key>
+		<string>37.0</string>
+		<key>name</key>
+		<string>6 Iron</string>
+	</dict>
+	<key>item 8</key>
+	<dict>
+		<key>length</key>
+		<string>36.5</string>
+		<key>name</key>
+		<string>7 Iron</string>
+	</dict>
+	<key>item 9</key>
+	<dict>
+		<key>length</key>
+		<string>36.0</string>
+		<key>name</key>
+		<string>8 Iron</string>
+	</dict>
+	<key>item 10</key>
+	<dict>
+		<key>length</key>
+		<string>35.5</string>
+		<key>name</key>
+		<string>9 Iron</string>
+	</dict>
+	<key>item 11</key>
+	<dict>
+		<key>length</key>
+		<string>35.0</string>
+		<key>name</key>
+		<string>Wedge</string>
+	</dict>
+</dict>
+</plist>

@@ -35,6 +35,8 @@
 		D6102D9B15A48E5400B2F814 /* LJWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6102D9915A48E5400B2F814 /* LJWebViewController.xib */; };
 		D6102DA015A48F2900B2F814 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6102D9D15A48F2900B2F814 /* SVProgressHUD.bundle */; };
 		D6102DA115A48F2900B2F814 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6102D9F15A48F2900B2F814 /* SVProgressHUD.m */; };
+		D6102DA815A4BDB900B2F814 /* Prefs.m in Sources */ = {isa = PBXBuildFile; fileRef = D6102DA715A4BDB800B2F814 /* Prefs.m */; };
+		D6102DAA15A4BDD500B2F814 /* Clubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6102DA915A4BDD500B2F814 /* Clubs.plist */; };
 		D66EAA1F158E69C0004AE8E5 /* DocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */; };
 		D66EAA21158E6EFA004AE8E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +82,9 @@
 		D6102D9D15A48F2900B2F814 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		D6102D9E15A48F2900B2F814 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		D6102D9F15A48F2900B2F814 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		D6102DA615A4BDB800B2F814 /* Prefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefs.h; sourceTree = "<group>"; };
+		D6102DA715A4BDB800B2F814 /* Prefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prefs.m; sourceTree = "<group>"; };
+		D6102DA915A4BDD500B2F814 /* Clubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Clubs.plist; sourceTree = "<group>"; };
 		D66EAA1D158E69C0004AE8E5 /* DocumentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentManager.h; sourceTree = "<group>"; };
 		D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentManager.m; sourceTree = "<group>"; };
 		D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -186,6 +191,9 @@
 				D6102D7D15A296A400B2F814 /* ReportViewController.h */,
 				D6102D7E15A296A400B2F814 /* ReportViewController.m */,
 				D6102D7F15A296A400B2F814 /* ReportViewController.xib */,
+				D6102DA615A4BDB800B2F814 /* Prefs.h */,
+				D6102DA715A4BDB800B2F814 /* Prefs.m */,
+				D6102DA915A4BDD500B2F814 /* Clubs.plist */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -267,6 +275,7 @@
 				D6102D8115A296A400B2F814 /* ReportViewController.xib in Resources */,
 				D6102D9B15A48E5400B2F814 /* LJWebViewController.xib in Resources */,
 				D6102DA015A48F2900B2F814 /* SVProgressHUD.bundle in Resources */,
+				D6102DAA15A4BDD500B2F814 /* Clubs.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +296,7 @@
 				D6102D8015A296A400B2F814 /* ReportViewController.m in Sources */,
 				D6102D9A15A48E5400B2F814 /* LJWebViewController.m in Sources */,
 				D6102DA115A48F2900B2F814 /* SVProgressHUD.m in Sources */,
+				D6102DA815A4BDB900B2F814 /* Prefs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,8 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
+#define THRESHOLD 0.90
+
 @interface ReportViewController ()<MFMailComposeViewControllerDelegate>{
     
     int count;
@@ -205,7 +207,7 @@
 {
     NSMutableArray *localArray = [NSMutableArray array];
     for (NSNumber *number in mData) {
-        if ([number floatValue] > 0.80*mMax)
+        if ([number floatValue] > THRESHOLD*mMax)
             [localArray addObject:number];
     }
     
