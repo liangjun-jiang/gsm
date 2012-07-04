@@ -16,8 +16,10 @@
 @property (nonatomic, strong) NSArray *handed;
 @property (nonatomic, strong) NSArray *positions;
 @property (nonatomic, strong) NSArray *clubs;
+@property (nonatomic, strong) NSString *currentHand;
+
 @property (nonatomic, strong) NSString *currentPosition;
-@property (nonatomic, strong) NSString *currentClub;
+@property (nonatomic, strong) NSDictionary *currentClub;
 
 
 @end
@@ -26,7 +28,7 @@
 
 @synthesize delegate = _delegate;
 @synthesize mTable = _mTable;
-@synthesize handed = _handed, positions = _positions, clubs = _clubs, currentClub = _currentClub, currentPosition = _currentPosition;
+@synthesize handed = _handed, positions = _positions, clubs = _clubs, currentClub = _currentClub, currentPosition = _currentPosition, currentHand = _currentHand;
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -40,8 +42,18 @@
     _positions = [NSArray arrayWithObjects:@"Wrist",@"Upper Arm", nil];
     
     NSString *file = [[NSBundle mainBundle] pathForResource:@"Clubs" ofType:@"plist"];
-    _clubs = [NSArray arrayWithContentsOfFile:file];
-//    _clubs = [NSArray arrayWithObjects:@"Driver",@"3-Wood",@"5-Wood",@"7-Iron", nil];
+    _clubs = [[NSDictionary dictionaryWithContentsOfFile:file] objectForKey:@"root"];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:HANDED]) self.currentHand = [defaults objectForKey:HANDED];
+    if ( [defaults objectForKey:POSITION]) {
+        self.currentPosition = [defaults objectForKey:POSITION];
+    }
+    
+    if ([defaults objectForKey:CLUB]) {
+        self.currentClub = [defaults objectForKey:CLUB];
+    }
+    
     
 }
 
@@ -49,6 +61,7 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    self.mTable = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -121,27 +134,55 @@
         
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.textLabel.text = (indexPath.section == 0)?[_positions objectAtIndex:indexPath.row]:[_clubs objectAtIndex:indexPath.row];
     
     switch (indexPath.section) {
         case 0:
             cell.textLabel.text = [_handed objectAtIndex:indexPath.row];
-            if (indexPath.row == 0) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+            if (self.currentHand) {
+                NSUInteger index = [_handed indexOfObject:self.handed];
+                if (indexPath.row == index) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    
+                }
+            } else {
+                if (indexPath.row == 0) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    self.currentHand = [_handed objectAtIndex:0];
+                }
             }
             break;
         case 1:
             cell.textLabel.text = [_positions objectAtIndex:indexPath.row];
-            if (indexPath.row == 1) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            if (self.currentPosition) {
+                NSUInteger index = [_positions indexOfObject:self.currentPosition];
+                if (indexPath.row == index) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+            } else {
+                if (indexPath.row == 0) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    self.currentPosition = [_positions objectAtIndex:0];
+                }
             }
             break;
         default:
             cell.textLabel.text = [[_clubs objectAtIndex:indexPath.row] objectForKey:@"name"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@" inch", [[_clubs objectAtIndex:indexPath.row] objectForKey:@"length"]];
-            if (indexPath.row == 0) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ inch", [[_clubs objectAtIndex:indexPath.row] objectForKey:@"length"]];
+            if (self.currentClub) {
+                NSUInteger index = [_clubs indexOfObject:self.currentClub];
+                if (indexPath.row == index) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+            } else {
+                if (indexPath.row == 0) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    self.currentClub = [_clubs objectAtIndex:0];
+                }
             }
+
+            
+            
             break;
     }
     
@@ -157,6 +198,20 @@
     NSInteger section = indexPath.section;
     
     NSInteger currentIndex = (section == 0)? [_positions indexOfObject:self.currentPosition]:[_clubs indexOfObject:self.currentClub];
+    switch (section) {
+        case 0:
+            currentIndex = [_handed indexOfObject:self.currentHand];
+            break;
+        case 1:
+            currentIndex = [_positions indexOfObject:self.currentPosition];
+            break;
+        case 2:
+            currentIndex = [_clubs indexOfObject:self.currentClub];
+            break;
+        default:
+            break;
+    }
+    
     if (currentIndex == indexPath.row) {
         return;
     }
@@ -165,20 +220,27 @@
     UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
     if (newCell.accessoryType == UITableViewCellAccessoryNone) {
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if (section == 0) {
-            self.currentPosition = [_positions objectAtIndex:indexPath.row];
+            self.handed = [_handed objectAtIndex:indexPath.row];
+            [defaults setObject:self.handed forKey:HANDED];
         } else if (section == 1){
+            self.currentPosition = [_positions objectAtIndex:indexPath.row];
+            [defaults setObject:self.currentPosition forKey:POSITION];
+        } else if (section == 2){
             self.currentClub = [_clubs objectAtIndex:indexPath.row];
+            [defaults setObject:self.currentClub forKey:CLUB];
         }
+        
+        [defaults synchronize];
         
     }
     
-    // Why this doesn't work?
     UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:oldIndexPath];
     if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
         oldCell.accessoryType = UITableViewCellAccessoryNone;
     }
-    [tableView reloadData];
+    
 }
 
 @end

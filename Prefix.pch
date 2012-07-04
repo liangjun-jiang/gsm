@@ -1,6 +1,7 @@
 
 #ifdef __OBJC__
 	#import <UIKit/UIKit.h>
+    #import "Prefs.h"
 #endif
 
 #define DRIVER_LENGTH 44  // in inch
