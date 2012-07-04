@@ -9,6 +9,8 @@
 #define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
 #define kLocalizedResume	NSLocalizedString(@"Resumed","resume taking samples")
 
+#define DRIVER_LENGTH 45.0
+
 @interface MainViewController(){
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
@@ -78,6 +80,11 @@
 	useAdaptive = NO;
 	[self changeFilter:[LowpassFilter class]];
 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"Right-handed" forKey:HANDED];
+    [defaults setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Driver",@"name",@"45.0",@"length",nil] forKey:CLUB];
+    [defaults synchronize];
+    
     motionManager = [[CMMotionManager alloc] init];
     
     motionManager.deviceMotionUpdateInterval = 1.0/kUpdateFrequency;
@@ -123,7 +130,7 @@
 		// Set the adaptive flag
 		filter.adaptive = useAdaptive;
 		// And update the filterLabel with the new filter name.
-		filterLabel.text = filter.name;
+		filterLabel.text = [NSString stringWithFormat:@"Accelerometer + %@",filter.name];
 	}
 }
 
@@ -200,12 +207,20 @@
     // Refer to: http://en.wikipedia.org/wiki/File:Rollpitchyawplain.png
     CMRotationRate rotationRate = motion.rotationRate;
     
-    float fx = rotationRate.x*MULTIPLIER;
-    float fy = rotationRate.y*MULTIPLIER;
-    float fz = rotationRate.z*MULTIPLIER;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    float length = 0.0;
+    if ([defaults objectForKey:CLUB]) {
+        length = [[[defaults objectForKey:CLUB] objectForKey:@"length"] floatValue];
+    } else {
+        length = DRIVER_LENGTH;
+    }
+        
+    
+    float fx = rotationRate.x*length*INCH_TO_M*METER_TO_MILE;
+    float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;
+    float fz = rotationRate.z*length*INCH_TO_M*METER_TO_MILE;
   
     // Let's just count one max value 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:HANDED]) {
         if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
             if (fy > 0) {

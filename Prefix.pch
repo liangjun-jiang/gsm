@@ -4,13 +4,11 @@
     #import "Prefs.h"
 #endif
 
-#define DRIVER_LENGTH 44  // in inch
-#define WEDGE_LENGTH 35  // in inch
 
 #define INCH_TO_M 0.0254
 #define METER_TO_MILE 2.24
-#define ARM_LENGTH 24  // in inch
 
-#define MULTIPLIER (WEDGE_LENGTH + ARM_LENGTH)*INCH_TO_M*METER_TO_MILE
+//#define ARM_LENGTH 24  // in inch
+//#define MULTIPLIER WEDGE_LENGTH*INCH_TO_M*METER_TO_MILE
 
-#define SCALE_FACTOR 20.0
+#define SCALE_FACTOR 30.0
