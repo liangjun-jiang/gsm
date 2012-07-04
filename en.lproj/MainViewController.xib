@@ -70,7 +70,7 @@
 								<reference key="IBUIToolbar" ref="97412129"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="611748143">
+							<object class="IBUIBarButtonItem" id="568660105">
 								<string key="IBUITitle">Setting</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
@@ -82,6 +82,10 @@
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
 						</object>
+						<object class="NSColor" key="IBUITintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAAA</bytes>
+						</object>
 					</object>
 					<object class="IBUIView" id="927728037">
 						<reference key="NSNextResponder" ref="245598487"/>
@@ -89,12 +93,9 @@
 						<string key="NSFrame">{{0, 49}, {320, 112}}</string>
 						<reference key="NSSuperview" ref="245598487"/>
 						<reference key="NSWindow"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="631722107">
+						<object class="NSColor" key="IBUIBackgroundColor" id="854373788">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC41AA</bytes>
-							<object class="NSColorSpace" key="NSCustomColorSpace" id="702260336">
-								<int key="NSID">2</int>
-							</object>
+							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 						</object>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -105,7 +106,7 @@
 						<string key="NSFrame">{{0, 198}, {320, 112}}</string>
 						<reference key="NSSuperview" ref="245598487"/>
 						<reference key="NSWindow"/>
-						<reference key="IBUIBackgroundColor" ref="631722107"/>
+						<reference key="IBUIBackgroundColor" ref="854373788"/>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -120,9 +121,9 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Club speed * 20 MPH</string>
-						<object class="NSColor" key="IBUITextColor" id="258283627">
+						<object class="NSColor" key="IBUITextColor" id="395765182">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
+							<bytes key="NSRGB">MSAwLjUgMAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
@@ -147,8 +148,8 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Lowpass Filter</string>
-						<reference key="IBUITextColor" ref="258283627"/>
+						<string key="IBUIText">Accelerometer + Lowpass Filter</string>
+						<reference key="IBUITextColor" ref="395765182"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -164,7 +165,9 @@
 						<object class="NSColor" key="IBUIBackgroundColor" id="930146206">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC43NSAwAA</bytes>
-							<reference key="NSCustomColorSpace" ref="702260336"/>
+							<object class="NSColorSpace" key="NSCustomColorSpace">
+								<int key="NSID">2</int>
+							</object>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -274,11 +277,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MC43NQA</bytes>
-					<reference key="NSCustomColorSpace" ref="702260336"/>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="854373788"/>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -365,7 +364,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">discloseSetting:</string>
-						<reference key="source" ref="611748143"/>
+						<reference key="source" ref="568660105"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">113</int>
@@ -447,7 +446,7 @@
 							<reference ref="479912090"/>
 							<reference ref="752007920"/>
 							<reference ref="665808368"/>
-							<reference ref="611748143"/>
+							<reference ref="568660105"/>
 							<reference ref="370463434"/>
 						</object>
 						<reference key="parent" ref="245598487"/>
@@ -474,7 +473,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">111</int>
-						<reference key="object" ref="611748143"/>
+						<reference key="object" ref="568660105"/>
 						<reference key="parent" ref="97412129"/>
 					</object>
 					<object class="IBObjectRecord">
