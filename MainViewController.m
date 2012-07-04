@@ -65,8 +65,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.rawDataArray = nil;  // we nilled it.
-    
 }
 
 // Implement viewDidLoad to do additional setup after loading the view.
@@ -162,6 +160,9 @@
 		// If we are not paused, then pause and set the title to "Resume"
 		isPaused = YES;
 		pause.title = kLocalizedResume;
+        if ([self.rawDataArray count] > 0) {
+            [self.rawDataArray removeAllObjects];
+        }
         
         // We start the motionManager
         if (motionManager.deviceMotionAvailable) {
