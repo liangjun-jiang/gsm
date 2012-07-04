@@ -19,6 +19,7 @@
 @property (unsafe_unretained, nonatomic) id <ReportViewControllerDelegate> delegate;
 @property (nonatomic, strong) IBOutlet UITableView *mTableView;
 @property (nonatomic, strong) NSMutableArray *rawData;
+@property (nonatomic, strong) IBOutlet UINavigationBar *navBar;
 
 -(IBAction)done:(id)sender;
 -(IBAction)sendFeedback:(id)sender;

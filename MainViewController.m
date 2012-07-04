@@ -9,7 +9,7 @@
 #define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
 #define kLocalizedResume	NSLocalizedString(@"Resumed","resume taking samples")
 
-#define DRIVER_LENGTH 45.0
+#define DRIVER_LENGTH 44.0
 
 @interface MainViewController(){
     NSMutableArray *rawDataArray;
@@ -80,10 +80,10 @@
 	useAdaptive = NO;
 	[self changeFilter:[LowpassFilter class]];
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"Right-handed" forKey:HANDED];
-    [defaults setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Driver",@"name",@"45.0",@"length",nil] forKey:CLUB];
-    [defaults synchronize];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:@"Right-handed" forKey:HANDED];
+//    [defaults setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Driver",@"name",[NSString stringWithFormat:@"%f",DRIVER_LENGTH],@"length",nil] forKey:CLUB];
+//    [defaults synchronize];
     
     motionManager = [[CMMotionManager alloc] init];
     
@@ -214,7 +214,8 @@
     } else {
         length = DRIVER_LENGTH;
     }
-        
+    
+    NSLog(@"selected length:%f",length);
     
     float fx = rotationRate.x*length*INCH_TO_M*METER_TO_MILE;
     float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;

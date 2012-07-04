@@ -38,11 +38,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    _handed = [NSArray arrayWithObjects:@"Left-handed",@"Right-handed", nil];
-    _positions = [NSArray arrayWithObjects:@"Wrist",@"Upper Arm", nil];
+    _handed = [NSArray arrayWithObjects:@"Right-handed",@"Left-handed", nil];
+    _positions = [NSArray arrayWithObjects:@"Wrist", nil];
     
     NSString *file = [[NSBundle mainBundle] pathForResource:@"Clubs" ofType:@"plist"];
     _clubs = [[NSDictionary dictionaryWithContentsOfFile:file] objectForKey:@"root"];
+    
+    // We make the array reversed
+    _clubs = [[_clubs reverseObjectEnumerator] allObjects];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:HANDED]) self.currentHand = [defaults objectForKey:HANDED];
@@ -121,6 +124,10 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return (section == 2)? 40.0:0.0;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath   
 

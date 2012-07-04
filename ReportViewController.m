@@ -25,7 +25,7 @@
 @end
 
 @implementation ReportViewController
-@synthesize delegate = _delegate, mTableView = _mTableView, rawData = _rawData;
+@synthesize delegate = _delegate, mTableView = _mTableView, rawData = _rawData, navBar = _navBar;
 
 - (IBAction)done:(id)sender
 {
@@ -37,23 +37,29 @@
 {
     [super viewDidLoad];
     
-    //Let's do some math here
-    // We use an array to keep track of the 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *title;
+    if ([defaults objectForKey:CLUB]) {
+        title = [defaults objectForKey:CLUB];
+    } else {
+        title = @"Driver";
+    }
+   
+    self.navigationItem.title = title;
+    
+    
+    // We do some simple math
     
     max = 0.0;
     mean = 0.0;
     standardDeviation = 0.0;
     
     max = [self calculateMax:self.rawData];
-    
-    standardDeviation = sqrtf([self calculateVariance:self.rawData withMean:mean]);
-    
     countableSwings = [self calculateCountableFromRawData:self.rawData withThreshold:max];
-    
     mean = [self calculateMean:countableSwings];
-
+    standardDeviation = sqrtf([self calculateVariance:countableSwings withMean:mean]);
     
-    [self.mTableView reloadData];
+    
 }
 
 - (void)viewDidUnload
@@ -232,7 +238,6 @@
     for (NSNumber *number in mData) {
         sum += fabsf(mMean - [number floatValue])*fabsf(mMean - [number floatValue]);
     }
-    
     return sum / [mData count];
 }
 
