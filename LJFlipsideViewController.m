@@ -140,7 +140,7 @@
             cell.textLabel.text = [_handed objectAtIndex:indexPath.row];
             
             if (self.currentHand) {
-                NSUInteger index = [_handed indexOfObject:self.handed];
+                NSUInteger index = [_handed indexOfObject:self.currentHand];
                 if (indexPath.row == index) {
                     cell.accessoryType = UITableViewCellAccessoryCheckmark;
                     
