@@ -43,19 +43,19 @@
     standardDeviation = 0.0;
     
     max = [self calculateMax:self.rawData];
+    
     mean = [self calculateMean:self.rawData];
     standardDeviation = sqrtf([self calculateVariance:self.rawData withMean:mean]);
     
     countableSwings = [self calculateCountableFromRawData:self.rawData withThreshold:max];
     
-
+    [self.mTableView reloadData];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    self.mTableView = nil;
     self.rawData = nil;
     countableSwings = nil;
 }
@@ -70,7 +70,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 4;
+    return 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -81,7 +81,7 @@
             return @"Number of Swing counted";
             break;
         case 1:
-            return @"Distribution";
+            return @"Distribution [MPH]";
             break;
         case 2:
             return @"Counted Club Speed [MPH]";
@@ -140,13 +140,13 @@
         case 1:
             switch (row) {
                 case 0:
-                    cell.textLabel.text = [NSString stringWithFormat:@"Max: %.2f [MPH]",max];
+                    cell.textLabel.text = [NSString stringWithFormat:@"Max: %.2f",max];
                     break;
                 case 1:
-                    cell.textLabel.text = [NSString stringWithFormat:@"Mean: %.2f [MPH]",mean];
+                    cell.textLabel.text = [NSString stringWithFormat:@"Mean: %.2f",mean];
                     break;
                 case 2:
-                    cell.textLabel.text = [NSString stringWithFormat:@"Standard Deviation: %.2f [MPH]",standardDeviation];
+                    cell.textLabel.text = [NSString stringWithFormat:@"Standard Deviation: %.2f",standardDeviation];
                     break;
                 default:
                     break;
@@ -271,28 +271,15 @@
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     picker.mailComposeDelegate = self;
     
-    [picker setSubject:@"Your data!"];
+    [picker setSubject:@"I'd like to hear from you!"];
     
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"MMddyyyyhhmmss"];
-//    NSString *fileName = [NSString stringWithFormat:@"%@.csv",[formatter stringFromDate:[NSDate date]]];
-//    NSMutableString *tempStr = [NSMutableString stringWithString:@"here is my test!"];
-//    NSLog(@"what's raw data string:%@",rawDataString);
-//    [self writeToFile:tempStr withFileName:fileName];
-//    
-//    if ([DocumentManager filePathInDocument:fileName]) {
-//        NSData *fileData = [NSData dataWithContentsOfFile:[DocumentManager filePathInDocument:fileName]];
-//        
-//        [picker addAttachmentData:fileData mimeType:@"application/octet-stream" fileName:fileName];
-//        
-//        // Fill out the email body text
-//        NSString *emailBody = @"Raw data!";
-//        [picker setMessageBody:emailBody isHTML:NO];
-//        
-//        [self presentModalViewController:picker animated:YES];
-//    }
+    [picker setToRecipients:[NSArray arrayWithObject:@"2010.longhorn@gmail.com"]];
     
+    NSString *emailBody = @"Do you think if the data make sense? Send me your comment and suggestion";
     
+    [picker setMessageBody:emailBody isHTML:NO];
+            
+    [self presentModalViewController:picker animated:YES];
     
 }
 
