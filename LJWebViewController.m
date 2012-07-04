@@ -9,7 +9,7 @@
 #import "LJWebViewController.h"
 #import "SVProgressHUD.h"
 //#define URL_STRING  @"http://ljsportapps.com/sm/index.html"
-#define URL_STRING @"google.com"
+#define URL_STRING @"http://google.com"
 
 @interface LJWebViewController ()<UIWebViewDelegate>
 
@@ -20,7 +20,7 @@
 
 - (IBAction)done:(id)sender
 {
-    [_delegate webViewControllerDidFinish:self];
+    [self.delegate webViewControllerDidFinish:self];
     
 }
 
