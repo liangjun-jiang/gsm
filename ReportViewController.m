@@ -40,12 +40,12 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *title;
     if ([defaults objectForKey:CLUB]) {
-        title = [defaults objectForKey:CLUB];
+        title = [[defaults objectForKey:CLUB] objectForKey:@"name"];
     } else {
         title = @"Driver";
     }
    
-    self.navigationItem.title = title;
+    self.navBar.topItem.title = title;
     
     
     // We do some simple math

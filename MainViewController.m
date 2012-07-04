@@ -215,8 +215,6 @@
         length = DRIVER_LENGTH;
     }
     
-    NSLog(@"selected length:%f",length);
-    
     float fx = rotationRate.x*length*INCH_TO_M*METER_TO_MILE;
     float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;
     float fz = rotationRate.z*length*INCH_TO_M*METER_TO_MILE;
