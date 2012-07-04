@@ -44,10 +44,12 @@
     
     max = [self calculateMax:self.rawData];
     
-    mean = [self calculateMean:self.rawData];
     standardDeviation = sqrtf([self calculateVariance:self.rawData withMean:mean]);
     
     countableSwings = [self calculateCountableFromRawData:self.rawData withThreshold:max];
+    
+    mean = [self calculateMean:countableSwings];
+
     
     [self.mTableView reloadData];
 }

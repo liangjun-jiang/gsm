@@ -219,8 +219,11 @@
     float fx = rotationRate.x*MULTIPLIER;
     float fy = rotationRate.y*MULTIPLIER;
     float fz = rotationRate.z*MULTIPLIER;
-    
-    [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+  
+    // Let's just count one max value 
+    if (fy > 0) {
+        [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+    }
     
     [unfiltered addRotationX:fx y:fy z:fz];
 
