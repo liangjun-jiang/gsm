@@ -3,10 +3,7 @@
 #import "MainViewController.h"
 #import "GraphView.h"
 #import "AccelerometerFilter.h"
-#import "DocumentManager.h"
 #import <CoreMotion/CoreMotion.h>
-#import "ReportViewController.h"
-#import "LJWebViewController.h"
 
 #define kUpdateFrequency	60.0
 #define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
@@ -14,7 +11,6 @@
 
 @interface MainViewController(){
     NSMutableArray *rawDataArray;
-    
     CMMotionManager *motionManager;
 
 }
@@ -60,9 +56,16 @@
 
 - (void)discloseInfo:(id)sender
 {
-    LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
-    web.delegate = self;
-    [self presentModalViewController:web animated:YES];
+//    LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
+//    web.delegate = self;
+//    [self presentModalViewController:web animated:YES];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.rawDataArray = nil;  // we nilled it.
     
 }
 
@@ -70,6 +73,7 @@
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
+    
     
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
   	isPaused = YES;
