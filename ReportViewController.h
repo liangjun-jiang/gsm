@@ -24,4 +24,5 @@
 @property (nonatomic, strong) NSMutableArray *rawData;
 
 -(IBAction)done:(id)sender;
+-(IBAction)sendFeedback:(id)sender;
 @end

@@ -149,7 +149,7 @@
                       encoding:NSUTF8StringEncoding error:&error];
 }
 
-- (IBAction)share:(id)sender
+- (IBAction)sendFeedback:(id)sender
 {
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
     if (mailClass != nil)
