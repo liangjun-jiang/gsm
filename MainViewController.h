@@ -30,8 +30,8 @@
 
 
 -(IBAction)pauseOrResume:(id)sender;
--(IBAction)filterSelect:(id)sender;
--(IBAction)adaptiveSelect:(id)sender;
+//-(IBAction)filterSelect:(id)sender;
+//-(IBAction)adaptiveSelect:(id)sender;
 
 -(IBAction)discloseSetting:(id)sender;
 - (IBAction)discloseInfo:(id)sender;

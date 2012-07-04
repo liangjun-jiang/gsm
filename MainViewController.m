@@ -113,19 +113,6 @@
     self.motionManager = nil;
 }
 
-// UIAccelerometerDelegate method, called when the device accelerates.
-//-(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
-//{
-//	// Update the accelerometer graph view
-//	if(!isPaused)
-//	{
-//		[filter addAcceleration:acceleration];
-//        
-//		[unfiltered addX:acceleration.x y:acceleration.y z:acceleration.z];
-//		[filtered addX:filter.x y:filter.y z:filter.z];
-//	}
-//}
-
 -(void)changeFilter:(Class)filterClass
 {
 	// Ensure that the new filter class is different from the current one...
@@ -180,34 +167,31 @@
 	
 }
 
--(IBAction)filterSelect:(id)sender
-{
-	if([sender selectedSegmentIndex] == 0)
-	{
-		// Index 0 of the segment selects the lowpass filter
-		[self changeFilter:[LowpassFilter class]];
-	}
-	else
-	{
-		// Index 1 of the segment selects the highpass filter
-		[self changeFilter:[HighpassFilter class]];
-	}
+//-(IBAction)filterSelect:(id)sender
+//{
+//	if([sender selectedSegmentIndex] == 0)
+//	{
+//		// Index 0 of the segment selects the lowpass filter
+//		[self changeFilter:[LowpassFilter class]];
+//	}
+//	else
+//	{
+//		// Index 1 of the segment selects the highpass filter
+//		[self changeFilter:[HighpassFilter class]];
+//	}
+//
+//	// Inform accessibility clients that the filter has changed.
+//	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+//}
 
-	// Inform accessibility clients that the filter has changed.
-	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-}
-
--(IBAction)adaptiveSelect:(id)sender
-{
-	// Index 1 is to use the adaptive filter, so if selected then set useAdaptive appropriately
-	useAdaptive = [sender selectedSegmentIndex] == 1;
-	// and update our filter and filterLabel
-	filter.adaptive = useAdaptive;
-	filterLabel.text = filter.name;
-	
-	// Inform accessibility clients that the adaptive selection has changed.
-	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-}
+//-(IBAction)adaptiveSelect:(id)sender
+//{
+//	// Index 1 is to use the adaptive filter, so if selected then set useAdaptive appropriately
+//	useAdaptive = [sender selectedSegmentIndex] == 1;
+//	// and update our filter and filterLabel
+//	filter.adaptive = useAdaptive;
+//	filterLabel.text = [NSString stringWithFormat:@"Acceleometer + %@",filter.name];
+//}
 
 
 
@@ -221,15 +205,27 @@
     float fz = rotationRate.z*MULTIPLIER;
   
     // Let's just count one max value 
-    if (fy > 0) {
-        [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:HANDED]) {
+        if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
+            if (fy > 0) {
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+            }
+        } else if ([[defaults objectForKey:HANDED] isEqualToString:@"Left-handed"]){
+            if (fy < 0) {
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+            }
+        }
+    }
+    else {
+        if (fy > 0) {
+            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+        }
     }
     
     [unfiltered addRotationX:fx y:fy z:fz];
-
+    [filtered addX:motion.userAcceleration.x y:motion.userAcceleration.y z:motion.userAcceleration.z];
     
-    
-    [filtered addRotationX:fx y:fy z:fz];
     
 }
 

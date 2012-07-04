@@ -82,7 +82,7 @@
     
     switch (section) {
         case 0:
-            return @"Number of Swing counted";
+            return @"Number of Swing Counted";
             break;
         case 1:
             return @"Distribution [MPH]";

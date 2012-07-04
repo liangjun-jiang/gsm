@@ -70,7 +70,7 @@
 								<reference key="IBUIToolbar" ref="97412129"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="446226420">
+							<object class="IBUIBarButtonItem" id="611748143">
 								<string key="IBUITitle">Setting</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
@@ -157,7 +157,7 @@
 					</object>
 					<object class="IBUISegmentedControl" id="952062221">
 						<reference key="NSNextResponder" ref="245598487"/>
-						<int key="NSvFlags">288</int>
+						<int key="NSvFlags">-2147483360</int>
 						<string key="NSFrame">{{20, 318}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="245598487"/>
 						<reference key="NSWindow"/>
@@ -199,7 +199,7 @@
 					</object>
 					<object class="IBUISegmentedControl" id="894002505">
 						<reference key="NSNextResponder" ref="245598487"/>
-						<int key="NSvFlags">288</int>
+						<int key="NSvFlags">-2147483360</int>
 						<string key="NSFrame">{{20, 365}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="245598487"/>
 						<reference key="NSWindow"/>
@@ -365,7 +365,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">discloseSetting:</string>
-						<reference key="source" ref="446226420"/>
+						<reference key="source" ref="611748143"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
 					<int key="connectionID">113</int>
@@ -447,7 +447,7 @@
 							<reference ref="479912090"/>
 							<reference ref="752007920"/>
 							<reference ref="665808368"/>
-							<reference ref="446226420"/>
+							<reference ref="611748143"/>
 							<reference ref="370463434"/>
 						</object>
 						<reference key="parent" ref="245598487"/>
@@ -474,7 +474,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">111</int>
-						<reference key="object" ref="446226420"/>
+						<reference key="object" ref="611748143"/>
 						<reference key="parent" ref="97412129"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -565,16 +565,12 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>adaptiveSelect:</string>
 							<string>discloseInfo:</string>
 							<string>discloseSetting:</string>
-							<string>filterSelect:</string>
 							<string>pauseOrResume:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -584,28 +580,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>adaptiveSelect:</string>
 							<string>discloseInfo:</string>
 							<string>discloseSetting:</string>
-							<string>filterSelect:</string>
 							<string>pauseOrResume:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">adaptiveSelect:</string>
-								<string key="candidateClassName">id</string>
-							</object>
 							<object class="IBActionInfo">
 								<string key="name">discloseInfo:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">discloseSetting:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">filterSelect:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -672,6 +658,10 @@
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
 			<integer value="768" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1296" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
