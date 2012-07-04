@@ -33,5 +33,6 @@
 -(IBAction)adaptiveSelect:(id)sender;
 
 -(IBAction)discloseSetting:(id)sender;
+- (IBAction)discloseInfo:(id)sender;
 
 @end

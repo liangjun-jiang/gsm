@@ -7,6 +7,9 @@
 //
 
 #import "LJWebViewController.h"
+#import "SVProgressHUD.h"
+//#define URL_STRING  @"http://ljsportapps.com/sm/index.html"
+#define URL_STRING @"google.com"
 
 @interface LJWebViewController ()<UIWebViewDelegate>
 
@@ -28,6 +31,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSURL *url = [NSURL URLWithString:URL_STRING];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (void)viewDidUnload
@@ -35,6 +40,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.webView = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -45,13 +51,13 @@
 #pragma mark - Delegate Methods
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading...", @"Loading...") maskType:SVProgressHUDMaskTypeGradient];
     
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
+    [SVProgressHUD dismiss];
     
 }
 

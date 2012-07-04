@@ -6,6 +6,7 @@
 #import "DocumentManager.h"
 #import <CoreMotion/CoreMotion.h>
 #import "ReportViewController.h"
+#import "LJWebViewController.h"
 
 #define kUpdateFrequency	60.0
 #define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
@@ -53,13 +54,20 @@
 }
 
 
+- (void)discloseInfo:(id)sender
+{
+    LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
+    [self presentModalViewController:web animated:YES];
+    
+}
+
 // Implement viewDidLoad to do additional setup after loading the view.
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
     
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
-  	isPaused = NO;
+  	isPaused = YES;
 	useAdaptive = NO;
 	[self changeFilter:[LowpassFilter class]];
 
@@ -147,15 +155,19 @@
 		pause.title = kLocalizedResume;
         
         // We start the motionManager
-        [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
-            [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
+        if (motionManager.deviceMotionAvailable) {
+            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
+                [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
+                
+            }]; 
+        } else {
+            NSLog(@"Device Motion is not available!");
+            motionManager = nil;
+        }
+
             
-        }];
 	}
 	
-	// Inform accessibility clients that the pause/resume button has changed.
-//	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-    
 }
 
 -(IBAction)filterSelect:(id)sender
@@ -188,60 +200,21 @@
 }
 
 
-- (IBAction)changeSensor:(id)sender{
-    UIBarButtonItem *mSensor = (UIBarButtonItem *)sender;
-    if ([mSensor.title isEqualToString:@"Accelerometer"]) {
-        mSensor.title = @"Gyroscope";
-        isPaused = YES;
-        
-        motionManager = [[CMMotionManager alloc] init];
-        
-        motionManager.deviceMotionUpdateInterval = 1.0/60.0;
-        
-        if (motionManager.deviceMotionAvailable) {
-            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
-                [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
-                
-            }];
-        } else {
-            NSLog(@"Device Motion is not available!");
-            motionManager = nil;
-        }
-                
-    } else {
-        mSensor.title = @"Accelerometer";
-        [motionManager stopDeviceMotionUpdates];
-        ReportViewController *rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
-        rvc.delegate = self;
-        [self presentModalViewController:rvc animated:YES];
-        
-
-    }
-    
-    // Inform accessibility clients that the pause/resume button has changed.
-//    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-    
-}
-
 
 - (void)performLogDeviceMotion: (CMDeviceMotion *)motion{
     
     // Refer to: http://en.wikipedia.org/wiki/File:Rollpitchyawplain.png
-
-    // to get the concept of roll, yaw and pitch
     CMRotationRate rotationRate = motion.rotationRate;
     
     float fx = rotationRate.x*MULTIPLIER;
     float fy = rotationRate.y*MULTIPLIER;
     float fz = rotationRate.z*MULTIPLIER;
     
-    NSLog(@"(%.2f,%.2f,%.2f) mph",fx,fy,fz);
     [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
     
     [unfiltered addRotationX:fx y:fy z:fz];
 
     [filtered addRotationX:fx y:fy z:fz];
-
     
 }
 
