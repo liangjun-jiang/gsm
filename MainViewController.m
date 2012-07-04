@@ -8,19 +8,16 @@
 #import "ReportViewController.h"
 
 #define kUpdateFrequency	60.0
-#define kLocalizedPause		NSLocalizedString(@"Pause","pause taking samples")
-#define kLocalizedResume	NSLocalizedString(@"Resume","resume taking samples")
-#define kLocalizedShare		NSLocalizedString(@"Share","share the data")
+#define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
+#define kLocalizedResume	NSLocalizedString(@"Resumed","resume taking samples")
 
 @interface MainViewController(){
     NSMutableArray *rawDataArray;
-    NSMutableString *rawDataString;
     
     CMMotionManager *motionManager;
 
 }
 @property (nonatomic) NSMutableArray *rawDataArray;
-@property (nonatomic) NSMutableString *rawDataString;
 @property (nonatomic, strong) CMMotionManager *motionManager;
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
@@ -31,8 +28,8 @@
 
 @implementation MainViewController
 
-@synthesize unfiltered, filtered, pause, filterLabel,share, sensor;
-@synthesize rawDataArray,rawDataString;
+@synthesize unfiltered, filtered, pause, filterLabel;
+@synthesize rawDataArray;
 @synthesize motionManager;
 
 - (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller
@@ -62,17 +59,13 @@
 	[super viewDidLoad];
     
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
-    share.possibleTitles = [NSSet setWithObjects:kLocalizedShare, nil];
-	isPaused = NO;
+  	isPaused = NO;
 	useAdaptive = NO;
 	[self changeFilter:[LowpassFilter class]];
 
-//	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / kUpdateFrequency];
-//	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
-    
     motionManager = [[CMMotionManager alloc] init];
     
-    motionManager.deviceMotionUpdateInterval = 1.0/60.0;
+    motionManager.deviceMotionUpdateInterval = 1.0/kUpdateFrequency;
     
     if (motionManager.deviceMotionAvailable) {
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
@@ -102,9 +95,6 @@
 	self.pause = nil;
 	self.filterLabel = nil;
     self.rawDataArray = nil;
-    self.rawDataString = nil;
-    self.sensor = nil;
-    self.share = nil;
     self.motionManager = nil;
 }
 
@@ -147,8 +137,8 @@
         [motionManager stopDeviceMotionUpdates];
         ReportViewController *rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
         rvc.delegate = self;
+        rvc.rawData = rawDataArray;
         [self presentModalViewController:rvc animated:YES];
-        
 	}
 	else
 	{
@@ -157,7 +147,10 @@
 		pause.title = kLocalizedResume;
         
         // We start the motionManager
-        [motionManager startDeviceMotionUpdates];
+        [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
+            [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
+            
+        }];
 	}
 	
 	// Inform accessibility clients that the pause/resume button has changed.
@@ -237,11 +230,18 @@
 
     // to get the concept of roll, yaw and pitch
     CMRotationRate rotationRate = motion.rotationRate;
-    NSLog(@"rotation x: %f rad/sec, rotation y:%f rad/sec, rotation z:%f rad/sec",rotationRate.x, rotationRate.y, rotationRate.z);
-    [unfiltered addRotationX:rotationRate.x*MULTIPLIER y:rotationRate.y*MULTIPLIER z:rotationRate.z*MULTIPLIER];
-
-    [filtered addRotationX:rotationRate.x*MULTIPLIER y:rotationRate.y*MULTIPLIER z:rotationRate.z*MULTIPLIER];
     
+    float fx = rotationRate.x*MULTIPLIER;
+    float fy = rotationRate.y*MULTIPLIER;
+    float fz = rotationRate.z*MULTIPLIER;
+    
+    NSLog(@"(%.2f,%.2f,%.2f) mph",fx,fy,fz);
+    [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+    
+    [unfiltered addRotationX:fx y:fy z:fz];
+
+    [filtered addRotationX:fx y:fy z:fz];
+
     
 }
 

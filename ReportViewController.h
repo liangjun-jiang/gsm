@@ -14,10 +14,14 @@
 - (void)reportViewControllerDidFinish:(ReportViewController *)controller;
 @end
 
-@interface ReportViewController : UIViewController
+@interface ReportViewController : UIViewController{
+    
+//    NSMutableArray *rawData;
+}
 
 @property (unsafe_unretained, nonatomic) id <ReportViewControllerDelegate> delegate;
 @property (nonatomic, strong) IBOutlet UITableView *mTableView;
+@property (nonatomic, strong) NSMutableArray *rawData;
 
 -(IBAction)done:(id)sender;
 @end
