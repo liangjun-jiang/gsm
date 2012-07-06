@@ -392,7 +392,7 @@
     [self dismissGuide];
     
     NSUserDefaults *defautls = [NSUserDefaults standardUserDefaults];
-    [defautls setBool:NO forKey:@"ShowGuide"];
+    [defautls setBool:YES forKey:@"ShowGuide"];
     [defautls synchronize];
 }
 
