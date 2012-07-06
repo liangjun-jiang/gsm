@@ -4,7 +4,7 @@
 
 @implementation AppDelegate
 
-@synthesize window, viewController, instructionViewController;
+@synthesize window, viewController;
 
 -(void)applicationDidFinishLaunching:(UIApplication*)application
 {

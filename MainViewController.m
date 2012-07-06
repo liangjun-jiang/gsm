@@ -22,12 +22,16 @@
     UIPageControl *pageControl;
     
     UIScrollView *scrollView;
-
+    
+    
+    
+    
 }
 @property (nonatomic) NSMutableArray *rawDataArray;
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
+
 
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
@@ -120,10 +124,10 @@
 {
     [super viewDidAppear:animated];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"ShowGuide"]) {
+    if (![defaults boolForKey:@"ShowGuide"]) {
         [self setUpInstructionGuide];
     } 
-    [self setUpInstructionGuide];
+//    [self setUpInstructionGuide];
 }
 
 -(void)viewDidUnload
@@ -271,9 +275,20 @@
     scrollView.pagingEnabled = YES;
     scrollView.scrollEnabled = YES;
     scrollView.delegate = self;
+    scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     
-    NSArray *images = [NSArray arrayWithObjects:@"Sample-1.png",@"Sample-2.png",@"Sample-3.png",@"Sample-4.png", nil];
+    
+    
+    NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"You need a iPhone or iPod touch with this app installed.",@"title",@"Sample-1.png",@"image", nil]; 
+    
+    NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"You also need a arm case for your iPhone or iPod Touch.",@"title",@"Sample-2.png",@"image", nil]; 
+    
+    NSDictionary *dict3 = [NSDictionary dictionaryWithObjectsAndKeys:@"Put your iPhone & iPad touch around your left wrist if you are right-handed, vice versa for left-handed.",@"title",@"Sample-3.png",@"image", nil]; 
+    
+    NSDictionary *dict4 = [NSDictionary dictionaryWithObjectsAndKeys:@"This will be how you will set up.",@"title",@"Sample-4.png",@"image", nil]; 
+    
+    NSArray *images = [NSArray arrayWithObjects:dict1,dict2,dict3,dict4, nil];
 	for (int i = 0; i < images.count; i++) {
 		CGRect frame;
 		frame.origin.x = scrollView.frame.size.width * i;
@@ -281,18 +296,53 @@
 		frame.size = scrollView.frame.size;
 		
 	    UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
-        [imageView setImage:[UIImage imageNamed:[images objectAtIndex:i]]];
+        [imageView setImage:[UIImage imageNamed:[[images objectAtIndex:i] objectForKey:@"image"]]];
 		[scrollView addSubview:imageView];
+        
+        UILabel *instructionLabel = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 20, 20.0, 280, 90)];
+        instructionLabel.numberOfLines = 0;
+        instructionLabel.lineBreakMode = UILineBreakModeWordWrap;
+        instructionLabel.backgroundColor = [UIColor clearColor];
+        instructionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
+        instructionLabel.textColor = [UIColor orangeColor];
+        
+        instructionLabel.text = [[images objectAtIndex:i] objectForKey:@"title"];
+        [scrollView addSubview:instructionLabel];
+        
+        if (i == 3) {
+            UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            dismissButton.frame = CGRectMake(frame.origin.x + 20, 300.0, 70.0, 40.0);
+            
+            [dismissButton setTitle:@"I get it." forState:UIControlStateNormal];
+            [dismissButton addTarget:self action:@selector(hideGuide) forControlEvents:UIControlEventTouchUpInside];
+            dismissButton.titleLabel.textColor = [UIColor blackColor];
+            dismissButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
+            [scrollView addSubview:dismissButton];
+            
+            UIButton *goButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            goButton.frame = CGRectMake(frame.origin.x + 80, 370.0, 250.0, 40.0);
+            
+            [goButton setTitle:@"I get it. Don't show it again." forState:UIControlStateNormal];
+            goButton.titleLabel.textColor = [UIColor blackColor];
+            goButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
+            [goButton addTarget:self action:@selector(dismissGuide) forControlEvents:UIControlEventTouchUpInside];
+            
+            [scrollView addSubview:goButton];
+
+            
+        }
+        
+        
 	}
 	
 	scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * images.count, scrollView.frame.size.height);
     
 	pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, 424, 320, 44)];
-//    pageControl.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    pageControl.backgroundColor = [UIColor blackColor];
     pageControl.tag = 111;
 	pageControl.currentPage = 0;
 	pageControl.numberOfPages = images.count;
-    [pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
+    [pageControl addTarget:self action:@selector(changePage) forControlEvents:UIControlEventValueChanged];
     
     
     [self.view addSubview:scrollView];
