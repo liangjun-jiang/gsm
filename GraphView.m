@@ -354,6 +354,8 @@ void DrawGridlines(CGContextRef context, CGFloat x, CGFloat width)
 	// Create a new current segment, which is required by -addX:y:z and other methods.
 	// This is also a weak reference (we assume that the 'segments' array will keep the strong reference).
 	current = [self addSegment];
+    
+    self.backgroundColor  = [UIColor clearColor];
 }
 
 

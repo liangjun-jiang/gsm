@@ -4,7 +4,7 @@
 
 @implementation AppDelegate
 
-@synthesize window, viewController;
+@synthesize window, viewController, instructionViewController;
 
 -(void)applicationDidFinishLaunching:(UIApplication*)application
 {
@@ -12,6 +12,6 @@
 	[window addSubview:viewController.view];
 }
 
-// Release resources.
+
 
 @end

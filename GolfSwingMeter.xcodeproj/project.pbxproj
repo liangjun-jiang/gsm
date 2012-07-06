@@ -37,6 +37,10 @@
 		D6102DA115A48F2900B2F814 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6102D9F15A48F2900B2F814 /* SVProgressHUD.m */; };
 		D6102DA815A4BDB900B2F814 /* Prefs.m in Sources */ = {isa = PBXBuildFile; fileRef = D6102DA715A4BDB800B2F814 /* Prefs.m */; };
 		D6102DAA15A4BDD500B2F814 /* Clubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6102DA915A4BDD500B2F814 /* Clubs.plist */; };
+		D6102E1815A6547600B2F814 /* Sample-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1415A6547600B2F814 /* Sample-2.png */; };
+		D6102E1915A6547600B2F814 /* Sample-3.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1515A6547600B2F814 /* Sample-3.png */; };
+		D6102E1D15A655D700B2F814 /* Sample-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1B15A655D700B2F814 /* Sample-1.png */; };
+		D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1C15A655D700B2F814 /* Sample-4.png */; };
 		D66EAA1F158E69C0004AE8E5 /* DocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */; };
 		D66EAA21158E6EFA004AE8E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
@@ -84,6 +88,10 @@
 		D6102DA615A4BDB800B2F814 /* Prefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefs.h; sourceTree = "<group>"; };
 		D6102DA715A4BDB800B2F814 /* Prefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prefs.m; sourceTree = "<group>"; };
 		D6102DA915A4BDD500B2F814 /* Clubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Clubs.plist; sourceTree = "<group>"; };
+		D6102E1415A6547600B2F814 /* Sample-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-2.png"; path = "images/Sample-2.png"; sourceTree = "<group>"; };
+		D6102E1515A6547600B2F814 /* Sample-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-3.png"; path = "images/Sample-3.png"; sourceTree = "<group>"; };
+		D6102E1B15A655D700B2F814 /* Sample-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-1.png"; path = "images/Sample-1.png"; sourceTree = "<group>"; };
+		D6102E1C15A655D700B2F814 /* Sample-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-4.png"; path = "images/Sample-4.png"; sourceTree = "<group>"; };
 		D66EAA1D158E69C0004AE8E5 /* DocumentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentManager.h; sourceTree = "<group>"; };
 		D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentManager.m; sourceTree = "<group>"; };
 		D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -138,6 +146,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D6102E1B15A655D700B2F814 /* Sample-1.png */,
+				D6102E1C15A655D700B2F814 /* Sample-4.png */,
+				D6102E1415A6547600B2F814 /* Sample-2.png */,
+				D6102E1515A6547600B2F814 /* Sample-3.png */,
 				18AD69B511D559E7005232E4 /* Icon-72.png */,
 				18AD69B611D559E7005232E4 /* Icon-Small-50.png */,
 				18AD69B711D559E7005232E4 /* Icon-Small.png */,
@@ -274,6 +286,10 @@
 				D6102D9B15A48E5400B2F814 /* LJWebViewController.xib in Resources */,
 				D6102DA015A48F2900B2F814 /* SVProgressHUD.bundle in Resources */,
 				D6102DAA15A4BDD500B2F814 /* Clubs.plist in Resources */,
+				D6102E1815A6547600B2F814 /* Sample-2.png in Resources */,
+				D6102E1915A6547600B2F814 /* Sample-3.png in Resources */,
+				D6102E1D15A655D700B2F814 /* Sample-1.png in Resources */,
+				D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,54 @@
 
 #define THRESHOLD 0.90
 
-@interface ReportViewController ()<MFMailComposeViewControllerDelegate>{
+
+#pragma mark - Help class to show the name prompt
+@interface NameAlertPrompt : UIAlertView {
+    UITextField *textField;
+}
+
+@property (nonatomic, retain) UITextField *textField;
+@property (readonly) NSString *enteredText;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle okButtonTitle:(NSString *)okButtonTitle;
+
+@end
+
+
+@implementation NameAlertPrompt
+@synthesize textField, enteredText;
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle okButtonTitle:(NSString *)okayButtonTitle {
+    
+    self = [super initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:okayButtonTitle, nil];
+    
+    if (self) {
+        UITextField *theTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)]; 
+        [theTextField setBackgroundColor:[UIColor whiteColor]]; 
+        [theTextField setSecureTextEntry:YES];
+        [theTextField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+        [theTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
+        [self addSubview:theTextField];
+        self.textField = theTextField;
+        //CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 130.0); 
+        //[self setTransform:translate];
+    }
+    return self;
+}
+
+- (void)show {
+    [textField becomeFirstResponder];
+    [super show];
+}
+
+- (NSString *)enteredText {
+    return textField.text;
+}
+
+@end
+
+
+
+@interface ReportViewController ()<UIAlertViewDelegate, MFMailComposeViewControllerDelegate>{
     
     int count;
     NSMutableArray *countableSwings;
@@ -316,6 +363,28 @@
             break;
     }
     [self dismissModalViewControllerAnimated:YES];
+}
+
+
+#pragma mark - Alert View Delegate
+- (void)alertViewCancel:(UIAlertView *)alertView
+{
+    
+    
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            
+            break;
+            
+        default:
+            NSLog(@"Save the user!");
+            break;
+    }
+    
 }
 
 @end

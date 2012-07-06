@@ -181,7 +181,7 @@
 				<reference key="dict.values" ref="957960031"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">94</int>
+			<int key="maxID">96</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -241,16 +241,12 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>adaptiveSelect:</string>
-							<string>changeSensor:</string>
+							<string>discloseInfo:</string>
 							<string>discloseSetting:</string>
-							<string>filterSelect:</string>
 							<string>pauseOrResume:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -260,28 +256,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>adaptiveSelect:</string>
-							<string>changeSensor:</string>
+							<string>discloseInfo:</string>
 							<string>discloseSetting:</string>
-							<string>filterSelect:</string>
 							<string>pauseOrResume:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">adaptiveSelect:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">changeSensor:</string>
+								<string key="name">discloseInfo:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">discloseSetting:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">filterSelect:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -297,16 +283,12 @@
 							<string>filterLabel</string>
 							<string>filtered</string>
 							<string>pause</string>
-							<string>sensor</string>
-							<string>share</string>
 							<string>unfiltered</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UILabel</string>
 							<string>GraphView</string>
-							<string>UIBarButtonItem</string>
-							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>GraphView</string>
 						</object>
@@ -318,8 +300,6 @@
 							<string>filterLabel</string>
 							<string>filtered</string>
 							<string>pause</string>
-							<string>sensor</string>
-							<string>share</string>
 							<string>unfiltered</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -334,14 +314,6 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">pause</string>
-								<string key="candidateClassName">UIBarButtonItem</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sensor</string>
-								<string key="candidateClassName">UIBarButtonItem</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">share</string>
 								<string key="candidateClassName">UIBarButtonItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">

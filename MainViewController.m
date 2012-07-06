@@ -11,13 +11,24 @@
 
 #define DRIVER_LENGTH 44.0
 
-@interface MainViewController(){
+#define FITTING_FACTOR 8 //mph
+
+@interface MainViewController()<UIScrollViewDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
+    
+    BOOL pageControlBeingUsed;
+    
+    UIPageControl *pageControl;
+    
+    UIScrollView *scrollView;
 
 }
 @property (nonatomic) NSMutableArray *rawDataArray;
 @property (nonatomic, strong) CMMotionManager *motionManager;
+@property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIScrollView *scrollView;
+
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
 // we just pass in the class and -changeFilter: will setup the proper filter.
@@ -30,6 +41,7 @@
 @synthesize unfiltered, filtered, pause, filterLabel;
 @synthesize rawDataArray;
 @synthesize motionManager;
+@synthesize pageControl, scrollView;
 
 - (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller
 {
@@ -51,16 +63,16 @@
 - (void)discloseSetting:(id)sender
 {
     LJFlipsideViewController *ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
-    ljfvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     ljfvc.delegate = self;
     [self presentModalViewController:ljfvc animated:YES];
 }
 
 - (void)discloseInfo:(id)sender
 {
-//    LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
-//    web.delegate = self;
-//    [self presentModalViewController:web animated:YES];
+    LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
+    web.delegate = self;
+    web.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:web animated:YES];
     
 }
 
@@ -80,11 +92,6 @@
 	useAdaptive = NO;
 	[self changeFilter:[LowpassFilter class]];
 
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults setObject:@"Right-handed" forKey:HANDED];
-//    [defaults setObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Driver",@"name",[NSString stringWithFormat:@"%f",DRIVER_LENGTH],@"length",nil] forKey:CLUB];
-//    [defaults synchronize];
-    
     motionManager = [[CMMotionManager alloc] init];
     
     motionManager.deviceMotionUpdateInterval = 1.0/kUpdateFrequency;
@@ -109,6 +116,16 @@
     
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:@"ShowGuide"]) {
+        [self setUpInstructionGuide];
+    } 
+    [self setUpInstructionGuide];
+}
+
 -(void)viewDidUnload
 {
 	[super viewDidUnload];
@@ -130,7 +147,7 @@
 		// Set the adaptive flag
 		filter.adaptive = useAdaptive;
 		// And update the filterLabel with the new filter name.
-		filterLabel.text = [NSString stringWithFormat:@"Accelerometer + %@",filter.name];
+		filterLabel.text = @"Swing Smoothness";//[NSString stringWithFormat:@"Accelerometer + %@",filter.name];
 	}
 }
 
@@ -223,17 +240,17 @@
     if ([defaults objectForKey:HANDED]) {
         if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
             if (fy > 0) {
-                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz) + FITTING_FACTOR]];
             }
         } else if ([[defaults objectForKey:HANDED] isEqualToString:@"Left-handed"]){
             if (fy < 0) {
-                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ FITTING_FACTOR]];
             }
         }
     }
     else {
         if (fy > 0) {
-            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)]];
+            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ FITTING_FACTOR]];
         }
     }
     
@@ -244,6 +261,89 @@
 }
 
 
+#pragma mark - Setup Instruction guide
 
+- (void)setUpInstructionGuide
+{
+ 
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320, 424)];
+    scrollView.tag = 110;
+    scrollView.pagingEnabled = YES;
+    scrollView.scrollEnabled = YES;
+    scrollView.delegate = self;
+    scrollView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    
+    NSArray *images = [NSArray arrayWithObjects:@"Sample-1.png",@"Sample-2.png",@"Sample-3.png",@"Sample-4.png", nil];
+	for (int i = 0; i < images.count; i++) {
+		CGRect frame;
+		frame.origin.x = scrollView.frame.size.width * i;
+		frame.origin.y = 0;
+		frame.size = scrollView.frame.size;
+		
+	    UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
+        [imageView setImage:[UIImage imageNamed:[images objectAtIndex:i]]];
+		[scrollView addSubview:imageView];
+	}
+	
+	scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * images.count, scrollView.frame.size.height);
+    
+	pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, 424, 320, 44)];
+//    pageControl.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    pageControl.tag = 111;
+	pageControl.currentPage = 0;
+	pageControl.numberOfPages = images.count;
+    [pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    [self.view addSubview:scrollView];
+    [self.view addSubview:pageControl];
+    
+    
+    [self.view bringSubviewToFront:scrollView];
+    [self.view bringSubviewToFront:pageControl];
+}
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+	if (!pageControlBeingUsed) {
+		// Switch the indicator when more than 50% of the previous/next page is visible
+       CGFloat pageWidth = scrollView.frame.size.width;
+        int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+        pageControl.currentPage = page;
+	}
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+	pageControlBeingUsed = NO;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+	pageControlBeingUsed = NO;
+}
+
+- (void)changePage {
+	// Update the scroll view to the appropriate page
+	CGRect frame;
+	frame.origin.x = self.scrollView.frame.size.width * self.pageControl.currentPage;
+	frame.origin.y = 0;
+	frame.size = self.scrollView.frame.size;
+	[self.scrollView scrollRectToVisible:frame animated:YES];
+	
+	pageControlBeingUsed = YES;
+}
+
+- (void)dismissGuide{
+    [scrollView removeFromSuperview];
+    [pageControl removeFromSuperview];
+    
+}
+
+- (void)hideGuide {
+    [self dismissGuide];
+    
+    NSUserDefaults *defautls = [NSUserDefaults standardUserDefaults];
+    [defautls setBool:NO forKey:@"ShowGuide"];
+    [defautls synchronize];
+}
 
 @end

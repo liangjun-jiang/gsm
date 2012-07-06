@@ -1,8 +1,10 @@
 
+
 @interface AppDelegate : NSObject<UIApplicationDelegate>
 {
     UIWindow *window;
 	UIViewController *viewController;
+    
 }
 
 @property (nonatomic) IBOutlet UIWindow *window;
