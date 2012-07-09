@@ -10,7 +10,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-#define THRESHOLD 0.90
+#define THRESHOLD 0.90  // this is used to collect the peak value +/- 90% of the max swing speed detected. 
 
 
 #pragma mark - Help class to show the name prompt
@@ -235,7 +235,7 @@
             [tableView deselectRowAtIndexPath:indexPath animated:NO];
             break;
         case 2:
-            
+            break;
         default:
             break;
     }
@@ -369,15 +369,13 @@
 #pragma mark - Alert View Delegate
 - (void)alertViewCancel:(UIAlertView *)alertView
 {
-    
-    
+    NSLog(@"User Cancelled");
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
         case 0:
-            
             break;
             
         default:

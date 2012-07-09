@@ -144,53 +144,55 @@
     
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = [_handed objectAtIndex:indexPath.row];
-            
-            if (self.currentHand) {
-                NSUInteger index = [_handed indexOfObject:self.currentHand];
-                if (indexPath.row == index) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    
+            {
+                cell.textLabel.text = [_handed objectAtIndex:indexPath.row];
+                
+                if (self.currentHand) {
+                    NSUInteger index = [_handed indexOfObject:self.currentHand];
+                    if (indexPath.row == index) {
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    }
+                } else {
+                    if (indexPath.row == 0) {
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                        self.currentHand = [_handed objectAtIndex:0];
+                    }
                 }
-            } else {
-                if (indexPath.row == 0) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    self.currentHand = [_handed objectAtIndex:0];
-                }
+                break;
             }
-            break;
         case 1:
-            cell.textLabel.text = [_positions objectAtIndex:indexPath.row];
-            if (self.currentPosition) {
-                NSUInteger index = [_positions indexOfObject:self.currentPosition];
-                if (indexPath.row == index) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            {
+                cell.textLabel.text = [_positions objectAtIndex:indexPath.row];
+                if (self.currentPosition) {
+                    NSUInteger index = [_positions indexOfObject:self.currentPosition];
+                    if (indexPath.row == index) {
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    }
+                } else {
+                    if (indexPath.row == 0) {
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                        self.currentPosition = [_positions objectAtIndex:0];
+                    }
                 }
-            } else {
-                if (indexPath.row == 0) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    self.currentPosition = [_positions objectAtIndex:0];
-                }
+                break;
             }
-            break;
         default:
-            cell.textLabel.text = [[_clubs objectAtIndex:indexPath.row] objectForKey:@"name"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ inch", [[_clubs objectAtIndex:indexPath.row] objectForKey:@"length"]];
-            if (self.currentClub) {
-                NSUInteger index = [_clubs indexOfObject:self.currentClub];
-                if (indexPath.row == index) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            {
+                cell.textLabel.text = [[_clubs objectAtIndex:indexPath.row] objectForKey:@"name"];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ inch", [[_clubs objectAtIndex:indexPath.row] objectForKey:@"length"]];
+                if (self.currentClub) {
+                    NSUInteger index = [_clubs indexOfObject:self.currentClub];
+                    if (indexPath.row == index) {
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    }
+                } else {
+                    if (indexPath.row == 0) {
+                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                        self.currentClub = [_clubs objectAtIndex:0];
+                    }
                 }
-            } else {
-                if (indexPath.row == 0) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    self.currentClub = [_clubs objectAtIndex:0];
-                }
+                break;
             }
-
-            
-            
-            break;
     }
     
     return cell;
@@ -204,16 +206,23 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSInteger section = indexPath.section;
     
-    NSInteger currentIndex = (section == 0)? [_positions indexOfObject:self.currentPosition]:[_clubs indexOfObject:self.currentClub];
+    NSInteger currentIndex = 0;
+    
+    NSIndexPath *oldIndexPath;
+    
     switch (section) {
         case 0:
             currentIndex = [_handed indexOfObject:self.currentHand];
+            oldIndexPath = [NSIndexPath indexPathForRow:currentIndex inSection:0];
             break;
         case 1:
             currentIndex = [_positions indexOfObject:self.currentPosition];
+            oldIndexPath = [NSIndexPath indexPathForRow:currentIndex inSection:1];
+            
             break;
         case 2:
             currentIndex = [_clubs indexOfObject:self.currentClub];
+            oldIndexPath = [NSIndexPath indexPathForRow:currentIndex inSection:2];
             break;
         default:
             break;
@@ -222,15 +231,14 @@
     if (currentIndex == indexPath.row) {
         return;
     }
-    NSIndexPath *oldIndexPath = (section == 0)?[NSIndexPath indexPathForRow:currentIndex inSection:0]:[NSIndexPath indexPathForRow:currentIndex inSection:1];
     
     UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
     if (newCell.accessoryType == UITableViewCellAccessoryNone) {
         newCell.accessoryType = UITableViewCellAccessoryCheckmark;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if (section == 0) {
-            self.handed = [_handed objectAtIndex:indexPath.row];
-            [defaults setObject:self.handed forKey:HANDED];
+            self.currentHand = [_handed objectAtIndex:indexPath.row];
+            [defaults setObject:self.currentHand forKey:HANDED];
         } else if (section == 1){
             self.currentPosition = [_positions objectAtIndex:indexPath.row];
             [defaults setObject:self.currentPosition forKey:POSITION];
@@ -247,7 +255,7 @@
     if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
         oldCell.accessoryType = UITableViewCellAccessoryNone;
     }
-    
+//    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:oldIndexPath, indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 @end

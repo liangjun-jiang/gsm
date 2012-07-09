@@ -90,7 +90,6 @@
 {
 	[super viewDidLoad];
     
-    
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
   	isPaused = YES;
 	useAdaptive = NO;
@@ -287,7 +286,7 @@
     
     NSDictionary *dict3 = [NSDictionary dictionaryWithObjectsAndKeys:@"Put your iPhone & iPad touch around your left wrist if you are right-handed, vice versa for left-handed.",@"title",@"Sample-3.png",@"image", nil]; 
     
-    NSDictionary *dict4 = [NSDictionary dictionaryWithObjectsAndKeys:@"This will be how you will set up.",@"title",@"Sample-4.png",@"image", nil]; 
+    NSDictionary *dict4 = [NSDictionary dictionaryWithObjectsAndKeys:@"This will be how you set up.",@"title",@"Sample-4.png",@"image", nil]; 
     
     NSArray *images = [NSArray arrayWithObjects:dict1,dict2,dict3,dict4, nil];
 	for (int i = 0; i < images.count; i++) {
@@ -384,17 +383,18 @@
 }
 
 - (void)dismissGuide{
-    [scrollView removeFromSuperview];
-    [pageControl removeFromSuperview];
-    
-}
-
-- (void)hideGuide {
-    [self dismissGuide];
+    [self hideGuide];
     
     NSUserDefaults *defautls = [NSUserDefaults standardUserDefaults];
     [defautls setBool:YES forKey:@"ShowGuide"];
     [defautls synchronize];
+
+}
+
+- (void)hideGuide {
+    [scrollView removeFromSuperview];
+    [pageControl removeFromSuperview];
+
 }
 
 @end
