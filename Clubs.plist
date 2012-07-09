@@ -5,66 +5,88 @@
 	<key>root</key>
 	<array>
 		<dict>
+			<key>fitting_param</key>
+			<string>0</string>
 			<key>length</key>
 			<string>35.0</string>
 			<key>name</key>
 			<string>Wedge</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>1</string>
 			<key>length</key>
 			<string>35.5</string>
 			<key>name</key>
 			<string>9 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>2</string>
 			<key>length</key>
 			<string>36.0</string>
 			<key>name</key>
 			<string>8 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>3</string>
 			<key>length</key>
 			<string>36.5</string>
 			<key>name</key>
 			<string>7 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>4</string>
 			<key>length</key>
 			<string>37.0</string>
 			<key>name</key>
 			<string>6 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>5</string>
 			<key>length</key>
 			<string>37.5</string>
 			<key>name</key>
 			<string>5 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>6</string>
 			<key>length</key>
 			<string>38.0</string>
 			<key>name</key>
 			<string>4 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>7</string>
 			<key>length</key>
 			<string>38.5</string>
 			<key>name</key>
 			<string>3 Iron</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>8</string>
 			<key>length</key>
 			<string>41.5</string>
 			<key>name</key>
 			<string>5 Wood</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>9</string>
 			<key>length</key>
 			<string>42.5</string>
 			<key>name</key>
 			<string>3 Wood</string>
 		</dict>
 		<dict>
+			<key>fitting_param</key>
+			<string>10</string>
 			<key>length</key>
 			<string>44</string>
 			<key>name</key>

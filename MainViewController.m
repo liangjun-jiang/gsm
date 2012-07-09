@@ -127,7 +127,6 @@
     if (![defaults boolForKey:@"ShowGuide"]) {
         [self setUpInstructionGuide];
     } 
-//    [self setUpInstructionGuide];
 }
 
 -(void)viewDidUnload
@@ -236,6 +235,8 @@
         length = DRIVER_LENGTH;
     }
     
+    float fitting_param = [[[defaults objectForKey:CLUB] objectForKey:@"fitting_param"] floatValue];
+    
     float fx = rotationRate.x*length*INCH_TO_M*METER_TO_MILE;
     float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;
     float fz = rotationRate.z*length*INCH_TO_M*METER_TO_MILE;
@@ -244,17 +245,17 @@
     if ([defaults objectForKey:HANDED]) {
         if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
             if (fy > 0) {
-                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz) + FITTING_FACTOR]];
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz) + fitting_param]];
             }
         } else if ([[defaults objectForKey:HANDED] isEqualToString:@"Left-handed"]){
             if (fy < 0) {
-                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ FITTING_FACTOR]];
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
             }
         }
     }
     else {
         if (fy > 0) {
-            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ FITTING_FACTOR]];
+            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
         }
     }
     
