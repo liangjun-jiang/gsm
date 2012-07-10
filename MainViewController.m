@@ -284,23 +284,23 @@
     y = motion.userAcceleration.y;
     z = motion.userAcceleration.z;
     
-    float currentVelocity_x = lastVelocity_x + GRAVITY_ACCELERATION*(x-lastAcceleration_x)*1/kUpdateFrequency ;
-   
-    float currentVelocity_y = lastVelocity_y + GRAVITY_ACCELERATION*(y-lastAcceleration_x)*1/kUpdateFrequency ;
+//    float currentVelocity_x = lastVelocity_x + GRAVITY_ACCELERATION*(x-lastAcceleration_x)*1/kUpdateFrequency ;
+//   
+//    float currentVelocity_y = lastVelocity_y + GRAVITY_ACCELERATION*(y-lastAcceleration_x)*1/kUpdateFrequency ;
+//    
+//    float currentVelocity_z = lastVelocity_z + GRAVITY_ACCELERATION*(z-lastAcceleration_z)*1/kUpdateFrequency ;
+//    
+    float r = sqrtf(x*x + y*y + z*z)*GRAVITY_ACCELERATION/5.0;
+//    [filtered addX:50*currentVelocity_x*1.0 y:50*currentVelocity_y z:50*currentVelocity_z*1.0];
+    [filtered addX:r y:r z:r];
+//    NSLog(@"y: %.2f",currentVelocity_y);
     
-    float currentVelocity_z = lastVelocity_z + GRAVITY_ACCELERATION*(z-lastAcceleration_z)*1/kUpdateFrequency ;
-    
-     NSLog(@"(%.2f, %.2f, %.2f)",currentVelocity_x, currentVelocity_y, currentVelocity_z);
-    
-    [filtered addX:currentVelocity_x*10.0 y:currentVelocity_y*10.0 z:currentVelocity_z*10.0];
-//    [filtered addX:x y:y z:z];
-    
-    lastAcceleration_x = x;
-    lastAcceleration_y = y;
-    lastAcceleration_z = z;
-    lastVelocity_x = currentVelocity_x;
-    lastVelocity_y = currentVelocity_y;
-    lastVelocity_z = currentVelocity_z;
+//    lastAcceleration_x = x;
+//    lastAcceleration_y = y;
+//    lastAcceleration_z = z;
+//    lastVelocity_x = currentVelocity_x;
+//    lastVelocity_y = currentVelocity_y;
+//    lastVelocity_z = currentVelocity_z;
     
     
 }
