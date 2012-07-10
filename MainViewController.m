@@ -13,6 +13,8 @@
 
 #define FITTING_FACTOR 8 //mph
 
+#define GRAVITY_ACCELERATION 9.8  //m*s^-2
+
 @interface MainViewController()<UIScrollViewDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
@@ -23,6 +25,9 @@
     
     UIScrollView *scrollView;
     
+    float lastVelocity_x,lastVelocity_y,lastVelocity_z;
+    
+    float lastAcceleration_x,lastAcceleration_y,lastAcceleration_z;
     
     
     
@@ -117,6 +122,15 @@
     
     rawDataArray = [NSMutableArray array];
     
+    // Used to keep track of the velocity
+    lastVelocity_x = 0.0;
+    lastVelocity_y = 0.0;
+    lastVelocity_z = 0.0;
+    
+    lastAcceleration_x = 0.0;
+    lastAcceleration_y = 0.0;
+    lastAcceleration_z = 0.0;
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -126,6 +140,8 @@
     if (![defaults boolForKey:@"ShowGuide"]) {
         [self setUpInstructionGuide];
     } 
+    [defaults setBool:YES forKey:@"ShowGuide"];
+    [defaults synchronize];
 }
 
 -(void)viewDidUnload
@@ -240,7 +256,8 @@
     float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;
     float fz = rotationRate.z*length*INCH_TO_M*METER_TO_MILE;
   
-    // Let's just count one max value 
+    // Let's just count one max value
+    // Gyroscope gives the different direction value for clockwise & anti-clockwise rotation
     if ([defaults objectForKey:HANDED]) {
         if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
             if (fy > 0) {
@@ -259,7 +276,31 @@
     }
     
     [unfiltered addRotationX:fx y:fy z:fz];
-    [filtered addX:motion.userAcceleration.x y:motion.userAcceleration.y z:motion.userAcceleration.z];
+    
+    // We integral the measured accerelation to get the velocity difference ( f(t1)
+    // x - red, y - green, z - blue
+    float x, y,z;  
+    x = motion.userAcceleration.x;
+    y = motion.userAcceleration.y;
+    z = motion.userAcceleration.z;
+    
+    float currentVelocity_x = lastVelocity_x + GRAVITY_ACCELERATION*(x-lastAcceleration_x)*1/kUpdateFrequency ;
+   
+    float currentVelocity_y = lastVelocity_y + GRAVITY_ACCELERATION*(y-lastAcceleration_x)*1/kUpdateFrequency ;
+    
+    float currentVelocity_z = lastVelocity_z + GRAVITY_ACCELERATION*(z-lastAcceleration_z)*1/kUpdateFrequency ;
+    
+     NSLog(@"(%.2f, %.2f, %.2f)",currentVelocity_x, currentVelocity_y, currentVelocity_z);
+    
+    [filtered addX:currentVelocity_x*10.0 y:currentVelocity_y*10.0 z:currentVelocity_z*10.0];
+//    [filtered addX:x y:y z:z];
+    
+    lastAcceleration_x = x;
+    lastAcceleration_y = y;
+    lastAcceleration_z = z;
+    lastVelocity_x = currentVelocity_x;
+    lastVelocity_y = currentVelocity_y;
+    lastVelocity_z = currentVelocity_z;
     
     
 }
@@ -278,7 +319,9 @@
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     
-    
+    UITapGestureRecognizer *tap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideGuide)];
+    [scrollView addGestureRecognizer:tap];
     
     NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"You need a iPhone or iPod touch with this app installed.",@"title",@"Sample-1.png",@"image", nil]; 
     
@@ -297,6 +340,7 @@
 		
 	    UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
         [imageView setImage:[UIImage imageNamed:[[images objectAtIndex:i] objectForKey:@"image"]]];
+        imageView.userInteractionEnabled = YES;
 		[scrollView addSubview:imageView];
         
         UILabel *instructionLabel = [[UILabel alloc] initWithFrame:CGRectMake(frame.origin.x + 20, 20.0, 280, 90)];

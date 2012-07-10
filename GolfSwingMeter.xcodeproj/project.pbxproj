@@ -187,6 +187,7 @@
 				D6102D9915A48E5400B2F814 /* LJWebViewController.xib */,
 				D6102D7715A2924500B2F814 /* LJFlipsideViewController.h */,
 				D6102D7815A2924500B2F814 /* LJFlipsideViewController.m */,
+				D6102D7B15A2926500B2F814 /* LJFlipsideViewController.xib */,
 				D66EAA1D158E69C0004AE8E5 /* DocumentManager.h */,
 				D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */,
 				639046AE0F7C400300F2FB94 /* AccelerometerFilter.h */,
@@ -197,7 +198,6 @@
 				6390467E0F7C386600F2FB94 /* MainViewController.m */,
 				6390470B0F7C4B3B00F2FB94 /* GraphView.h */,
 				6390470C0F7C4B3B00F2FB94 /* GraphView.m */,
-				D6102D7B15A2926500B2F814 /* LJFlipsideViewController.xib */,
 				D6102D7D15A296A400B2F814 /* ReportViewController.h */,
 				D6102D7E15A296A400B2F814 /* ReportViewController.m */,
 				D6102D7F15A296A400B2F814 /* ReportViewController.xib */,
@@ -360,7 +360,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = GolfSwingMeter;
-				PROVISIONING_PROFILE = "EFF21354-4AF7-4E3A-ABEC-816B0DE701EB";
+				PROVISIONING_PROFILE = "";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
@@ -387,12 +387,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Liangjun Jiang (U8842KWUC6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "E0DD7EC6-6F3F-4D70-A32D-E6B5124C1949";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -406,7 +408,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 			};
 			name = Release;

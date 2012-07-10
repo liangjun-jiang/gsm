@@ -255,7 +255,6 @@
     if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
         oldCell.accessoryType = UITableViewCellAccessoryNone;
     }
-//    [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:oldIndexPath, indexPath, nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 @end
