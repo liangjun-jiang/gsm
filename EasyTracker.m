@@ -41,7 +41,7 @@ static const BOOL kDefaultDebugEnabled = NO;
 static const BOOL kDefaultAnalyticsDisabled = NO;
 static const BOOL kDefaultAnonymizeIpEnabled = YES;
 static const NSInteger kDefaultSampleRate = 100;
-static NSString *const kDefaultAccountId = @"UA-18698535-5";
+static NSString *const kDefaultAccountId = @"UA-00000000-1";
 
 enum EasyTrackerState {
   EasyTrackerStateNotTracking,

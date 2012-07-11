@@ -226,19 +226,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger section = [indexPath section];
-    switch (section) {
-        case 0:
-            [tableView  deselectRowAtIndexPath:indexPath animated:NO];
-            break;
-        case 1:
-            [tableView deselectRowAtIndexPath:indexPath animated:NO];
-            break;
-        case 2:
-            break;
-        default:
-            break;
-    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
 }
 
 #pragma mark - help methods

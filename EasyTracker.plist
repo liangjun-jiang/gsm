@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>accountId</key>
-	<string>UA-18698535-5</string>
+	<string>UA-18698535-6</string>
 	<key>debugEnabled</key>
-	<true/>
+	<false/>
 	<key>FirstViewController</key>
 	<string>Main View</string>
 </dict>
