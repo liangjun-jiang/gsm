@@ -8,6 +8,7 @@
 
 #import "LJFlipsideViewController.h"
 
+
 @interface LJFlipsideViewController (){
     
     
@@ -239,12 +240,30 @@
         if (section == 0) {
             self.currentHand = [_handed objectAtIndex:indexPath.row];
             [defaults setObject:self.currentHand forKey:HANDED];
+            
+            NSError *error;
+            if (![[GANTracker sharedTracker] trackEvent:@"handed"
+                                       action:@"select_handed"
+                                        label:self.currentHand
+                                        value:1
+                                   withError:&error]) {
+            }
+            
         } else if (section == 1){
             self.currentPosition = [_positions objectAtIndex:indexPath.row];
             [defaults setObject:self.currentPosition forKey:POSITION];
         } else if (section == 2){
             self.currentClub = [_clubs objectAtIndex:indexPath.row];
             [defaults setObject:self.currentClub forKey:CLUB];
+            
+            NSError *error;
+            if (![[GANTracker sharedTracker] trackEvent:@"club"
+                                                 action:@"select_club"
+                                                  label:[self.currentClub objectForKey:@"name"]
+                                                  value:1
+                                              withError:&error]) {
+            }
+            
         }
         
         [defaults synchronize];

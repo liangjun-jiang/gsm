@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accountId</key>
+	<string>UA-18698535-5</string>
+	<key>debugEnabled</key>
+	<true/>
+	<key>FirstViewController</key>
+	<string>Main View</string>
+</dict>
+</plist>

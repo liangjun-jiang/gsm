@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EasyTracker.h"
 
 @class LJFlipsideViewController;
 
@@ -14,7 +15,7 @@
 - (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller;
 @end
 
-@interface LJFlipsideViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface LJFlipsideViewController : TrackedUIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     
 }

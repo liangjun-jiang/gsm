@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EasyTracker.h"
 
 @class LJWebViewController;
 
@@ -14,7 +15,7 @@
 - (void)webViewControllerDidFinish:(LJWebViewController *)controller;
 @end
 
-@interface LJWebViewController : UIViewController
+@interface LJWebViewController : TrackedUIViewController
 
 
 @property (nonatomic, strong) IBOutlet UIWebView *webView;

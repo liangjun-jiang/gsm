@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "EasyTracker.h"
 @class ReportViewController;
 
 @protocol ReportViewControllerDelegate
 - (void)reportViewControllerDidFinish:(ReportViewController *)controller;
 @end
 
-@interface ReportViewController : UIViewController
+@interface ReportViewController : TrackedUIViewController
 
 @property (unsafe_unretained, nonatomic) id <ReportViewControllerDelegate> delegate;
 @property (nonatomic, strong) IBOutlet UITableView *mTableView;

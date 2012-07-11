@@ -47,6 +47,8 @@
 		D67ED0F915AE05F100109E5A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0F815AE05F100109E5A /* libsqlite3.0.dylib */; };
 		D67ED0FE15AE064D00109E5A /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FC15AE064D00109E5A /* libGoogleAnalytics.a */; };
 		D67ED0FF15AE064E00109E5A /* libGoogleAnalytics_NoThumb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FD15AE064D00109E5A /* libGoogleAnalytics_NoThumb.a */; };
+		D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D67ED10A15AE0F6200109E5A /* EasyTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */ = {isa = PBXBuildFile; fileRef = D67ED11115AE16D600109E5A /* EasyTracker.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,9 @@
 		D67ED0FB15AE064D00109E5A /* GANTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GANTracker.h; sourceTree = "<group>"; };
 		D67ED0FC15AE064D00109E5A /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		D67ED0FD15AE064D00109E5A /* libGoogleAnalytics_NoThumb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_NoThumb.a; sourceTree = "<group>"; };
+		D67ED10915AE0F6200109E5A /* EasyTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTracker.h; sourceTree = "<group>"; };
+		D67ED10A15AE0F6200109E5A /* EasyTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTracker.m; sourceTree = "<group>"; };
+		D67ED11115AE16D600109E5A /* EasyTracker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EasyTracker.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +143,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D67ED10815AE0F3D00109E5A /* Google Analytics EasyTracking SDK */,
 				D67ED0FA15AE064D00109E5A /* Google Analytics */,
 				2D500B1D0D5A766B00DBA0E3 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -160,6 +166,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D67ED11115AE16D600109E5A /* EasyTracker.plist */,
 				D6102E1B15A655D700B2F814 /* Sample-1.png */,
 				D6102E1C15A655D700B2F814 /* Sample-4.png */,
 				D6102E1415A6547600B2F814 /* Sample-2.png */,
@@ -245,6 +252,15 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		D67ED10815AE0F3D00109E5A /* Google Analytics EasyTracking SDK */ = {
+			isa = PBXGroup;
+			children = (
+				D67ED10915AE0F6200109E5A /* EasyTracker.h */,
+				D67ED10A15AE0F6200109E5A /* EasyTracker.m */,
+			);
+			name = "Google Analytics EasyTracking SDK";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -317,6 +333,7 @@
 				D6102E1915A6547600B2F814 /* Sample-3.png in Resources */,
 				D6102E1D15A655D700B2F814 /* Sample-1.png in Resources */,
 				D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */,
+				D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +355,7 @@
 				D6102D9A15A48E5400B2F814 /* LJWebViewController.m in Sources */,
 				D6102DA115A48F2900B2F814 /* SVProgressHUD.m in Sources */,
 				D6102DA815A4BDB900B2F814 /* Prefs.m in Sources */,
+				D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
