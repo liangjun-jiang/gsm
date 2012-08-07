@@ -49,6 +49,8 @@
 		D67ED0FF15AE064E00109E5A /* libGoogleAnalytics_NoThumb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FD15AE064D00109E5A /* libGoogleAnalytics_NoThumb.a */; };
 		D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D67ED10A15AE0F6200109E5A /* EasyTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */ = {isa = PBXBuildFile; fileRef = D67ED11115AE16D600109E5A /* EasyTracker.plist */; };
+		D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A66415D165ED0028CD37 /* StoreKit.framework */; };
+		D6D9EF0F15B9EC2C00D22A58 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +111,9 @@
 		D67ED10915AE0F6200109E5A /* EasyTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTracker.h; sourceTree = "<group>"; };
 		D67ED10A15AE0F6200109E5A /* EasyTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTracker.m; sourceTree = "<group>"; };
 		D67ED11115AE16D600109E5A /* EasyTracker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EasyTracker.plist; sourceTree = "<group>"; };
+		D6B6A66415D165ED0028CD37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		D6D9EF0D15B9EC2C00D22A58 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */,
 				D67ED0F915AE05F100109E5A /* libsqlite3.0.dylib in Frameworks */,
 				D67ED0F615AE05E600109E5A /* CFNetwork.framework in Frameworks */,
 				D6102D6915A254C900B2F814 /* CoreMotion.framework in Frameworks */,
@@ -189,6 +195,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6A66415D165ED0028CD37 /* StoreKit.framework */,
 				D67ED0F815AE05F100109E5A /* libsqlite3.0.dylib */,
 				D67ED0F515AE05E600109E5A /* CFNetwork.framework */,
 				D6102D6815A254C900B2F814 /* CoreMotion.framework */,
@@ -227,6 +234,8 @@
 				D6102DA615A4BDB800B2F814 /* Prefs.h */,
 				D6102DA715A4BDB800B2F814 /* Prefs.m */,
 				D6102DA915A4BDD500B2F814 /* Clubs.plist */,
+				D6D9EF0D15B9EC2C00D22A58 /* IAPHelper.h */,
+				D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -356,6 +365,7 @@
 				D6102DA115A48F2900B2F814 /* SVProgressHUD.m in Sources */,
 				D6102DA815A4BDB900B2F814 /* Prefs.m in Sources */,
 				D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */,
+				D6D9EF0F15B9EC2C00D22A58 /* IAPHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
