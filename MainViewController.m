@@ -80,6 +80,7 @@
     
 }
 
+#pragma mark - in-App Purchase
 - (void)loadingInAppPurchaseItems
 {
     Reachability *reach = [Reachability reachabilityForInternetConnection];
@@ -103,6 +104,11 @@
 - (void)inAppItemsLoaded:(NSNotificationCenter *)notification{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [SVProgressHUD dismiss];
+    
+    NSDictionary *dataDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"Purchase this feature",@"title", @"report", @"name",[InAPPIAPHelper sharedHelper].products, @"value",nil];
+    PopListView *popList = [[PopListView alloc] initWithData:dataDict];
+    popList.delegate = self;
+    [popList showInView:self.view animated:YES];
 }
 
 - (void)discloseReport
@@ -226,8 +232,7 @@
         // We show the report immediately
         [motionManager stopDeviceMotionUpdates];
         
-        
-        
+        // We show the report or we show the in-app purchase 
         [self discloseReport];
         
 	}

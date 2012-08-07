@@ -11,7 +11,11 @@
 
 #define kProductsLoadedNotification        @"ProductsLoaded"
 
-@interface IAPHelper : NSObject<SKProductsRequestDelegate>{
+// Add two new notifications
+#define kProductPurchasedNotification       @"ProductPurchased"
+#define kProductPurchaseFailedNotification  @"ProductPurchaseFailed"
+
+@interface IAPHelper : NSObject<SKProductsRequestDelegate, SKPaymentTransactionObserver>{
     NSSet *_produtIdentifiers;
     NSArray *_products;
     NSMutableSet *_purchasedProducts;
@@ -26,5 +30,5 @@
 
 - (void)requestProducts;
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
-
+- (void)buyProductIdentifier:(NSString *)productIdentifier;
 @end

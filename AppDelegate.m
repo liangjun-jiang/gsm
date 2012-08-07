@@ -1,7 +1,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-
+#import "InAPPIAPHelper.h"
 #import "EasyTracker.h"
 
 @implementation AppDelegate
@@ -21,6 +21,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                          withError:nil];
     
     return YES;
+    
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAPPIAPHelper sharedHelper]];
 }
 
 @end
