@@ -3,13 +3,11 @@
 #import <UIKit/UIKit.h>
 
 #import "EasyTracker.h"
-#import "LJFlipsideViewController.h"
-#import "ReportViewController.h"
-#import "LJWebViewController.h"
+
 @class GraphView;
 @class AccelerometerFilter;
 
-@interface MainViewController : TrackedUIViewController<UIAccelerometerDelegate, LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate>
+@interface MainViewController : TrackedUIViewController<UIAccelerometerDelegate>
 {
 	GraphView *unfiltered;
 	GraphView *filtered;
@@ -19,16 +17,13 @@
 	UILabel *filterLabel;
 	AccelerometerFilter *filter;
 	BOOL isPaused, useAdaptive;
-    
-    }
+}
 
 @property(nonatomic) IBOutlet GraphView *unfiltered;
 @property(nonatomic) IBOutlet GraphView *filtered;
 @property(nonatomic) IBOutlet UIBarButtonItem *pause;
 
 @property(nonatomic) IBOutlet UILabel *filterLabel;
-
-
 
 -(IBAction)pauseOrResume:(id)sender;
 //-(IBAction)filterSelect:(id)sender;

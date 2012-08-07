@@ -50,6 +50,10 @@
 		D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D67ED10A15AE0F6200109E5A /* EasyTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */ = {isa = PBXBuildFile; fileRef = D67ED11115AE16D600109E5A /* EasyTracker.plist */; };
 		D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A66415D165ED0028CD37 /* StoreKit.framework */; };
+		D6B6A66915D166850028CD37 /* InAPPIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A66815D166850028CD37 /* InAPPIAPHelper.m */; };
+		D6B6A67015D16C4B0028CD37 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A66F15D16C4B0028CD37 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D6B6A67215D16F950028CD37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */; };
+		D6B6A67A15D1734B0028CD37 /* PopListView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A67815D1734A0028CD37 /* PopListView.m */; };
 		D6D9EF0F15B9EC2C00D22A58 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +116,13 @@
 		D67ED10A15AE0F6200109E5A /* EasyTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTracker.m; sourceTree = "<group>"; };
 		D67ED11115AE16D600109E5A /* EasyTracker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EasyTracker.plist; sourceTree = "<group>"; };
 		D6B6A66415D165ED0028CD37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		D6B6A66715D166850028CD37 /* InAPPIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAPPIAPHelper.h; sourceTree = "<group>"; };
+		D6B6A66815D166850028CD37 /* InAPPIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAPPIAPHelper.m; sourceTree = "<group>"; };
+		D6B6A66E15D16C4B0028CD37 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		D6B6A66F15D16C4B0028CD37 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D6B6A67815D1734A0028CD37 /* PopListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopListView.m; sourceTree = "<group>"; };
+		D6B6A67915D1734A0028CD37 /* PopListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopListView.h; sourceTree = "<group>"; };
 		D6D9EF0D15B9EC2C00D22A58 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B6A67215D16F950028CD37 /* SystemConfiguration.framework in Frameworks */,
 				D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */,
 				D67ED0F915AE05F100109E5A /* libsqlite3.0.dylib in Frameworks */,
 				D67ED0F615AE05E600109E5A /* CFNetwork.framework in Frameworks */,
@@ -195,6 +207,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */,
 				D6B6A66415D165ED0028CD37 /* StoreKit.framework */,
 				D67ED0F815AE05F100109E5A /* libsqlite3.0.dylib */,
 				D67ED0F515AE05E600109E5A /* CFNetwork.framework */,
@@ -226,6 +239,8 @@
 				30D873960D76212900B213B8 /* AppDelegate.m */,
 				6390467D0F7C386600F2FB94 /* MainViewController.h */,
 				6390467E0F7C386600F2FB94 /* MainViewController.m */,
+				D6B6A67815D1734A0028CD37 /* PopListView.m */,
+				D6B6A67915D1734A0028CD37 /* PopListView.h */,
 				6390470B0F7C4B3B00F2FB94 /* GraphView.h */,
 				6390470C0F7C4B3B00F2FB94 /* GraphView.m */,
 				D6102D7D15A296A400B2F814 /* ReportViewController.h */,
@@ -236,6 +251,10 @@
 				D6102DA915A4BDD500B2F814 /* Clubs.plist */,
 				D6D9EF0D15B9EC2C00D22A58 /* IAPHelper.h */,
 				D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */,
+				D6B6A66E15D16C4B0028CD37 /* Reachability.h */,
+				D6B6A66F15D16C4B0028CD37 /* Reachability.m */,
+				D6B6A66715D166850028CD37 /* InAPPIAPHelper.h */,
+				D6B6A66815D166850028CD37 /* InAPPIAPHelper.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -366,6 +385,9 @@
 				D6102DA815A4BDB900B2F814 /* Prefs.m in Sources */,
 				D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */,
 				D6D9EF0F15B9EC2C00D22A58 /* IAPHelper.m in Sources */,
+				D6B6A66915D166850028CD37 /* InAPPIAPHelper.m in Sources */,
+				D6B6A67015D16C4B0028CD37 /* Reachability.m in Sources */,
+				D6B6A67A15D1734B0028CD37 /* PopListView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

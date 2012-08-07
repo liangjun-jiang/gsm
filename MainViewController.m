@@ -4,6 +4,14 @@
 #import "GraphView.h"
 #import "AccelerometerFilter.h"
 #import <CoreMotion/CoreMotion.h>
+#import "LJFlipsideViewController.h"
+#import "ReportViewController.h"
+#import "LJWebViewController.h"
+#import "IAPHelper.h"
+#import "InAPPIAPHelper.h"
+#import "Reachability.h"
+#import "SVProgressHUD/SVProgressHUD.h"
+#import "PopListView.h"
 
 #define kUpdateFrequency	60.0
 #define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
@@ -15,7 +23,9 @@
 
 #define GRAVITY_ACCELERATION 9.8  //m*s^-2
 
-@interface MainViewController()<UIScrollViewDelegate>{
+#define kProductsLoadedNotification        @"ProductsLoaded"
+
+@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate, PopListViewDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
     
@@ -26,10 +36,7 @@
     UIScrollView *scrollView;
     
     float lastVelocity_x,lastVelocity_y,lastVelocity_z;
-    
     float lastAcceleration_x,lastAcceleration_y,lastAcceleration_z;
-    
-    
     
 }
 @property (nonatomic) NSMutableArray *rawDataArray;
@@ -37,6 +44,9 @@
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
+@property(nonatomic, retain) LJFlipsideViewController *ljfvc;
+@property(nonatomic, retain) ReportViewController *rvc;
+@property(nonatomic, retain,) LJWebViewController *web;
 
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
@@ -51,6 +61,7 @@
 @synthesize rawDataArray;
 @synthesize motionManager;
 @synthesize pageControl, scrollView;
+@synthesize ljfvc, web, rvc;
 
 - (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller
 {
@@ -69,16 +80,49 @@
     
 }
 
+- (void)loadingInAppPurchaseItems
+{
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    if (netStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
+    } else {
+        if ([InAPPIAPHelper sharedHelper].products == nil) {
+            [[InAPPIAPHelper sharedHelper] requestProducts];
+            [SVProgressHUD showWithStatus:@"Loading"];
+            [self performSelector:@selector(timeOut:) withObject:nil afterDelay:30.0];
+            
+        }
+    }
+}
+
+- (void)timeOut:(id)arg{
+    [SVProgressHUD showErrorWithStatus:@"Timeout! Please try again later."];
+}
+
+- (void)inAppItemsLoaded:(NSNotificationCenter *)notification{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [SVProgressHUD dismiss];
+}
+
+- (void)discloseReport
+{
+    rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
+    rvc.delegate = self;
+    rvc.rawData = rawDataArray;
+    [self presentModalViewController:rvc animated:YES];
+}
+
 - (void)discloseSetting:(id)sender
 {
-    LJFlipsideViewController *ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
+    ljfvc = [[LJFlipsideViewController alloc] initWithNibName:@"LJFlipsideViewController" bundle:nil];
     ljfvc.delegate = self;
     [self presentModalViewController:ljfvc animated:YES];
 }
 
 - (void)discloseInfo:(id)sender
 {
-    LJWebViewController *web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
+    web = [[LJWebViewController alloc] initWithNibName:@"LJWebViewController" bundle:nil];
     web.delegate = self;
     web.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:web animated:YES];
@@ -94,6 +138,8 @@
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
     
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
   	isPaused = YES;
@@ -179,10 +225,11 @@
         
         // We show the report immediately
         [motionManager stopDeviceMotionUpdates];
-        ReportViewController *rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
-        rvc.delegate = self;
-        rvc.rawData = rawDataArray;
-        [self presentModalViewController:rvc animated:YES];
+        
+        
+        
+        [self discloseReport];
+        
 	}
 	else
 	{
@@ -303,6 +350,15 @@
 //    lastVelocity_z = currentVelocity_z;
     
     
+}
+#pragma mark - Poplist View Delegate
+- (void)popListView:(PopListView *)popListView didSelectedIndex:(NSInteger)anIndex {
+    
+    
+}
+
+- (void)popListViewDidCancel {
+    NSLog(@"User doesn't want to make purchase.");
 }
 
 
