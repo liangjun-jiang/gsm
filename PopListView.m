@@ -8,6 +8,8 @@
 
 #import "PopListView.h"
 #import <QuartzCore/QuartzCore.h>
+#import <StoreKit/StoreKit.h>
+#import "InAPPIAPHelper.h"
 @interface BypassGeoHeader : UIView
 @property (nonatomic, strong) UILabel *titleLabel;
 - (void)setTitle:(NSString*)title;
@@ -157,11 +159,30 @@
     int row = [indexPath row];
 
     NSArray *valueArray = [_dataDict objectForKey:@"value"];
-    if ([[_dataDict objectForKey:@"name"] isEqualToString:@"report"]){
-        cell.textLabel.text = [valueArray objectAtIndex:row];
-    }  else if ([[_dataDict objectForKey:@"name"] isEqualToString:@"realtime"]){
-        cell.textLabel.text = [valueArray objectAtIndex:row];
+    
+    SKProduct *product = [valueArray objectAtIndex:row];
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [numberFormatter setLocale:product.priceLocale];
+    NSString *formattedString = [numberFormatter stringFromNumber:product.price];
+    cell.textLabel.text = product.localizedTitle;
+    cell.detailTextLabel.text = formattedString;
+    
+    if ([[InAPPIAPHelper sharedHelper].purchasedProducts containsObject:product.productIdentifier]){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.accessoryView = nil;
+    } else {
+        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        buyButton.frame = CGRectMake(0.0, 0.0, 72.0, 37.0);
+        [buyButton setTitle:@"buy" forState:UIControlStateNormal];
+        buyButton.tag = indexPath.row;
+        [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = buyButton;
     }
+    
     cell.textLabel.textColor = [UIColor blackColor];
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
     return cell;

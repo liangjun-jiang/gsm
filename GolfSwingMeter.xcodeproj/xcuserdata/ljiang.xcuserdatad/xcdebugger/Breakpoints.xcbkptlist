@@ -13,7 +13,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "132"
          endingLineNumber = "132"
-         landmarkName = "-viewWillAppear:"
+         landmarkName = "-discloseInfo:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

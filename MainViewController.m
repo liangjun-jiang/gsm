@@ -138,6 +138,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:kProductPurchasedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchaseFailed:) name:kProductPurchaseFailedNotification object:nil];
+    
 }
 
 // Implement viewDidLoad to do additional setup after loading the view.
@@ -261,34 +265,6 @@
 	
 }
 
-//-(IBAction)filterSelect:(id)sender
-//{
-//	if([sender selectedSegmentIndex] == 0)
-//	{
-//		// Index 0 of the segment selects the lowpass filter
-//		[self changeFilter:[LowpassFilter class]];
-//	}
-//	else
-//	{
-//		// Index 1 of the segment selects the highpass filter
-//		[self changeFilter:[HighpassFilter class]];
-//	}
-//
-//	// Inform accessibility clients that the filter has changed.
-//	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
-//}
-
-//-(IBAction)adaptiveSelect:(id)sender
-//{
-//	// Index 1 is to use the adaptive filter, so if selected then set useAdaptive appropriately
-//	useAdaptive = [sender selectedSegmentIndex] == 1;
-//	// and update our filter and filterLabel
-//	filter.adaptive = useAdaptive;
-//	filterLabel.text = [NSString stringWithFormat:@"Acceleometer + %@",filter.name];
-//}
-
-
-
 - (void)performLogDeviceMotion: (CMDeviceMotion *)motion{
     
     // Refer to: http://en.wikipedia.org/wiki/File:Rollpitchyawplain.png
@@ -357,6 +333,42 @@
     
 }
 #pragma mark - Poplist View Delegate
+- (void)productPurchased:(NSNotification *)notification {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [SVProgressHUD dismiss];
+    
+    NSString *productIdentifier = (NSString *)notification.object;
+    NSLog(@"Purchased : %@",productIdentifier);
+    
+    
+}
+
+- (void)productPurchasedFailed:(NSNotification *)notification {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [SVProgressHUD dismiss];
+    
+    SKPaymentTransaction *transaction = (SKPaymentTransaction *)notification.object;
+    if (transaction.error.code != SKErrorPaymentCancelled) {
+        [SVProgressHUD showErrorWithStatus:transaction.error.localizedDescription];
+    }
+}
+
+# pragma mark - Poplist View
+
+
+- (IBAction)buyButtonTapped:(id)sender
+{
+    UIButton *buyButton = (UIButton *)sender;
+    SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:buyButton.tag];
+    NSLog(@"Buying %@ ...",product.productIdentifier);
+    [[InAPPIAPHelper sharedHelper] buyProductIdentifier:product.productIdentifier];
+    [SVProgressHUD showWithStatus:@"Buying ..."];
+    [self performSelector:@selector(timeOut:) withObject:nil afterDelay:60*5];
+    
+}
+
+
+
 - (void)popListView:(PopListView *)popListView didSelectedIndex:(NSInteger)anIndex {
     
     
