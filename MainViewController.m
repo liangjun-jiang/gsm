@@ -51,7 +51,7 @@
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
 // we just pass in the class and -changeFilter: will setup the proper filter.
--(void)changeFilter:(Class)filterClass;
+//-(void)changeFilter:(Class)filterClass;
 
 @end
 
@@ -63,6 +63,8 @@
 @synthesize pageControl, scrollView;
 @synthesize ljfvc, web, rvc;
 
+
+#pragma mark - delegate method
 - (void)flipsideViewControllerDidFinish:(LJFlipsideViewController *)controller
 {
     [self dismissModalViewControllerAnimated:YES];
@@ -101,14 +103,143 @@
     [SVProgressHUD showErrorWithStatus:@"Timeout! Please try again later."];
 }
 
-- (void)inAppItemsLoaded:(NSNotificationCenter *)notification{
+- (void)productsLoaded:(NSNotification *)notification{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [SVProgressHUD dismiss];
     
-    NSDictionary *dataDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"Purchase this feature",@"title", @"report", @"name",[InAPPIAPHelper sharedHelper].products, @"value",nil];
+    NSLog(@"producte loaded object:%@",[notification object]);
+    
+    NSDictionary *dataDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"Features",@"title", @"report", @"name",[InAPPIAPHelper sharedHelper].products, @"value",nil];
     PopListView *popList = [[PopListView alloc] initWithData:dataDict];
     popList.delegate = self;
     [popList showInView:self.view animated:YES];
+}
+
+
+#pragma mark - button Item methods
+
+-(void)changeFilter:(Class)filterClass
+{
+	// Ensure that the new filter class is different from the current one...
+	if(filterClass != [filter class])
+	{
+		// And if it is, release the old one and create a new one.
+		filter = [[filterClass alloc] initWithSampleRate:kUpdateFrequency cutoffFrequency:5.0];
+		// Set the adaptive flag
+		filter.adaptive = useAdaptive;
+		// And update the filterLabel with the new filter name.
+		filterLabel.text = @"Swing Smoothness";//[NSString stringWithFormat:@"Accelerometer + %@",filter.name];
+	}
+}
+
+
+-(IBAction)pauseOrResume:(id)sender
+{
+	if(isPaused)
+	{
+		// If we're paused, then resume and set the title to "Pause"
+		isPaused = NO;
+		pause.title = kLocalizedPause;
+        
+        // We show the report immediately
+        [motionManager stopDeviceMotionUpdates];
+        
+        // We show the report or we show the in-app purchase
+        [self loadingInAppPurchaseItems];
+//        [self discloseReport];
+        
+	}
+	else
+	{
+		// If we are not paused, then pause and set the title to "Resume"
+		isPaused = YES;
+		pause.title = kLocalizedResume;
+        if ([self.rawDataArray count] > 0) {
+            [self.rawDataArray removeAllObjects];
+        }
+        
+        // We start the motionManager
+        if (motionManager.deviceMotionAvailable) {
+            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
+                [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
+                
+            }];
+        } else {
+            NSLog(@"Device Motion is not available!");
+            motionManager = nil;
+        }
+        
+        
+	}
+	
+}
+
+- (void)performLogDeviceMotion: (CMDeviceMotion *)motion{
+    
+    // Refer to: http://en.wikipedia.org/wiki/File:Rollpitchyawplain.png
+    CMRotationRate rotationRate = motion.rotationRate;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    float length = 0.0;
+    if ([defaults objectForKey:CLUB]) {
+        length = [[[defaults objectForKey:CLUB] objectForKey:@"length"] floatValue];
+    } else {
+        length = DRIVER_LENGTH;
+    }
+    
+    float fitting_param = [[[defaults objectForKey:CLUB] objectForKey:@"fitting_param"] floatValue];
+    
+    float fx = rotationRate.x*length*INCH_TO_M*METER_TO_MILE;
+    float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;
+    float fz = rotationRate.z*length*INCH_TO_M*METER_TO_MILE;
+    
+    // Let's just count one max value
+    // Gyroscope gives the different direction value for clockwise & anti-clockwise rotation
+    if ([defaults objectForKey:HANDED]) {
+        if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
+            if (fy > 0) {
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz) + fitting_param]];
+            }
+        } else if ([[defaults objectForKey:HANDED] isEqualToString:@"Left-handed"]){
+            if (fy < 0) {
+                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
+            }
+        }
+    }
+    else {
+        if (fy > 0) {
+            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
+        }
+    }
+    
+    [unfiltered addRotationX:fx y:fy z:fz];
+    
+    // We integral the measured accerelation to get the velocity difference ( f(t1)
+    // x - red, y - green, z - blue
+    float x, y,z;
+    x = motion.userAcceleration.x;
+    y = motion.userAcceleration.y;
+    z = motion.userAcceleration.z;
+    
+    //    float currentVelocity_x = lastVelocity_x + GRAVITY_ACCELERATION*(x-lastAcceleration_x)*1/kUpdateFrequency ;
+    //
+    //    float currentVelocity_y = lastVelocity_y + GRAVITY_ACCELERATION*(y-lastAcceleration_x)*1/kUpdateFrequency ;
+    //
+    //    float currentVelocity_z = lastVelocity_z + GRAVITY_ACCELERATION*(z-lastAcceleration_z)*1/kUpdateFrequency ;
+    //
+    float r = sqrtf(x*x + y*y + z*z)*GRAVITY_ACCELERATION/5.0;
+    //    [filtered addX:50*currentVelocity_x*1.0 y:50*currentVelocity_y z:50*currentVelocity_z*1.0];
+    [filtered addX:r y:r z:r];
+    //    NSLog(@"y: %.2f",currentVelocity_y);
+    
+    //    lastAcceleration_x = x;
+    //    lastAcceleration_y = y;
+    //    lastAcceleration_z = z;
+    //    lastVelocity_x = currentVelocity_x;
+    //    lastVelocity_y = currentVelocity_y;
+    //    lastVelocity_z = currentVelocity_z;
+    
+    
 }
 
 - (void)discloseReport
@@ -134,6 +265,8 @@
     [self presentModalViewController:web animated:YES];
     
 }
+
+#pragma mark view cycle
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -211,127 +344,8 @@
     self.motionManager = nil;
 }
 
--(void)changeFilter:(Class)filterClass
-{
-	// Ensure that the new filter class is different from the current one...
-	if(filterClass != [filter class])
-	{
-		// And if it is, release the old one and create a new one.
-		filter = [[filterClass alloc] initWithSampleRate:kUpdateFrequency cutoffFrequency:5.0];
-		// Set the adaptive flag
-		filter.adaptive = useAdaptive;
-		// And update the filterLabel with the new filter name.
-		filterLabel.text = @"Swing Smoothness";//[NSString stringWithFormat:@"Accelerometer + %@",filter.name];
-	}
-}
 
--(IBAction)pauseOrResume:(id)sender
-{
-	if(isPaused)
-	{
-		// If we're paused, then resume and set the title to "Pause"
-		isPaused = NO;
-		pause.title = kLocalizedPause;
-        
-        // We show the report immediately
-        [motionManager stopDeviceMotionUpdates];
-        
-        // We show the report or we show the in-app purchase 
-        [self discloseReport];
-        
-	}
-	else
-	{
-		// If we are not paused, then pause and set the title to "Resume"
-		isPaused = YES;
-		pause.title = kLocalizedResume;
-        if ([self.rawDataArray count] > 0) {
-            [self.rawDataArray removeAllObjects];
-        }
-        
-        // We start the motionManager
-        if (motionManager.deviceMotionAvailable) {
-            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error){
-                [self performSelector:@selector(performLogDeviceMotion:) onThread:[NSThread mainThread] withObject:motion waitUntilDone:YES];
-                
-            }]; 
-        } else {
-            NSLog(@"Device Motion is not available!");
-            motionManager = nil;
-        }
 
-            
-	}
-	
-}
-
-- (void)performLogDeviceMotion: (CMDeviceMotion *)motion{
-    
-    // Refer to: http://en.wikipedia.org/wiki/File:Rollpitchyawplain.png
-    CMRotationRate rotationRate = motion.rotationRate;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    float length = 0.0;
-    if ([defaults objectForKey:CLUB]) {
-        length = [[[defaults objectForKey:CLUB] objectForKey:@"length"] floatValue];
-    } else {
-        length = DRIVER_LENGTH;
-    }
-    
-    float fitting_param = [[[defaults objectForKey:CLUB] objectForKey:@"fitting_param"] floatValue];
-    
-    float fx = rotationRate.x*length*INCH_TO_M*METER_TO_MILE;
-    float fy = rotationRate.y*length*INCH_TO_M*METER_TO_MILE;
-    float fz = rotationRate.z*length*INCH_TO_M*METER_TO_MILE;
-  
-    // Let's just count one max value
-    // Gyroscope gives the different direction value for clockwise & anti-clockwise rotation
-    if ([defaults objectForKey:HANDED]) {
-        if ([[defaults objectForKey:HANDED] isEqualToString:@"Right-handed"]) {
-            if (fy > 0) {
-                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz) + fitting_param]];
-            }
-        } else if ([[defaults objectForKey:HANDED] isEqualToString:@"Left-handed"]){
-            if (fy < 0) {
-                [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
-            }
-        }
-    }
-    else {
-        if (fy > 0) {
-            [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
-        }
-    }
-    
-    [unfiltered addRotationX:fx y:fy z:fz];
-    
-    // We integral the measured accerelation to get the velocity difference ( f(t1)
-    // x - red, y - green, z - blue
-    float x, y,z;  
-    x = motion.userAcceleration.x;
-    y = motion.userAcceleration.y;
-    z = motion.userAcceleration.z;
-    
-//    float currentVelocity_x = lastVelocity_x + GRAVITY_ACCELERATION*(x-lastAcceleration_x)*1/kUpdateFrequency ;
-//   
-//    float currentVelocity_y = lastVelocity_y + GRAVITY_ACCELERATION*(y-lastAcceleration_x)*1/kUpdateFrequency ;
-//    
-//    float currentVelocity_z = lastVelocity_z + GRAVITY_ACCELERATION*(z-lastAcceleration_z)*1/kUpdateFrequency ;
-//    
-    float r = sqrtf(x*x + y*y + z*z)*GRAVITY_ACCELERATION/5.0;
-//    [filtered addX:50*currentVelocity_x*1.0 y:50*currentVelocity_y z:50*currentVelocity_z*1.0];
-    [filtered addX:r y:r z:r];
-//    NSLog(@"y: %.2f",currentVelocity_y);
-    
-//    lastAcceleration_x = x;
-//    lastAcceleration_y = y;
-//    lastAcceleration_z = z;
-//    lastVelocity_x = currentVelocity_x;
-//    lastVelocity_y = currentVelocity_y;
-//    lastVelocity_z = currentVelocity_z;
-    
-    
-}
 #pragma mark - Poplist View Delegate
 - (void)productPurchased:(NSNotification *)notification {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -339,8 +353,6 @@
     
     NSString *productIdentifier = (NSString *)notification.object;
     NSLog(@"Purchased : %@",productIdentifier);
-    
-    
 }
 
 - (void)productPurchasedFailed:(NSNotification *)notification {
@@ -354,8 +366,6 @@
 }
 
 # pragma mark - Poplist View
-
-
 - (IBAction)buyButtonTapped:(id)sender
 {
     UIButton *buyButton = (UIButton *)sender;
@@ -366,8 +376,6 @@
     [self performSelector:@selector(timeOut:) withObject:nil afterDelay:60*5];
     
 }
-
-
 
 - (void)popListView:(PopListView *)popListView didSelectedIndex:(NSInteger)anIndex {
     

@@ -25,23 +25,22 @@
 {
     if ((self = [super init])) {
         _produtIdentifiers = productIdentifiers;
+    
+        // Check for Previous Purchased products
+        NSMutableSet *purchasedProducts = [NSMutableSet set];
+        [_produtIdentifiers enumerateObjectsUsingBlock:^(id obj, BOOL *stop){
+            BOOL productPurchased = [[NSUserDefaults standardUserDefaults] boolForKey:obj];
+            
+            if (productPurchased) {
+                [purchasedProducts addObject:obj];
+                NSLog(@"purchased: %@",obj);
+            }
+            
+            NSLog(@"not purchased: %@",obj);
+        }];
+    
+        self.purchasedProducts = purchasedProducts;
     }
-    
-    // Check for Previous Purchased products
-    NSMutableSet *purchasedProducts = [NSMutableSet set];
-    [_produtIdentifiers enumerateObjectsUsingBlock:^(id obj, BOOL *stop){
-        BOOL productPurchased = [[NSUserDefaults standardUserDefaults] boolForKey:obj];
-        
-        if (productPurchased) {
-            [purchasedProducts addObject:obj];
-            NSLog(@"purchased: %@",obj);
-        }
-        
-        NSLog(@"not purchased: %@",obj);
-    }];
-    
-    
-    self.purchasedProducts = purchasedProducts;
     
     return self;
 }
@@ -51,9 +50,16 @@
 {
     
     self.products = response.products;
+    NSLog(@"server retured: %@",response.products);
     self.request = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kProductsLoadedNotification object:_products];
+    
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    
+    NSLog(@"what's the error :%@",error.localizedDescription);
     
 }
 

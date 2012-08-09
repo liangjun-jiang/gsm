@@ -10,8 +10,6 @@
 #import "StoreKit/StoreKit.h"
 
 #define kProductsLoadedNotification        @"ProductsLoaded"
-
-// Add two new notifications
 #define kProductPurchasedNotification       @"ProductPurchased"
 #define kProductPurchaseFailedNotification  @"ProductPurchaseFailed"
 

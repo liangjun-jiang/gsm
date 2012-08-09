@@ -22,13 +22,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImageView *containerBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"geo_location_tab@2X.png"]];
+        UIImageView *containerBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"geo_location_tab.png"]];
         containerBackground.frame = CGRectMake(0.0, 0.0, 270.0, 50.0);
         [self addSubview:containerBackground];
-        
-        UIImageView *geoMarkerImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"geo_location_map_marker@2X.png"]];
-        geoMarkerImageview.frame = CGRectMake(21.0, 14.0, 19.0, 21.0);
-        [self addSubview:geoMarkerImageview];
         
         titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(42.0, 14.0, 175.0, 21.0)];
         titleLabel.backgroundColor = [UIColor clearColor];
@@ -38,10 +34,6 @@
         titleLabel.tag = 112;
         [self addSubview:titleLabel];
         
-        UIImageView *geoLocationArrowImageview = [[UIImageView alloc] initWithFrame:CGRectMake(225.0, 10.0, 29.0, 30.0)];
-        geoLocationArrowImageview.image = [UIImage imageNamed:@"geo_location_arrow_before"];
-        geoLocationArrowImageview.tag = 113;
-        [self addSubview:geoLocationArrowImageview];
     }
     return self;
 }
