@@ -50,6 +50,8 @@
 		D67ED0FF15AE064E00109E5A /* libGoogleAnalytics_NoThumb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FD15AE064D00109E5A /* libGoogleAnalytics_NoThumb.a */; };
 		D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D67ED10A15AE0F6200109E5A /* EasyTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */ = {isa = PBXBuildFile; fileRef = D67ED11115AE16D600109E5A /* EasyTracker.plist */; };
+		D6A6F97715D3FC7E00783AE6 /* InAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */; };
+		D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */; };
 		D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A66415D165ED0028CD37 /* StoreKit.framework */; };
 		D6B6A66915D166850028CD37 /* InAPPIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A66815D166850028CD37 /* InAPPIAPHelper.m */; };
 		D6B6A67015D16C4B0028CD37 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A66F15D16C4B0028CD37 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -117,6 +119,9 @@
 		D67ED10915AE0F6200109E5A /* EasyTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTracker.h; sourceTree = "<group>"; };
 		D67ED10A15AE0F6200109E5A /* EasyTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTracker.m; sourceTree = "<group>"; };
 		D67ED11115AE16D600109E5A /* EasyTracker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EasyTracker.plist; sourceTree = "<group>"; };
+		D6A6F97515D3FC7E00783AE6 /* InAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppPurchaseViewController.h; sourceTree = "<group>"; };
+		D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchaseViewController.m; sourceTree = "<group>"; };
+		D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InAppPurchaseViewController.xib; sourceTree = "<group>"; };
 		D6B6A66415D165ED0028CD37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D6B6A66715D166850028CD37 /* InAPPIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAPPIAPHelper.h; sourceTree = "<group>"; };
 		D6B6A66815D166850028CD37 /* InAPPIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAPPIAPHelper.m; sourceTree = "<group>"; };
@@ -256,6 +261,9 @@
 				D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */,
 				D6B6A66E15D16C4B0028CD37 /* Reachability.h */,
 				D6B6A66F15D16C4B0028CD37 /* Reachability.m */,
+				D6A6F97515D3FC7E00783AE6 /* InAppPurchaseViewController.h */,
+				D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */,
+				D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */,
 				D6B6A66715D166850028CD37 /* InAPPIAPHelper.h */,
 				D6B6A66815D166850028CD37 /* InAPPIAPHelper.m */,
 			);
@@ -366,6 +374,7 @@
 				D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */,
 				D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */,
 				D67C000F15D31AE3000B1BBE /* geo_location_tab.png in Resources */,
+				D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +401,7 @@
 				D6B6A66915D166850028CD37 /* InAPPIAPHelper.m in Sources */,
 				D6B6A67015D16C4B0028CD37 /* Reachability.m in Sources */,
 				D6B6A67A15D1734B0028CD37 /* PopListView.m in Sources */,
+				D6A6F97715D3FC7E00783AE6 /* InAppPurchaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

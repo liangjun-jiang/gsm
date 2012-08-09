@@ -11,7 +11,7 @@
 #import "InAPPIAPHelper.h"
 #import "Reachability.h"
 #import "SVProgressHUD/SVProgressHUD.h"
-#import "PopListView.h"
+#import "InAppPurchaseViewController.h"
 
 #define kUpdateFrequency	60.0
 #define kLocalizedPause		NSLocalizedString(@"Paused","pause taking samples")
@@ -23,9 +23,7 @@
 
 #define GRAVITY_ACCELERATION 9.8  //m*s^-2
 
-#define kProductsLoadedNotification        @"ProductsLoaded"
-
-@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate, PopListViewDelegate>{
+@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
     
@@ -46,7 +44,8 @@
 
 @property(nonatomic, retain) LJFlipsideViewController *ljfvc;
 @property(nonatomic, retain) ReportViewController *rvc;
-@property(nonatomic, retain,) LJWebViewController *web;
+@property(nonatomic, retain) LJWebViewController *web;
+@property (nonatomic, retain) InAppPurchaseViewController *inAppViewController;
 
 
 // Sets up a new filter. Since the filter's class matters and not a particular instance
@@ -61,7 +60,7 @@
 @synthesize rawDataArray;
 @synthesize motionManager;
 @synthesize pageControl, scrollView;
-@synthesize ljfvc, web, rvc;
+@synthesize ljfvc, web, rvc, inAppViewController;
 
 
 #pragma mark - delegate method
@@ -82,38 +81,6 @@
     
 }
 
-#pragma mark - in-App Purchase
-- (void)loadingInAppPurchaseItems
-{
-    Reachability *reach = [Reachability reachabilityForInternetConnection];
-    NetworkStatus netStatus = [reach currentReachabilityStatus];
-    if (netStatus == NotReachable) {
-        [SVProgressHUD showErrorWithStatus:@"No Internet Connection!"];
-    } else {
-        if ([InAPPIAPHelper sharedHelper].products == nil) {
-            [[InAPPIAPHelper sharedHelper] requestProducts];
-            [SVProgressHUD showWithStatus:@"Loading"];
-            [self performSelector:@selector(timeOut:) withObject:nil afterDelay:30.0];
-            
-        }
-    }
-}
-
-- (void)timeOut:(id)arg{
-    [SVProgressHUD showErrorWithStatus:@"Timeout! Please try again later."];
-}
-
-- (void)productsLoaded:(NSNotification *)notification{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [SVProgressHUD dismiss];
-    
-    NSLog(@"producte loaded object:%@",[notification object]);
-    
-    NSDictionary *dataDict = [[NSDictionary alloc] initWithObjectsAndKeys:@"Features",@"title", @"report", @"name",[InAPPIAPHelper sharedHelper].products, @"value",nil];
-    PopListView *popList = [[PopListView alloc] initWithData:dataDict];
-    popList.delegate = self;
-    [popList showInView:self.view animated:YES];
-}
 
 
 #pragma mark - button Item methods
@@ -145,9 +112,13 @@
         [motionManager stopDeviceMotionUpdates];
         
         // We show the report or we show the in-app purchase
-        [self loadingInAppPurchaseItems];
-//        [self discloseReport];
-        
+       
+        if ([[InAPPIAPHelper sharedHelper].purchasedProducts count] != [[InAPPIAPHelper sharedHelper].products count])
+        {
+            [self loadingInAppPurchaseItems];
+        } else {
+            [self discloseReport];
+        }
 	}
 	else
 	{
@@ -240,6 +211,11 @@
     //    lastVelocity_z = currentVelocity_z;
     
     
+}
+
+- (void)loadingInAppPurchaseItems{
+    inAppViewController = [[InAppPurchaseViewController alloc] initWithNibName:@"InAppPurchaseViewController" bundle:nil];
+    [self presentModalViewController:inAppViewController animated:YES];
 }
 
 - (void)discloseReport
@@ -366,25 +342,25 @@
 }
 
 # pragma mark - Poplist View
-- (IBAction)buyButtonTapped:(id)sender
-{
-    UIButton *buyButton = (UIButton *)sender;
-    SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:buyButton.tag];
-    NSLog(@"Buying %@ ...",product.productIdentifier);
-    [[InAPPIAPHelper sharedHelper] buyProductIdentifier:product.productIdentifier];
-    [SVProgressHUD showWithStatus:@"Buying ..."];
-    [self performSelector:@selector(timeOut:) withObject:nil afterDelay:60*5];
-    
-}
-
-- (void)popListView:(PopListView *)popListView didSelectedIndex:(NSInteger)anIndex {
-    
-    
-}
-
-- (void)popListViewDidCancel {
-    NSLog(@"User doesn't want to make purchase.");
-}
+//- (IBAction)buyButtonTapped:(id)sender
+//{
+//    UIButton *buyButton = (UIButton *)sender;
+//    SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:buyButton.tag];
+//    NSLog(@"Buying %@ ...",product.productIdentifier);
+//    [[InAPPIAPHelper sharedHelper] buyProductIdentifier:product.productIdentifier];
+//    [SVProgressHUD showWithStatus:@"Buying ..."];
+//    [self performSelector:@selector(timeOut:) withObject:nil afterDelay:60*5];
+//    
+//}
+//
+//- (void)popListView:(PopListView *)popListView didSelectedIndex:(NSInteger)anIndex {
+//    
+//    
+//}
+//
+//- (void)popListViewDidCancel {
+//    NSLog(@"User doesn't want to make purchase.");
+//}
 
 
 #pragma mark - Setup Instruction guide

@@ -16,9 +16,6 @@
 @end
 
 @interface LJFlipsideViewController : TrackedUIViewController<UITableViewDataSource, UITableViewDelegate>
-{
-    
-}
 
 @property (unsafe_unretained, nonatomic) id <LJFlipsideViewControllerDelegate> delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITableView *mTable;
