@@ -23,7 +23,7 @@
 
 #define GRAVITY_ACCELERATION 9.8  //m*s^-2
 
-@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate>{
+@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate, InAppPurchaseViewControllerDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
     
@@ -81,6 +81,10 @@
     
 }
 
+- (void)purchaseControllerDidFinish:(InAppPurchaseViewController *)controller
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 
 #pragma mark - button Item methods
@@ -111,14 +115,16 @@
         // We show the report immediately
         [motionManager stopDeviceMotionUpdates];
         
+        [self loadingInAppPurchaseItems];
         // We show the report or we show the in-app purchase
-       
-        if ([[InAPPIAPHelper sharedHelper].purchasedProducts count] != [[InAPPIAPHelper sharedHelper].products count])
-        {
-            [self loadingInAppPurchaseItems];
-        } else {
-            [self discloseReport];
-        }
+//        if ([[InAPPIAPHelper sharedHelper].products count] > 0) {
+//            if ([[InAPPIAPHelper sharedHelper].purchasedProducts count] != [[InAPPIAPHelper sharedHelper].products count]) {
+//                [self loadingInAppPurchaseItems];
+//            }
+//        }else {
+//            [self discloseReport];
+//        }
+        
 	}
 	else
 	{
@@ -215,6 +221,7 @@
 
 - (void)loadingInAppPurchaseItems{
     inAppViewController = [[InAppPurchaseViewController alloc] initWithNibName:@"InAppPurchaseViewController" bundle:nil];
+    inAppViewController.delegate = self;
     [self presentModalViewController:inAppViewController animated:YES];
 }
 
@@ -257,8 +264,6 @@
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
     
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
   	isPaused = YES;
@@ -322,24 +327,24 @@
 
 
 
-#pragma mark - Poplist View Delegate
-- (void)productPurchased:(NSNotification *)notification {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [SVProgressHUD dismiss];
-    
-    NSString *productIdentifier = (NSString *)notification.object;
-    NSLog(@"Purchased : %@",productIdentifier);
-}
-
-- (void)productPurchasedFailed:(NSNotification *)notification {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [SVProgressHUD dismiss];
-    
-    SKPaymentTransaction *transaction = (SKPaymentTransaction *)notification.object;
-    if (transaction.error.code != SKErrorPaymentCancelled) {
-        [SVProgressHUD showErrorWithStatus:transaction.error.localizedDescription];
-    }
-}
+//#pragma mark - Poplist View Delegate
+//- (void)productPurchased:(NSNotification *)notification {
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+//    [SVProgressHUD dismiss];
+//    
+//    NSString *productIdentifier = (NSString *)notification.object;
+//    NSLog(@"Purchased : %@",productIdentifier);
+//}
+//
+//- (void)productPurchasedFailed:(NSNotification *)notification {
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+//    [SVProgressHUD dismiss];
+//    
+//    SKPaymentTransaction *transaction = (SKPaymentTransaction *)notification.object;
+//    if (transaction.error.code != SKErrorPaymentCancelled) {
+//        [SVProgressHUD showErrorWithStatus:transaction.error.localizedDescription];
+//    }
+//}
 
 # pragma mark - Poplist View
 //- (IBAction)buyButtonTapped:(id)sender
