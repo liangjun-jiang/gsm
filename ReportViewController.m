@@ -11,7 +11,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 
 #define THRESHOLD 0.90  // this is used to collect the peak value +/- 90% of the max swing speed detected. 
-
+#define EFFECTIVE_POINTS 180
 
 #pragma mark - Help class to show the name prompt
 @interface NameAlertPrompt : UIAlertView {
@@ -60,20 +60,28 @@
 
 
 @interface ReportViewController ()<UIAlertViewDelegate, MFMailComposeViewControllerDelegate>{
-    
     int count;
-    NSMutableArray *countableSwings;
     float max;
     float mean;
     float standardDeviation;
     
+    float maxAccX;
+    float meanAccX;
+    float sdAccx;
+    
 }
+@property (nonatomic, strong) IBOutlet UITableView *mTableView;
+
+@property (nonatomic, strong) IBOutlet UINavigationBar *navBar;
+@property (nonatomic, strong) NSMutableArray *countableSwings;
+@property (nonatomic, strong) NSMutableArray *countableSwingTempos;
 
 @end
 
 @implementation ReportViewController
-@synthesize delegate = _delegate, mTableView = _mTableView, rawData = _rawData, navBar = _navBar;
-@synthesize accelormeterData = _accelormeterData;
+@synthesize delegate = _delegate, mTableView = _mTableView,  navBar;
+@synthesize rawData = _rawData, accelormeterData = _accelormeterData;
+@synthesize countableSwings, countableSwingTempos;
 
 - (IBAction)done:(id)sender
 {
@@ -107,6 +115,23 @@
     mean = [self calculateMean:countableSwings];
     standardDeviation = sqrtf([self calculateVariance:countableSwings withMean:mean]);
     
+    
+    maxAccX =  0.0;
+    meanAccX = 0.0;
+    sdAccx = 0.0;
+    
+    NSMutableArray *cacluatingTempo = [NSMutableArray array];
+    [self.accelormeterData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [cacluatingTempo addObject:[(NSDictionary *)obj objectForKey:@"accX"]];
+    }];
+    
+    maxAccX = [self calculateMax:cacluatingTempo];
+    countableSwingTempos = [self calculateCountableFromRawData:cacluatingTempo withThreshold:maxAccX];
+    
+    meanAccX = [self calculateMean:countableSwingTempos];
+    sdAccx = sqrtf([self calculateVariance:countableSwingTempos withMean:meanAccX]);
+    
+    NSLog(@"swing tempo :%@",[self calculateSwingTempo:cacluatingTempo withMax:maxAccX]);
     
 }
 
@@ -171,7 +196,7 @@
             return [countableSwings count];
             break;
         case 3:
-            return [countableSwings count];
+            return [countableSwingTempos count];
             break;
         default:
             break;
@@ -247,8 +272,17 @@
     float localMax = 0.0;
     
     for (NSNumber *number in mData){
-        if ([number floatValue] > localMax) {
-            localMax = [number floatValue];
+        if ([number floatValue] > 0) {
+            if ([number floatValue] > localMax) {
+                localMax = [number floatValue];
+            }
+        }
+        else  {
+            if (-[number floatValue] > localMax) {
+                localMax = -[number floatValue];
+            }
+            
+            return -localMax;
         }
     }
     
@@ -289,24 +323,49 @@
     return sum / [mData count];
 }
 
-// TODO: CHANGE TO ICLOUD
-#pragma mark -
-- (void)writeToFile:(NSMutableString *)mutableString withFileName:(NSString *)fileName
-{
+
+- (NSDictionary *)calculateSwingTempo:(NSMutableArray *)mData withMax:(float)mMax{
+        
+    int downswingFirstPart = 0;
+    int downswingSecondPart = 0;
+
+    int backswingFirstPart = 0;
+    int backswingSecondPart = 0;
     
-    NSError *error;
+    __block NSUInteger maxIndex = 0;
+    [mData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj containsObject:[NSNumber numberWithFloat:mMax]]) {
+            maxIndex = idx;
+            *stop = YES;
+        }
+    }];
     
-    NSString *documentsDirectory = [NSHomeDirectory() 
-                                    stringByAppendingPathComponent:@"Documents"];
+    /* Now this is the fun part
+    * We already have the index for the max value which has to be at the bottom of downswing
+    * We starts from those, follow back (to backswing) with 2/3 of total points, and 1/3 of back to follow through part.
+    * We compare each point with +/- 0.03 (we think it's noise floor)/
+    * we want to find the first 0 which should be the swing starting point, the 2nd 0 which is the top of backswing. The two should be the backswing time
+    * We want to find the third 0 which should be the end of following through (
+    * If the user continues to swing, it could be another 0
+    */
+    for (int i = maxIndex; i < [mData count]; i++) {
+        if (fabs([[mData objectAtIndex:i] floatValue]> fabs(0.02)) ) {
+            downswingSecondPart++;
+        }
+    }
     
-    NSString *filePath = [documentsDirectory 
-                          stringByAppendingPathComponent:fileName];
+    for (int j = maxIndex*0.3; j < maxIndex; j++) {
+        if ([[mData objectAtIndex:j] floatValue]> 0.02) {
+            backswingFirstPart ++;
+        } else if ([[mData objectAtIndex:j] floatValue]< -0.02){
+            downswingFirstPart ++;
+        }
+    }
     
-    
-    // Write to the file
-    [mutableString writeToFile:filePath atomically:YES
-                      encoding:NSUTF8StringEncoding error:&error];
+    return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:backswingFirstPart],@"backSwing",[NSNumber numberWithFloat:downswingFirstPart + backswingSecondPart],@"downSwing", nil];
 }
+
+#pragma mark - Mail Delegate
 
 - (IBAction)sendFeedback:(id)sender
 {

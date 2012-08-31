@@ -224,6 +224,7 @@
     rvc = [[ReportViewController alloc] initWithNibName:@"ReportViewController" bundle:nil];
     rvc.delegate = self;
     rvc.rawData = rawDataArray;
+    rvc.accelormeterData = accelometerData;
     [self presentModalViewController:rvc animated:YES];
 }
 
