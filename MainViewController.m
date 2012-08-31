@@ -23,6 +23,9 @@
 
 #define GRAVITY_ACCELERATION 9.8  //m*s^-2
 
+#define REPORT_IDENTIFIER @"com.ljsportapps.GolfSwingMeter.report"
+#define REALTIME_IDENTIFIER @"com.ljsportapps.GolfSwingMeter.realtimefeedback"
+
 @interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate, InAppPurchaseViewControllerDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
@@ -33,11 +36,12 @@
     
     UIScrollView *scrollView;
     
-    float lastVelocity_x,lastVelocity_y,lastVelocity_z;
-    float lastAcceleration_x,lastAcceleration_y,lastAcceleration_z;
+    NSMutableArray *accelometerData;
     
 }
-@property (nonatomic) NSMutableArray *rawDataArray;
+@property (nonatomic, strong) NSMutableArray *rawDataArray;
+@property (nonatomic, strong) NSMutableArray *accelometerData;
+
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -99,7 +103,7 @@
 		// Set the adaptive flag
 		filter.adaptive = useAdaptive;
 		// And update the filterLabel with the new filter name.
-		filterLabel.text = @"Swing Smoothness";//[NSString stringWithFormat:@"Accelerometer + %@",filter.name];
+		filterLabel.text = @"Swing Tempo";//[NSString stringWithFormat:@"Accelerometer + %@",filter.name];
 	}
 }
 
@@ -115,16 +119,12 @@
         // We show the report immediately
         [motionManager stopDeviceMotionUpdates];
         
-        [self loadingInAppPurchaseItems];
-        // We show the report or we show the in-app purchase
-//        if ([[InAPPIAPHelper sharedHelper].products count] > 0) {
-//            if ([[InAPPIAPHelper sharedHelper].purchasedProducts count] != [[InAPPIAPHelper sharedHelper].products count]) {
-//                [self loadingInAppPurchaseItems];
-//            }
-//        }else {
+        [self discloseReport];
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        if ([defaults boolForKey:REPORT_IDENTIFIER]) {
 //            [self discloseReport];
-//        }
-        
+//        } else
+//            [self loadingInAppPurchaseItems];
 	}
 	else
 	{
@@ -133,6 +133,10 @@
 		pause.title = kLocalizedResume;
         if ([self.rawDataArray count] > 0) {
             [self.rawDataArray removeAllObjects];
+        }
+        
+        if ([accelometerData count] > 0){
+            [accelometerData removeAllObjects];
         }
         
         // We start the motionManager
@@ -198,24 +202,14 @@
     y = motion.userAcceleration.y;
     z = motion.userAcceleration.z;
     
-    //    float currentVelocity_x = lastVelocity_x + GRAVITY_ACCELERATION*(x-lastAcceleration_x)*1/kUpdateFrequency ;
-    //
-    //    float currentVelocity_y = lastVelocity_y + GRAVITY_ACCELERATION*(y-lastAcceleration_x)*1/kUpdateFrequency ;
-    //
-    //    float currentVelocity_z = lastVelocity_z + GRAVITY_ACCELERATION*(z-lastAcceleration_z)*1/kUpdateFrequency ;
-    //
-    float r = sqrtf(x*x + y*y + z*z)*GRAVITY_ACCELERATION/5.0;
-    //    [filtered addX:50*currentVelocity_x*1.0 y:50*currentVelocity_y z:50*currentVelocity_z*1.0];
-    [filtered addX:r y:r z:r];
-    //    NSLog(@"y: %.2f",currentVelocity_y);
+    [accelometerData addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:x], @"accX",[NSNumber numberWithFloat:y], @"accY",[NSNumber numberWithFloat:z], @"accZ", nil]];
     
-    //    lastAcceleration_x = x;
-    //    lastAcceleration_y = y;
-    //    lastAcceleration_z = z;
-    //    lastVelocity_x = currentVelocity_x;
-    //    lastVelocity_y = currentVelocity_y;
-    //    lastVelocity_z = currentVelocity_z;
+    //for right-handed, backswing starts from x increase postively then reach peak
+    //at the top, x = 0;, then x < 0, at the impack, x reaches peack
+    // then x decreases.
     
+//    float r = sqrtf(x*x + y*y + z*z)*GRAVITY_ACCELERATION/5.0;
+    [filtered addX:x y:y z:z];
     
 }
 
@@ -268,7 +262,8 @@
   	pause.possibleTitles = [NSSet setWithObjects:kLocalizedPause, kLocalizedResume, nil];
   	isPaused = YES;
 	useAdaptive = NO;
-	[self changeFilter:[LowpassFilter class]];
+	
+    [self changeFilter:[LowpassFilter class]];
 
     motionManager = [[CMMotionManager alloc] init];
     
@@ -291,15 +286,7 @@
 	[filtered setAccessibilityLabel:NSLocalizedString(@"filteredGraph", @"")];
     
     rawDataArray = [NSMutableArray array];
-    
-    // Used to keep track of the velocity
-    lastVelocity_x = 0.0;
-    lastVelocity_y = 0.0;
-    lastVelocity_z = 0.0;
-    
-    lastAcceleration_x = 0.0;
-    lastAcceleration_y = 0.0;
-    lastAcceleration_z = 0.0;
+    accelometerData = [NSMutableArray array];
     
 }
 
@@ -322,51 +309,9 @@
 	self.pause = nil;
 	self.filterLabel = nil;
     self.rawDataArray = nil;
+    self.accelometerData = nil;
     self.motionManager = nil;
 }
-
-
-
-//#pragma mark - Poplist View Delegate
-//- (void)productPurchased:(NSNotification *)notification {
-//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-//    [SVProgressHUD dismiss];
-//    
-//    NSString *productIdentifier = (NSString *)notification.object;
-//    NSLog(@"Purchased : %@",productIdentifier);
-//}
-//
-//- (void)productPurchasedFailed:(NSNotification *)notification {
-//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-//    [SVProgressHUD dismiss];
-//    
-//    SKPaymentTransaction *transaction = (SKPaymentTransaction *)notification.object;
-//    if (transaction.error.code != SKErrorPaymentCancelled) {
-//        [SVProgressHUD showErrorWithStatus:transaction.error.localizedDescription];
-//    }
-//}
-
-# pragma mark - Poplist View
-//- (IBAction)buyButtonTapped:(id)sender
-//{
-//    UIButton *buyButton = (UIButton *)sender;
-//    SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:buyButton.tag];
-//    NSLog(@"Buying %@ ...",product.productIdentifier);
-//    [[InAPPIAPHelper sharedHelper] buyProductIdentifier:product.productIdentifier];
-//    [SVProgressHUD showWithStatus:@"Buying ..."];
-//    [self performSelector:@selector(timeOut:) withObject:nil afterDelay:60*5];
-//    
-//}
-//
-//- (void)popListView:(PopListView *)popListView didSelectedIndex:(NSInteger)anIndex {
-//    
-//    
-//}
-//
-//- (void)popListViewDidCancel {
-//    NSLog(@"User doesn't want to make purchase.");
-//}
-
 
 #pragma mark - Setup Instruction guide
 

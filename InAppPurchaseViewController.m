@@ -14,18 +14,42 @@
 @implementation InAppPurchaseViewController
 @synthesize delegate, mTable;
 
-#pragma mark -
-#pragma mark View lifecycle
-
 - (IBAction)done:(id)sender
 {
     [self.delegate purchaseControllerDidFinish:self];
 }
 
 
+#pragma mark -
+#pragma mark View lifecycle
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:kProductPurchasedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(productPurchaseFailed:) name:kProductPurchaseFailedNotification object: nil];
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    if (netStatus == NotReachable) {
+        [SVProgressHUD showErrorWithStatus:@"No internet connection!"];
+    } else {
+        NSLog(@"purchased: %@", [InAPPIAPHelper sharedHelper].purchasedProducts);
+        
+        if ([InAPPIAPHelper sharedHelper].products == nil) {
+            
+            [[InAPPIAPHelper sharedHelper] requestProducts];
+            [SVProgressHUD showWithStatus:@"Loading..."];
+            [self performSelector:@selector(timeout:) withObject:nil afterDelay:30.0];
+        }
+    }
+
 }
 
 - (void)dismissHUD:(id)arg {
@@ -37,7 +61,7 @@
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [SVProgressHUD dismiss];
-    self.mTable.hidden = FALSE;
+    self.mTable.hidden = NO;
     
     [self.mTable reloadData];
     
@@ -55,29 +79,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-
-    self.mTable.hidden = TRUE;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productsLoaded:) name:kProductsLoadedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:kProductPurchasedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(productPurchaseFailed:) name:kProductPurchaseFailedNotification object: nil];
-    
-    Reachability *reach = [Reachability reachabilityForInternetConnection];	
-    NetworkStatus netStatus = [reach currentReachabilityStatus];    
-    if (netStatus == NotReachable) {        
-        [SVProgressHUD showErrorWithStatus:@"No internet connection!"];
-    } else {        
-        if ([InAPPIAPHelper sharedHelper].products == nil) {
-            
-            [[InAPPIAPHelper sharedHelper] requestProducts];
-            [SVProgressHUD showWithStatus:@"Loading..."];
-            [self performSelector:@selector(timeout:) withObject:nil afterDelay:30.0];
-        }        
-    }
-
-    [super viewWillAppear:animated];
-}
 
 #pragma mark -
 #pragma mark Table view data source
@@ -149,7 +150,6 @@
     UIButton *buyButton = (UIButton *)sender;    
     SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:buyButton.tag];
     
-    NSLog(@"Buying %@...", product.productIdentifier);
     [[InAPPIAPHelper sharedHelper] buyProductIdentifier:product.productIdentifier];
     
     [SVProgressHUD showWithStatus:@"Buying..."];
@@ -184,6 +184,8 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchaseFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
 }
 
 @end

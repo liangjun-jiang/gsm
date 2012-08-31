@@ -10,13 +10,24 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-		<string>Icon-72.png</string>
-		<string>Icon-Small.png</string>
-		<string>Icon-Small-50.png</string>
-		<string>Icon-Small@2x.png</string>
+		<string>first_57.png</string>
+		<string>first_114.png</string>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>first_57.png</string>
+				<string>first_114.png</string>
+				<string>Icon-72.png</string>
+				<string>Icon-Small.png</string>
+				<string>Icon-Small-50.png</string>
+				<string>Icon-Small@2x.png</string>
+			</array>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>com.ljsportapps.GolfSwingMeter</string>
 	<key>CFBundleInfoDictionaryVersion</key>

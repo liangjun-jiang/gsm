@@ -50,7 +50,6 @@
 {
     
     self.products = response.products;
-    NSLog(@"server retured: %@",response.products);
     self.request = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kProductsLoadedNotification object:_products];
@@ -64,7 +63,6 @@
 }
 
 - (void)buyProductIdentifier:(NSString *)productIdentifier {
-    NSLog(@"Buying :%@ ...", productIdentifier);
     SKPayment *payment = [SKPayment paymentWithProductIdentifier:productIdentifier];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
     
@@ -76,7 +74,6 @@
 }
 
 - (void)provideContent: (NSString *)productIdentifier {
-    NSLog(@"toggle flag for :%@", productIdentifier);
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [_purchasedProducts addObject:productIdentifier];
@@ -121,6 +118,7 @@
                 break;
             case SKPaymentTransactionStateRestored:
                 [self restoreTransaction:transaction];
+                break;
             default:
                 break;
         }

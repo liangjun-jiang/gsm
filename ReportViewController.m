@@ -73,6 +73,7 @@
 
 @implementation ReportViewController
 @synthesize delegate = _delegate, mTableView = _mTableView, rawData = _rawData, navBar = _navBar;
+@synthesize accelormeterData = _accelormeterData;
 
 - (IBAction)done:(id)sender
 {
@@ -112,9 +113,10 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    self.mTableView = nil;
-    self.rawData = nil;
+    _mTableView = nil;
+    _rawData = nil;
     countableSwings = nil;
+    _accelormeterData = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -127,7 +129,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return 4;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -142,6 +144,9 @@
             break;
         case 2:
             return @"Counted Club Speed [MPH]";
+            break;
+        case 3:
+            return @"Counted Swing Tempo [SECONDS]";
             break;
         default:
             break;
@@ -163,6 +168,9 @@
             return 3;
             break;
         case 2:
+            return [countableSwings count];
+            break;
+        case 3:
             return [countableSwings count];
             break;
         default:
@@ -211,6 +219,10 @@
             break;
         case 2:
             cell.textLabel.text = [NSString stringWithFormat:@"%.2f",[[countableSwings objectAtIndex:row] floatValue]];
+            break;
+            
+        case 3:
+            cell.textLabel.text = @"backswing & downSwing";
             break;
         default:
             break;
