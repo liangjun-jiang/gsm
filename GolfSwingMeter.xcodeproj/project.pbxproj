@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		14D2E8F90DEF831F00195E03 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14D2E8F80DEF831F00195E03 /* MainWindow.xib */; };
 		188D3E9A0D6D207B0076AE1E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		18AD69C211D559E7005232E4 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 18AD69BB11D559E7005232E4 /* iTunesArtwork */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -51,14 +50,13 @@
 		D6B6A67015D16C4B0028CD37 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A66F15D16C4B0028CD37 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D6B6A67215D16F950028CD37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */; };
 		D6B6A67A15D1734B0028CD37 /* PopListView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A67815D1734A0028CD37 /* PopListView.m */; };
-		D6CA7B6C15F142E500C3F596 /* first_57.png in Resources */ = {isa = PBXBuildFile; fileRef = D6CA7B6A15F142E500C3F596 /* first_57.png */; };
-		D6CA7B6D15F142E500C3F596 /* first_114.png in Resources */ = {isa = PBXBuildFile; fileRef = D6CA7B6B15F142E500C3F596 /* first_114.png */; };
 		D6D9EF0F15B9EC2C00D22A58 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */; };
+		D6FF320015F68CB50057FFD8 /* icon3_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */; };
+		D6FF320315F68CD00057FFD8 /* icon3_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = D6FF320215F68CD00057FFD8 /* icon3_114x114.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		14D2E8FA0DEF831F00195E03 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		18AD69BB11D559E7005232E4 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = images/iTunesArtwork; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* GolfSwingMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfSwingMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,10 +118,10 @@
 		D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D6B6A67815D1734A0028CD37 /* PopListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopListView.m; sourceTree = "<group>"; };
 		D6B6A67915D1734A0028CD37 /* PopListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopListView.h; sourceTree = "<group>"; };
-		D6CA7B6A15F142E500C3F596 /* first_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_57.png; sourceTree = "<group>"; };
-		D6CA7B6B15F142E500C3F596 /* first_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_114.png; sourceTree = "<group>"; };
 		D6D9EF0D15B9EC2C00D22A58 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3_57x57.png; sourceTree = "<group>"; };
+		D6FF320215F68CD00057FFD8 /* icon3_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3_114x114.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,8 +158,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				D6CA7B6A15F142E500C3F596 /* first_57.png */,
-				D6CA7B6B15F142E500C3F596 /* first_114.png */,
+				D6FF320215F68CD00057FFD8 /* icon3_114x114.png */,
+				D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */,
 				D67ED10815AE0F3D00109E5A /* Google Analytics EasyTracking SDK */,
 				D67ED0FA15AE064D00109E5A /* Google Analytics */,
 				2D500B1D0D5A766B00DBA0E3 /* Classes */,
@@ -191,7 +189,6 @@
 				D6102E1C15A655D700B2F814 /* Sample-4.png */,
 				D6102E1415A6547600B2F814 /* Sample-2.png */,
 				D6102E1515A6547600B2F814 /* Sample-3.png */,
-				18AD69BB11D559E7005232E4 /* iTunesArtwork */,
 				63ABFA420FDDCA4800218D27 /* MainViewController.xib */,
 				14D2E8F80DEF831F00195E03 /* MainWindow.xib */,
 				639A50B80FDB1BC9007BE898 /* Localizable.strings */,
@@ -344,7 +341,6 @@
 				14D2E8F90DEF831F00195E03 /* MainWindow.xib in Resources */,
 				639A50BA0FDB1BC9007BE898 /* Localizable.strings in Resources */,
 				63ABFA440FDDCA4800218D27 /* MainViewController.xib in Resources */,
-				18AD69C211D559E7005232E4 /* iTunesArtwork in Resources */,
 				D6102D7C15A2926500B2F814 /* LJFlipsideViewController.xib in Resources */,
 				D6102D8115A296A400B2F814 /* ReportViewController.xib in Resources */,
 				D6102D9B15A48E5400B2F814 /* LJWebViewController.xib in Resources */,
@@ -357,8 +353,8 @@
 				D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */,
 				D67C000F15D31AE3000B1BBE /* geo_location_tab.png in Resources */,
 				D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */,
-				D6CA7B6C15F142E500C3F596 /* first_57.png in Resources */,
-				D6CA7B6D15F142E500C3F596 /* first_114.png in Resources */,
+				D6FF320015F68CB50057FFD8 /* icon3_57x57.png in Resources */,
+				D6FF320315F68CD00057FFD8 /* icon3_114x114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

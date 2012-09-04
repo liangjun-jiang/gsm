@@ -12,6 +12,7 @@
 
 #define THRESHOLD 0.90  // this is used to collect the peak value +/- 90% of the max swing speed detected. 
 #define EFFECTIVE_POINTS 180
+#define NOISE_FLOOR 0.02 // *9.8 m/s^2 as noise floor
 
 #pragma mark - Help class to show the name prompt
 @interface NameAlertPrompt : UIAlertView {
@@ -40,8 +41,6 @@
         [theTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
         [self addSubview:theTextField];
         self.textField = theTextField;
-        //CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 130.0); 
-        //[self setTransform:translate];
     }
     return self;
 }
@@ -75,13 +74,15 @@
 @property (nonatomic, strong) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, strong) NSMutableArray *countableSwings;
 @property (nonatomic, strong) NSMutableArray *countableSwingTempos;
+@property (nonatomic, strong) NSDictionary *calculatedSwingTempo;
+
 
 @end
 
 @implementation ReportViewController
 @synthesize delegate = _delegate, mTableView = _mTableView,  navBar;
 @synthesize rawData = _rawData, accelormeterData = _accelormeterData;
-@synthesize countableSwings, countableSwingTempos;
+@synthesize countableSwings, countableSwingTempos, calculatedSwingTempo;
 
 - (IBAction)done:(id)sender
 {
@@ -124,14 +125,16 @@
     [self.accelormeterData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [cacluatingTempo addObject:[(NSDictionary *)obj objectForKey:@"accX"]];
     }];
-    
-    maxAccX = [self calculateMax:cacluatingTempo];
+    maxAccX = [self calculateSwingTempoMax:cacluatingTempo];
     countableSwingTempos = [self calculateCountableFromRawData:cacluatingTempo withThreshold:maxAccX];
     
     meanAccX = [self calculateMean:countableSwingTempos];
     sdAccx = sqrtf([self calculateVariance:countableSwingTempos withMean:meanAccX]);
     
-    NSLog(@"swing tempo :%@",[self calculateSwingTempo:cacluatingTempo withMax:maxAccX]);
+    NSLog(@"max : %.2f, mean: %.2f and St: %.2f",maxAccX, meanAccX, sdAccx);
+    
+    calculatedSwingTempo = [NSDictionary dictionaryWithDictionary:[self calculateSwingTempo:cacluatingTempo withMax:maxAccX]];
+    NSLog(@"dict : %@",calculatedSwingTempo);
     
 }
 
@@ -171,7 +174,7 @@
             return @"Counted Club Speed [MPH]";
             break;
         case 3:
-            return @"Counted Swing Tempo [SECONDS]";
+            return @"Calculated Swing Tempo [SECONDS]";
             break;
         default:
             break;
@@ -196,7 +199,7 @@
             return [countableSwings count];
             break;
         case 3:
-            return [countableSwingTempos count];
+            return 2;
             break;
         default:
             break;
@@ -247,8 +250,10 @@
             break;
             
         case 3:
-            cell.textLabel.text = @"backswing & downSwing";
+        {
+            cell.textLabel.text = (row == 0)?[NSString stringWithFormat:@"Backswing: %.2f sec",[[calculatedSwingTempo objectForKey:@"backSwing"] floatValue] * 1.0/60.0]:[NSString stringWithFormat:@"Downswing: %.2f sec",[[calculatedSwingTempo objectForKey:@"downSwing"] floatValue]* 1.0/60.0];
             break;
+        }
         default:
             break;
     }
@@ -289,6 +294,14 @@
     return localMax;
 }
 
+
+// to measure swing tempo's max
+- (float)calculateSwingTempoMax:(NSArray *)mData
+{
+    NSNumber* min = [mData valueForKeyPath:@"@min.self"];
+    NSNumber* maxV = [mData valueForKeyPath:@"@max.self"];
+    return fabs([min floatValue] > fabs([maxV floatValue]))?[min floatValue]:[maxV floatValue];
+}
 
 // we use +/- 20% of the max to get other peak values
 - (NSMutableArray *)calculateCountableFromRawData:(NSMutableArray *)mData withThreshold:(float)mMax
@@ -332,13 +345,13 @@
     int backswingFirstPart = 0;
     int backswingSecondPart = 0;
     
-    __block NSUInteger maxIndex = 0;
-    [mData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj containsObject:[NSNumber numberWithFloat:mMax]]) {
-            maxIndex = idx;
-            *stop = YES;
-        }
-    }];
+    NSUInteger maxIndex = 0;
+    
+    if ([mData containsObject:[NSNumber numberWithFloat:mMax]]) {
+        maxIndex = [mData indexOfObject:[NSNumber numberWithFloat:mMax]];
+    }
+    
+    NSLog(@"what's the max happended :%d",maxIndex);
     
     /* Now this is the fun part
     * We already have the index for the max value which has to be at the bottom of downswing
@@ -349,20 +362,20 @@
     * If the user continues to swing, it could be another 0
     */
     for (int i = maxIndex; i < [mData count]; i++) {
-        if (fabs([[mData objectAtIndex:i] floatValue]> fabs(0.02)) ) {
+        if (fabs([[mData objectAtIndex:i] floatValue]> fabs(NOISE_FLOOR)) ) {
             downswingSecondPart++;
         }
     }
     
     for (int j = maxIndex*0.3; j < maxIndex; j++) {
-        if ([[mData objectAtIndex:j] floatValue]> 0.02) {
+        if ([[mData objectAtIndex:j] floatValue]> NOISE_FLOOR) {
             backswingFirstPart ++;
-        } else if ([[mData objectAtIndex:j] floatValue]< -0.02){
+        } else if ([[mData objectAtIndex:j] floatValue]< -NOISE_FLOOR){
             downswingFirstPart ++;
         }
     }
     
-    return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:backswingFirstPart],@"backSwing",[NSNumber numberWithFloat:downswingFirstPart + backswingSecondPart],@"downSwing", nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:backswingFirstPart],@"backSwing",[NSNumber numberWithInt:downswingFirstPart + backswingSecondPart],@"downSwing", nil];
 }
 
 #pragma mark - Mail Delegate
