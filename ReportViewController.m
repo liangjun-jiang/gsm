@@ -369,14 +369,8 @@
         if ([[mData objectAtIndex:i] floatValue] < 0 && (i < maxIndex) && fabs([[mData objectAtIndex:i] floatValue])> NOISE_FLOOR) {
             backTiming++;
         }
-//        if (i< maxIndex) {
-//            if ( [[mData objectAtIndex:i] floatValue] < 0 && [[mData objectAtIndex:i+1] floatValue]> 0 && fabs([[mData objectAtIndex:i] floatValue])> NOISE_FLOOR) {
-//                finishedBackSwing = i;
-//            }
-//        }
     }
     
-//    int finishedDownSwing = 0;
     
     // It's better that we starts from the end of backswing
     for (int j = maxIndex * 0.3; j < [mData count]; j++) {

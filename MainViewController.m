@@ -23,6 +23,9 @@
 
 #define GRAVITY_ACCELERATION 9.8  //m*s^-2
 
+
+#define  NOISE_FLOOR   0.1 
+
 #define REPORT_IDENTIFIER @"com.ljsportapps.GolfSwingMeter.report"
 #define REALTIME_IDENTIFIER @"com.ljsportapps.GolfSwingMeter.realtimefeedback"
 
@@ -38,9 +41,15 @@
     
     NSMutableArray *accelometerData;
     
+    float velocity;
+    
+    
 }
 @property (nonatomic, strong) NSMutableArray *rawDataArray;
 @property (nonatomic, strong) NSMutableArray *accelometerData;
+@property (nonatomic, strong) NSMutableArray *velocityArray;
+
+
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) UIPageControl *pageControl;
@@ -63,6 +72,7 @@
 @synthesize unfiltered, filtered, pause, filterLabel;
 @synthesize rawDataArray;
 @synthesize motionManager;
+@synthesize velocityArray;
 @synthesize pageControl, scrollView;
 @synthesize ljfvc, web, rvc, inAppViewController;
 
@@ -110,6 +120,9 @@
 
 -(IBAction)pauseOrResume:(id)sender
 {
+    // we set it to 0 otherwise the data will keep accumulatin
+    
+    velocity = 0.0;
 	if(isPaused)
 	{
 		// If we're paused, then resume and set the title to "Pause"
@@ -208,8 +221,18 @@
     //at the top, x = 0;, then x < 0, at the impack, x reaches peack
     // then x decreases.
     
-//    float r = sqrtf(x*x + y*y + z*z)*GRAVITY_ACCELERATION/5.0;
-    [filtered addX:x y:y z:z];
+    velocity = 0.0;
+    
+//    if (fabs(x) > NOISE_FLOOR) {
+        float r = x*GRAVITY_ACCELERATION;
+        
+        [velocityArray addObject:[NSNumber numberWithFloat:r]];
+        for (int i = 0; i< [velocityArray count]; i++) {
+            velocity +=[[velocityArray objectAtIndex:i] floatValue] * 1/kUpdateFrequency;
+        }
+//    }
+    
+    [filtered addX:velocity y:velocity z:velocity];
     
 }
 
@@ -288,6 +311,8 @@
     
     rawDataArray = [NSMutableArray array];
     accelometerData = [NSMutableArray array];
+    
+    velocityArray = [NSMutableArray array];
     
 }
 
