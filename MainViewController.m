@@ -132,12 +132,12 @@
         // We show the report immediately
         [motionManager stopDeviceMotionUpdates];
         
-        [self discloseReport];
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        if ([defaults boolForKey:REPORT_IDENTIFIER]) {
-//            [self discloseReport];
-//        } else
-//            [self loadingInAppPurchaseItems];
+//        [self discloseReport];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([defaults boolForKey:REPORT_IDENTIFIER]) {
+            [self discloseReport];
+        } else
+            [self loadingInAppPurchaseItems];
 	}
 	else
 	{
