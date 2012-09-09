@@ -205,7 +205,6 @@
             [rawDataArray addObject:[NSNumber numberWithFloat:sqrt(fx*fx + fy*fy + fz*fz)+ fitting_param]];
         }
     }
-    
     [unfiltered addRotationX:fx y:fy z:fz];
     
     // We integral the measured accerelation to get the velocity difference ( f(t1)
@@ -221,18 +220,18 @@
     //at the top, x = 0;, then x < 0, at the impack, x reaches peack
     // then x decreases.
     
-    velocity = 0.0;
+//    velocity = 0.0;
+//    
+////    if (fabs(x) > NOISE_FLOOR) {
+//        float r = x*GRAVITY_ACCELERATION;
+//        
+//        [velocityArray addObject:[NSNumber numberWithFloat:r]];
+//        for (int i = 0; i< [velocityArray count]; i++) {
+//            velocity +=[[velocityArray objectAtIndex:i] floatValue] * 1/kUpdateFrequency;
+//        }
+////    }
     
-//    if (fabs(x) > NOISE_FLOOR) {
-        float r = x*GRAVITY_ACCELERATION;
-        
-        [velocityArray addObject:[NSNumber numberWithFloat:r]];
-        for (int i = 0; i< [velocityArray count]; i++) {
-            velocity +=[[velocityArray objectAtIndex:i] floatValue] * 1/kUpdateFrequency;
-        }
-//    }
-    
-    [filtered addX:velocity y:velocity z:velocity];
+    [filtered addX:x y:y z:z];
     
 }
 
@@ -358,7 +357,7 @@
     
     NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"You need a iPhone or iPod touch with this app installed.",@"title",@"Sample-1.png",@"image", nil]; 
     
-    NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"You also need a arm case for your iPhone or iPod Touch.",@"title",@"Sample-2.png",@"image", nil]; 
+    NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"You also need an arm case for your iPhone or iPod Touch.",@"title",@"Sample-2.png",@"image", nil]; 
     
     NSDictionary *dict3 = [NSDictionary dictionaryWithObjectsAndKeys:@"Put your iPhone & iPad touch around your left wrist if you are right-handed, vice versa for left-handed.",@"title",@"Sample-3.png",@"image", nil]; 
     
@@ -387,7 +386,7 @@
         [scrollView addSubview:instructionLabel];
         
         if (i == 3) {
-            UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            UIButton *dismissButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             dismissButton.frame = CGRectMake(frame.origin.x + 20, 300.0, 70.0, 40.0);
             
             [dismissButton setTitle:@"I get it." forState:UIControlStateNormal];
@@ -396,8 +395,8 @@
             dismissButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
             [scrollView addSubview:dismissButton];
             
-            UIButton *goButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            goButton.frame = CGRectMake(frame.origin.x + 80, 370.0, 250.0, 40.0);
+            UIButton *goButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            goButton.frame = CGRectMake(frame.origin.x + 60, 370.0, 250.0, 40.0);
             
             [goButton setTitle:@"I get it. Don't show it again." forState:UIControlStateNormal];
             goButton.titleLabel.textColor = [UIColor blackColor];

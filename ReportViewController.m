@@ -19,6 +19,7 @@
 #pragma mark - Help class to show the name prompt
 @interface NameAlertPrompt : UIAlertView {
     UITextField *textField;
+    
 }
 
 @property (nonatomic, retain) UITextField *textField;
@@ -69,6 +70,7 @@
     float maxAccX;
     float meanAccX;
     float sdAccx;
+    BOOL right_handed;
     
 }
 @property (nonatomic, strong) IBOutlet UITableView *mTableView;
@@ -108,9 +110,10 @@
    
     self.navBar.topItem.title = title;
     
+    // We determine if the user is left-handed or right handed
+    right_handed = [[[NSUserDefaults standardUserDefaults] objectForKey:HANDED] isEqualToString:@"Right-handed"]?YES:NO;
     
     // We do some simple math
-    
     max = 0.0;
     mean = 0.0;
     standardDeviation = 0.0;
@@ -304,7 +307,13 @@
 {
     NSNumber* min = [mData valueForKeyPath:@"@min.self"];
     NSNumber* maxV = [mData valueForKeyPath:@"@max.self"];
-    return fabs([min floatValue] > fabs([maxV floatValue]))?[min floatValue]:[maxV floatValue];
+    if (right_handed) {
+        //for right handed, the max speed should be negative
+        return (fabs([min floatValue]) > fabs([maxV floatValue]))?[min floatValue]:[maxV floatValue];
+    } else
+        // for left-handed, the max speed should be positive
+        return (fabs([maxV floatValue]) > fabs([min floatValue]))?[maxV floatValue]:[min floatValue];
+
 }
 
 // we use +/- 20% of the max to get other peak values
@@ -363,23 +372,27 @@
         maxIndex = [mData indexOfObject:[NSNumber numberWithFloat:mMax]];
     }
     
-//    int finishedBackSwing = 0;
-    
     for (int i = 0; i< [mData count]; i++) {
-        if ([[mData objectAtIndex:i] floatValue] < 0 && (i < maxIndex) && fabs([[mData objectAtIndex:i] floatValue])> NOISE_FLOOR) {
-            backTiming++;
-        }
+        float temp = [[mData objectAtIndex:i] floatValue];
+        if (i < maxIndex && fabs(temp)> NOISE_FLOOR) {
+            if (right_handed){
+                if (temp < 0) backTiming++;
+            }  else if(temp > 0) backTiming++;
+        
+        } 
     }
     
     
     // It's better that we starts from the end of backswing
     for (int j = maxIndex * 0.3; j < [mData count]; j++) {
-        if ([mData objectAtIndex:j] > 0 && [[mData objectAtIndex:j] floatValue] > NOISE_FLOOR) {
-            downTiming++;
-//            if ([[mData objectAtIndex:j+1] floatValue] < 0) {
-//                finishedDownSwing = j;
-//            }
+        float temp = [[mData objectAtIndex:j] floatValue];
+        if ( fabs(temp) > NOISE_FLOOR) {
+            if (right_handed) {
+                if (temp > 0) downTiming++;
+            } else if (temp < 0) downTiming++;
         }
+        
+           
     }
 //    NSLog(@"down timing :%d, finished downswing %d, finished backswing, %d", downTiming, finishedDownSwing, finishedBackSwing);
     return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:backTiming],@"backSwing",[NSNumber numberWithInt:downTiming],@"downSwing", nil];
