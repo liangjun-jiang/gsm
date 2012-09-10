@@ -40,7 +40,7 @@
     if (netStatus == NotReachable) {
         [SVProgressHUD showErrorWithStatus:@"No internet connection!"];
     } else {
-        NSLog(@"purchased: %@", [InAPPIAPHelper sharedHelper].purchasedProducts);
+//        NSLog(@"purchased: %@", [InAPPIAPHelper sharedHelper].purchasedProducts);
         
         if ([InAPPIAPHelper sharedHelper].products == nil) {
             
@@ -134,7 +134,10 @@
     return cell;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+}
 #pragma mark -
 #pragma mark Memory management
 
@@ -184,8 +187,8 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchaseFailedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchaseFailedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
 }
 
 @end

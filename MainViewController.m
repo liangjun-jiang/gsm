@@ -220,18 +220,18 @@
     //at the top, x = 0;, then x < 0, at the impack, x reaches peack
     // then x decreases.
     
-//    velocity = 0.0;
-//    
-////    if (fabs(x) > NOISE_FLOOR) {
-//        float r = x*GRAVITY_ACCELERATION;
-//        
-//        [velocityArray addObject:[NSNumber numberWithFloat:r]];
-//        for (int i = 0; i< [velocityArray count]; i++) {
-//            velocity +=[[velocityArray objectAtIndex:i] floatValue] * 1/kUpdateFrequency;
-//        }
-////    }
+    velocity = 0.0;
     
-    [filtered addX:x y:y z:z];
+    if (fabs(x) > NOISE_FLOOR) {
+        float r = x*GRAVITY_ACCELERATION;
+        
+        [velocityArray addObject:[NSNumber numberWithFloat:r]];
+        for (int i = 0; i< [velocityArray count]; i++) {
+            velocity +=[[velocityArray objectAtIndex:i] floatValue] * 1/kUpdateFrequency;
+        }
+    }
+    
+    [filtered addX:velocity y:velocity z:velocity];
     
 }
 
@@ -298,7 +298,7 @@
             
         }];
     } else {
-        NSLog(@"Device Motion is not available!");
+//        NSLog(@"Device Motion is not available!");
         motionManager = nil;
     }
 	

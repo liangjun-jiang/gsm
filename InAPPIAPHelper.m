@@ -23,7 +23,7 @@ static InAPPIAPHelper *_sharedHelper;
 
 - (id)init {
     
-    NSSet *productIdentifier = [NSSet setWithObjects:@"com.ljsportapps.GolfSwingMeter.report",@"com.ljsportapps.GolfSwingMeter.realtimefeedback", nil];
+    NSSet *productIdentifier = [NSSet setWithObjects:@"com.ljsportapps.GolfSwingMeter.report", nil];
     
     self = [super initWithProductIdentifiers:productIdentifier];
     if (self) {

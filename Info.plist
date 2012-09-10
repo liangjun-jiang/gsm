@@ -12,10 +12,6 @@
 	<array>
 		<string>icon3_57x57.png</string>
 		<string>icon3_114x114.png</string>
-		<string>Icon-72.png</string>
-		<string>Icon-Small.png</string>
-		<string>Icon-Small-50.png</string>
-		<string>Icon-Small@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>

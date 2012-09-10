@@ -43,6 +43,8 @@
 		D67ED0FF15AE064E00109E5A /* libGoogleAnalytics_NoThumb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FD15AE064D00109E5A /* libGoogleAnalytics_NoThumb.a */; };
 		D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D67ED10A15AE0F6200109E5A /* EasyTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */ = {isa = PBXBuildFile; fileRef = D67ED11115AE16D600109E5A /* EasyTracker.plist */; };
+		D69D1CAD15FE8B8D008C84BF /* launch@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D69D1CAB15FE8B8D008C84BF /* launch@2X.png */; };
+		D69D1CAE15FE8B8D008C84BF /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = D69D1CAC15FE8B8D008C84BF /* launch.png */; };
 		D6A6F97715D3FC7E00783AE6 /* InAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */; };
 		D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */; };
 		D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A66415D165ED0028CD37 /* StoreKit.framework */; };
@@ -107,6 +109,8 @@
 		D67ED10915AE0F6200109E5A /* EasyTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTracker.h; sourceTree = "<group>"; };
 		D67ED10A15AE0F6200109E5A /* EasyTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTracker.m; sourceTree = "<group>"; };
 		D67ED11115AE16D600109E5A /* EasyTracker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EasyTracker.plist; sourceTree = "<group>"; };
+		D69D1CAB15FE8B8D008C84BF /* launch@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2X.png"; sourceTree = "<group>"; };
+		D69D1CAC15FE8B8D008C84BF /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		D6A6F97515D3FC7E00783AE6 /* InAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppPurchaseViewController.h; sourceTree = "<group>"; };
 		D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchaseViewController.m; sourceTree = "<group>"; };
 		D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InAppPurchaseViewController.xib; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D69D1CAB15FE8B8D008C84BF /* launch@2X.png */,
+				D69D1CAC15FE8B8D008C84BF /* launch.png */,
 				D6FF320215F68CD00057FFD8 /* icon3_114x114.png */,
 				D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */,
 				D67ED10815AE0F3D00109E5A /* Google Analytics EasyTracking SDK */,
@@ -355,6 +361,8 @@
 				D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */,
 				D6FF320015F68CB50057FFD8 /* icon3_57x57.png in Resources */,
 				D6FF320315F68CD00057FFD8 /* icon3_114x114.png in Resources */,
+				D69D1CAD15FE8B8D008C84BF /* launch@2X.png in Resources */,
+				D69D1CAE15FE8B8D008C84BF /* launch.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +428,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Liangjun Jiang (U8842KWUC6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Liangjun Jiang";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -435,7 +443,7 @@
 					"\"$(SRCROOT)/Library\"",
 				);
 				PRODUCT_NAME = GolfSwingMeter;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5873A352-55F5-4F3A-ACDE-01E983362F91";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
@@ -445,6 +453,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Liangjun Jiang";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -457,6 +466,7 @@
 					"\"$(SRCROOT)/Library\"",
 				);
 				PRODUCT_NAME = GolfSwingMeter;
+				PROVISIONING_PROFILE = "5873A352-55F5-4F3A-ACDE-01E983362F91";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;

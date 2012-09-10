@@ -14,18 +14,11 @@
 @synthesize purchasedProducts = _purchasedProducts;
 @synthesize request = _request;
 
-- (void)requestProducts{
-       
-    self.request = [[SKProductsRequest alloc] initWithProductIdentifiers:_produtIdentifiers];
-    _request.delegate = self;
-    [_request start];
-}
-
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers
 {
     if ((self = [super init])) {
         _produtIdentifiers = productIdentifiers;
-    
+        
         // Check for Previous Purchased products
         NSMutableSet *purchasedProducts = [NSMutableSet set];
         [_produtIdentifiers enumerateObjectsUsingBlock:^(id obj, BOOL *stop){
@@ -38,12 +31,21 @@
             
             NSLog(@"not purchased: %@",obj);
         }];
-    
+        
         self.purchasedProducts = purchasedProducts;
     }
     
     return self;
 }
+
+- (void)requestProducts{
+       
+    self.request = [[SKProductsRequest alloc] initWithProductIdentifiers:_produtIdentifiers];
+    _request.delegate = self;
+    [_request start];
+}
+
+
 
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
@@ -63,6 +65,8 @@
 }
 
 - (void)buyProductIdentifier:(NSString *)productIdentifier {
+    NSLog(@"Buying %@...", productIdentifier);
+
     SKPayment *payment = [SKPayment paymentWithProductIdentifier:productIdentifier];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
     
