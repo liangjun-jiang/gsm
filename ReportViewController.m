@@ -7,8 +7,9 @@
 //
 
 #import "ReportViewController.h"
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
+#import "InAppPurchaseViewController.h"
+//#import <MessageUI/MessageUI.h>
+//#import <MessageUI/MFMailComposeViewController.h>
 
 #define THRESHOLD 0.90  // this is used to collect the peak value +/- 90% of the max swing speed detected. 
 #define EFFECTIVE_POINTS 180
@@ -16,52 +17,53 @@
 #define GRAVITY 9.8 // m/s^2
 #define kUpdateFrequency 60 
 
-#pragma mark - Help class to show the name prompt
-@interface NameAlertPrompt : UIAlertView {
-    UITextField *textField;
-    
-}
+//#pragma mark - Help class to show the name prompt
+//@interface NameAlertPrompt : UIAlertView {
+//    UITextField *textField;
+//    
+//}
+//
+//@property (nonatomic, retain) UITextField *textField;
+//@property (readonly) NSString *enteredText;
+//- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle okButtonTitle:(NSString *)okButtonTitle;
+//
+//@end
+//
+//
+//@implementation NameAlertPrompt
+//@synthesize textField, enteredText;
+//
+//- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle okButtonTitle:(NSString *)okayButtonTitle {
+//    
+//    self = [super initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:okayButtonTitle, nil];
+//    
+//    if (self) {
+//        UITextField *theTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)]; 
+//        [theTextField setBackgroundColor:[UIColor whiteColor]]; 
+//        [theTextField setSecureTextEntry:YES];
+//        [theTextField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+//        [theTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
+//        [self addSubview:theTextField];
+//        self.textField = theTextField;
+//    }
+//    return self;
+//}
+//
+//- (void)show {
+//    [textField becomeFirstResponder];
+//    [super show];
+//}
+//
+//- (NSString *)enteredText {
+//    return textField.text;
+//}
+//
+//@end
 
-@property (nonatomic, retain) UITextField *textField;
-@property (readonly) NSString *enteredText;
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle okButtonTitle:(NSString *)okButtonTitle;
-
-@end
 
 
-@implementation NameAlertPrompt
-@synthesize textField, enteredText;
-
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle okButtonTitle:(NSString *)okayButtonTitle {
-    
-    self = [super initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:okayButtonTitle, nil];
-    
-    if (self) {
-        UITextField *theTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)]; 
-        [theTextField setBackgroundColor:[UIColor whiteColor]]; 
-        [theTextField setSecureTextEntry:YES];
-        [theTextField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-        [theTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
-        [self addSubview:theTextField];
-        self.textField = theTextField;
-    }
-    return self;
-}
-
-- (void)show {
-    [textField becomeFirstResponder];
-    [super show];
-}
-
-- (NSString *)enteredText {
-    return textField.text;
-}
-
-@end
-
-
-
-@interface ReportViewController ()<UIAlertViewDelegate, MFMailComposeViewControllerDelegate>{
+@interface ReportViewController ()<InAppPurchaseViewControllerDelegate>
+{
     int count;
     float max;
     float mean;
@@ -398,84 +400,103 @@
     return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:backTiming],@"backSwing",[NSNumber numberWithInt:downTiming],@"downSwing", nil];
 }
 
-#pragma mark - Mail Delegate
-
-- (IBAction)sendFeedback:(id)sender
+#pragma mark - Remove Ads
+- (void)purchaseControllerDidFinish:(InAppPurchaseViewController *)controller
 {
-    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-    if (mailClass != nil)
-    {
-        // We must always check whether the current device is configured for sending emails
-        if ([mailClass canSendMail])
-        {
-            [self displayComposerSheet];
-        }
-    }
-    
-}
-
-
-- (void)displayComposerSheet{
-    
-    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-    picker.mailComposeDelegate = self;
-    
-    [picker setSubject:@"I'd like to hear from you!"];
-    
-    [picker setToRecipients:[NSArray arrayWithObject:@"2010.longhorn@gmail.com"]];
-    
-    NSString *emailBody = @"Do you think if the data make sense? Send me your comment and suggestion";
-    
-    [picker setMessageBody:emailBody isHTML:NO];
-            
-    [self presentModalViewController:picker animated:YES];
-    
-}
-
-// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
-{   
-    //    message.hidden = NO;
-    // Notifies users about errors associated with the interface
-    switch (result)
-    {
-        case MFMailComposeResultCancelled:
-            //            message.text = @"Result: canceled";
-            break;
-        case MFMailComposeResultSaved:
-            //            message.text = @"Result: saved";
-            break;
-        case MFMailComposeResultSent:
-            //            message.text = @"Result: sent";
-            break;
-        case MFMailComposeResultFailed:
-            //            message.text = @"Result: failed";
-            break;
-        default:
-            //            message.text = @"Result: not sent";
-            break;
-    }
     [self dismissModalViewControllerAnimated:YES];
 }
 
 
-#pragma mark - Alert View Delegate
-- (void)alertViewCancel:(UIAlertView *)alertView
+- (IBAction)removeAds:(id)sender
 {
-    NSLog(@"User Cancelled");
+    
+    [self loadingInAppPurchaseItems];
 }
 
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0:
-            break;
-            
-        default:
-            NSLog(@"Save the user!");
-            break;
-    }
-    
+- (void)loadingInAppPurchaseItems{
+    InAppPurchaseViewController *inAppViewController = [[InAppPurchaseViewController alloc] initWithNibName:@"InAppPurchaseViewController" bundle:nil];
+    inAppViewController.delegate = self;
+    [self presentModalViewController:inAppViewController animated:YES];
 }
+
+#pragma mark - Mail Delegate
+
+//- (IBAction)sendFeedback:(id)sender
+//{
+//    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+//    if (mailClass != nil)
+//    {
+//        // We must always check whether the current device is configured for sending emails
+//        if ([mailClass canSendMail])
+//        {
+//            [self displayComposerSheet];
+//        }
+//    }
+//    
+//}
+//
+//
+//- (void)displayComposerSheet{
+//    
+//    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+//    picker.mailComposeDelegate = self;
+//    
+//    [picker setSubject:@"I'd like to hear from you!"];
+//    
+//    [picker setToRecipients:[NSArray arrayWithObject:@"2010.longhorn@gmail.com"]];
+//    
+//    NSString *emailBody = @"Do you think if the data make sense? Send me your comment and suggestion";
+//    
+//    [picker setMessageBody:emailBody isHTML:NO];
+//            
+//    [self presentModalViewController:picker animated:YES];
+//    
+//}
+
+// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
+//- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
+//{   
+//    //    message.hidden = NO;
+//    // Notifies users about errors associated with the interface
+//    switch (result)
+//    {
+//        case MFMailComposeResultCancelled:
+//            //            message.text = @"Result: canceled";
+//            break;
+//        case MFMailComposeResultSaved:
+//            //            message.text = @"Result: saved";
+//            break;
+//        case MFMailComposeResultSent:
+//            //            message.text = @"Result: sent";
+//            break;
+//        case MFMailComposeResultFailed:
+//            //            message.text = @"Result: failed";
+//            break;
+//        default:
+//            //            message.text = @"Result: not sent";
+//            break;
+//    }
+//    [self dismissModalViewControllerAnimated:YES];
+//}
+
+
+#pragma mark - Alert View Delegate
+//- (void)alertViewCancel:(UIAlertView *)alertView
+//{
+//    NSLog(@"User Cancelled");
+//}
+//
+//- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    switch (buttonIndex) {
+//        case 0:
+//            break;
+//            
+//        default:
+//            NSLog(@"Save the user!");
+//            break;
+//    }
+//    
+//}
 
 @end

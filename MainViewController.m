@@ -2,6 +2,7 @@
 
 #import "MainViewController.h"
 #import "GraphView.h"
+#import <iAd/iAd.h>
 #import "AccelerometerFilter.h"
 #import <CoreMotion/CoreMotion.h>
 #import "LJFlipsideViewController.h"
@@ -29,7 +30,7 @@
 #define REPORT_IDENTIFIER @"com.ljsportapps.GolfSwingMeter.report"
 #define REALTIME_IDENTIFIER @"com.ljsportapps.GolfSwingMeter.realtimefeedback"
 
-@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate, InAppPurchaseViewControllerDelegate>{
+@interface MainViewController()<UIScrollViewDelegate,LJFlipsideViewControllerDelegate, ReportViewControllerDelegate, WebViewControllerDelegate,ADBannerViewDelegate>{
     NSMutableArray *rawDataArray;
     CMMotionManager *motionManager;
     
@@ -49,7 +50,7 @@
 @property (nonatomic, strong) NSMutableArray *accelometerData;
 @property (nonatomic, strong) NSMutableArray *velocityArray;
 
-
+@property (nonatomic, strong) ADBannerView *bannerView;
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) UIPageControl *pageControl;
@@ -75,6 +76,8 @@
 @synthesize velocityArray;
 @synthesize pageControl, scrollView;
 @synthesize ljfvc, web, rvc, inAppViewController;
+@synthesize accelometerData;
+@synthesize bannerView;
 
 
 #pragma mark - delegate method
@@ -95,10 +98,10 @@
     
 }
 
-- (void)purchaseControllerDidFinish:(InAppPurchaseViewController *)controller
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
+//- (void)purchaseControllerDidFinish:(InAppPurchaseViewController *)controller
+//{
+//    [self dismissModalViewControllerAnimated:YES];
+//}
 
 
 #pragma mark - button Item methods
@@ -132,12 +135,12 @@
         // We show the report immediately
         [motionManager stopDeviceMotionUpdates];
         
-//        [self discloseReport];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        if ([defaults boolForKey:REPORT_IDENTIFIER]) {
-            [self discloseReport];
-        } else
-            [self loadingInAppPurchaseItems];
+        [self discloseReport];
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        if ([defaults boolForKey:REPORT_IDENTIFIER]) {
+//            [self discloseReport];
+//        } else
+//            [self loadingInAppPurchaseItems];
 	}
 	else
 	{
@@ -235,11 +238,11 @@
     
 }
 
-- (void)loadingInAppPurchaseItems{
-    inAppViewController = [[InAppPurchaseViewController alloc] initWithNibName:@"InAppPurchaseViewController" bundle:nil];
-    inAppViewController.delegate = self;
-    [self presentModalViewController:inAppViewController animated:YES];
-}
+//- (void)loadingInAppPurchaseItems{
+//    inAppViewController = [[InAppPurchaseViewController alloc] initWithNibName:@"InAppPurchaseViewController" bundle:nil];
+//    inAppViewController.delegate = self;
+//    [self presentModalViewController:inAppViewController animated:YES];
+//}
 
 - (void)discloseReport
 {
@@ -274,6 +277,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:kProductPurchasedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchaseFailed:) name:kProductPurchaseFailedNotification object:nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults boolForKey:@"PURCHASED"]) {
+        NSLog(@"ads");
+        self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 336.0, self.view.frame.size.width, 44.0)];
+        self.bannerView.delegate = self;
+    }
     
 }
 
@@ -337,6 +347,31 @@
     self.accelometerData = nil;
     self.motionManager = nil;
 }
+
+#pragma mark - ads
+#pragma mark banner ad
+// banner view delegate methods
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    [self.view addSubview:self.bannerView];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    //    [self layoutAnimated:YES];
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
+{
+    return YES;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner
+{
+    
+}
+
 
 #pragma mark - Setup Instruction guide
 

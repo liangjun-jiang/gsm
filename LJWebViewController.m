@@ -9,7 +9,7 @@
 #import "LJWebViewController.h"
 #import "SVProgressHUD.h"
 //#define URL_STRING  @"http://ljsportapps.com/sm/index.html"
-#define URL_STRING @"http://google.com"
+#define URL_STRING @"http://ljsportapps.com/gsm/#about"
 
 @interface LJWebViewController ()<UIWebViewDelegate>
 

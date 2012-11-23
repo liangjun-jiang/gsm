@@ -34,7 +34,6 @@
 		D6102E1915A6547600B2F814 /* Sample-3.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1515A6547600B2F814 /* Sample-3.png */; };
 		D6102E1D15A655D700B2F814 /* Sample-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1B15A655D700B2F814 /* Sample-1.png */; };
 		D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1C15A655D700B2F814 /* Sample-4.png */; };
-		D66EAA1F158E69C0004AE8E5 /* DocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */; };
 		D66EAA21158E6EFA004AE8E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */; };
 		D67C000F15D31AE3000B1BBE /* geo_location_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = D67C000E15D31AE3000B1BBE /* geo_location_tab.png */; };
 		D67ED0F615AE05E600109E5A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0F515AE05E600109E5A /* CFNetwork.framework */; };
@@ -43,8 +42,8 @@
 		D67ED0FF15AE064E00109E5A /* libGoogleAnalytics_NoThumb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FD15AE064D00109E5A /* libGoogleAnalytics_NoThumb.a */; };
 		D67ED10B15AE0F6200109E5A /* EasyTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = D67ED10A15AE0F6200109E5A /* EasyTracker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */ = {isa = PBXBuildFile; fileRef = D67ED11115AE16D600109E5A /* EasyTracker.plist */; };
-		D69D1CAD15FE8B8D008C84BF /* launch@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D69D1CAB15FE8B8D008C84BF /* launch@2X.png */; };
-		D69D1CAE15FE8B8D008C84BF /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = D69D1CAC15FE8B8D008C84BF /* launch.png */; };
+		D69D1CBA15FE8F7D008C84BF /* Default@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D69D1CB815FE8F7D008C84BF /* Default@2X.png */; };
+		D69D1CBB15FE8F7D008C84BF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D69D1CB915FE8F7D008C84BF /* Default.png */; };
 		D6A6F97715D3FC7E00783AE6 /* InAppPurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */; };
 		D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */; };
 		D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A66415D165ED0028CD37 /* StoreKit.framework */; };
@@ -52,6 +51,8 @@
 		D6B6A67015D16C4B0028CD37 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A66F15D16C4B0028CD37 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D6B6A67215D16F950028CD37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */; };
 		D6B6A67A15D1734B0028CD37 /* PopListView.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B6A67815D1734A0028CD37 /* PopListView.m */; };
+		D6CCB315165F028C00A1B361 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6CCB314165F028C00A1B361 /* Default-568h@2x.png */; };
+		D6CCB317165F041A00A1B361 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CCB316165F041A00A1B361 /* iAd.framework */; };
 		D6D9EF0F15B9EC2C00D22A58 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */; };
 		D6FF320015F68CB50057FFD8 /* icon3_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */; };
 		D6FF320315F68CD00057FFD8 /* icon3_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = D6FF320215F68CD00057FFD8 /* icon3_114x114.png */; };
@@ -97,8 +98,6 @@
 		D6102E1515A6547600B2F814 /* Sample-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-3.png"; path = "images/Sample-3.png"; sourceTree = "<group>"; };
 		D6102E1B15A655D700B2F814 /* Sample-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-1.png"; path = "images/Sample-1.png"; sourceTree = "<group>"; };
 		D6102E1C15A655D700B2F814 /* Sample-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-4.png"; path = "images/Sample-4.png"; sourceTree = "<group>"; };
-		D66EAA1D158E69C0004AE8E5 /* DocumentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentManager.h; sourceTree = "<group>"; };
-		D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentManager.m; sourceTree = "<group>"; };
 		D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		D67C000E15D31AE3000B1BBE /* geo_location_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_location_tab.png; sourceTree = "<group>"; };
 		D67ED0F515AE05E600109E5A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -109,8 +108,8 @@
 		D67ED10915AE0F6200109E5A /* EasyTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyTracker.h; sourceTree = "<group>"; };
 		D67ED10A15AE0F6200109E5A /* EasyTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyTracker.m; sourceTree = "<group>"; };
 		D67ED11115AE16D600109E5A /* EasyTracker.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EasyTracker.plist; sourceTree = "<group>"; };
-		D69D1CAB15FE8B8D008C84BF /* launch@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2X.png"; sourceTree = "<group>"; };
-		D69D1CAC15FE8B8D008C84BF /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
+		D69D1CB815FE8F7D008C84BF /* Default@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2X.png"; sourceTree = "<group>"; };
+		D69D1CB915FE8F7D008C84BF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D6A6F97515D3FC7E00783AE6 /* InAppPurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppPurchaseViewController.h; sourceTree = "<group>"; };
 		D6A6F97615D3FC7E00783AE6 /* InAppPurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchaseViewController.m; sourceTree = "<group>"; };
 		D6A6F97915D3FC9400783AE6 /* InAppPurchaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InAppPurchaseViewController.xib; sourceTree = "<group>"; };
@@ -122,6 +121,8 @@
 		D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D6B6A67815D1734A0028CD37 /* PopListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopListView.m; sourceTree = "<group>"; };
 		D6B6A67915D1734A0028CD37 /* PopListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopListView.h; sourceTree = "<group>"; };
+		D6CCB314165F028C00A1B361 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D6CCB316165F041A00A1B361 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		D6D9EF0D15B9EC2C00D22A58 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		D6D9EF0E15B9EC2C00D22A58 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3_57x57.png; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CCB317165F041A00A1B361 /* iAd.framework in Frameworks */,
 				D6B6A67215D16F950028CD37 /* SystemConfiguration.framework in Frameworks */,
 				D6B6A66515D165ED0028CD37 /* StoreKit.framework in Frameworks */,
 				D67ED0F915AE05F100109E5A /* libsqlite3.0.dylib in Frameworks */,
@@ -162,8 +164,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				D69D1CAB15FE8B8D008C84BF /* launch@2X.png */,
-				D69D1CAC15FE8B8D008C84BF /* launch.png */,
+				D6CCB314165F028C00A1B361 /* Default-568h@2x.png */,
+				D69D1CB815FE8F7D008C84BF /* Default@2X.png */,
+				D69D1CB915FE8F7D008C84BF /* Default.png */,
 				D6FF320215F68CD00057FFD8 /* icon3_114x114.png */,
 				D6FF31FF15F68CB50057FFD8 /* icon3_57x57.png */,
 				D67ED10815AE0F3D00109E5A /* Google Analytics EasyTracking SDK */,
@@ -206,6 +209,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6CCB316165F041A00A1B361 /* iAd.framework */,
 				D6B6A67115D16F950028CD37 /* SystemConfiguration.framework */,
 				D6B6A66415D165ED0028CD37 /* StoreKit.framework */,
 				D67ED0F815AE05F100109E5A /* libsqlite3.0.dylib */,
@@ -230,8 +234,6 @@
 				D6102D7715A2924500B2F814 /* LJFlipsideViewController.h */,
 				D6102D7815A2924500B2F814 /* LJFlipsideViewController.m */,
 				D6102D7B15A2926500B2F814 /* LJFlipsideViewController.xib */,
-				D66EAA1D158E69C0004AE8E5 /* DocumentManager.h */,
-				D66EAA1E158E69C0004AE8E5 /* DocumentManager.m */,
 				639046AE0F7C400300F2FB94 /* AccelerometerFilter.h */,
 				639046AF0F7C400300F2FB94 /* AccelerometerFilter.m */,
 				30D873950D76212900B213B8 /* AppDelegate.h */,
@@ -361,8 +363,9 @@
 				D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */,
 				D6FF320015F68CB50057FFD8 /* icon3_57x57.png in Resources */,
 				D6FF320315F68CD00057FFD8 /* icon3_114x114.png in Resources */,
-				D69D1CAD15FE8B8D008C84BF /* launch@2X.png in Resources */,
-				D69D1CAE15FE8B8D008C84BF /* launch.png in Resources */,
+				D69D1CBA15FE8F7D008C84BF /* Default@2X.png in Resources */,
+				D69D1CBB15FE8F7D008C84BF /* Default.png in Resources */,
+				D6CCB315165F028C00A1B361 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +381,6 @@
 				6390467F0F7C386600F2FB94 /* MainViewController.m in Sources */,
 				639046B00F7C400300F2FB94 /* AccelerometerFilter.m in Sources */,
 				6390470D0F7C4B3B00F2FB94 /* GraphView.m in Sources */,
-				D66EAA1F158E69C0004AE8E5 /* DocumentManager.m in Sources */,
 				D6102D7915A2924500B2F814 /* LJFlipsideViewController.m in Sources */,
 				D6102D8015A296A400B2F814 /* ReportViewController.m in Sources */,
 				D6102D9A15A48E5400B2F814 /* LJWebViewController.m in Sources */,
@@ -428,7 +430,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Liangjun Jiang";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Liangjun Jiang (NLHVYBKJKH)";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -443,7 +446,7 @@
 					"\"$(SRCROOT)/Library\"",
 				);
 				PRODUCT_NAME = GolfSwingMeter;
-				PROVISIONING_PROFILE = "5873A352-55F5-4F3A-ACDE-01E983362F91";
+				PROVISIONING_PROFILE = "2B034DB9-0549-48EF-B111-38601C77699B";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
@@ -453,7 +456,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Liangjun Jiang";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Liangjun Jiang (NLHVYBKJKH)";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -466,7 +470,7 @@
 					"\"$(SRCROOT)/Library\"",
 				);
 				PRODUCT_NAME = GolfSwingMeter;
-				PROVISIONING_PROFILE = "5873A352-55F5-4F3A-ACDE-01E983362F91";
+				PROVISIONING_PROFILE = "2B034DB9-0549-48EF-B111-38601C77699B";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;

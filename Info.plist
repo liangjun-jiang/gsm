@@ -10,6 +10,8 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
 	<array>
+		<string>Default@2X.png</string>
+		<string>Default.png</string>
 		<string>icon3_57x57.png</string>
 		<string>icon3_114x114.png</string>
 	</array>
@@ -19,12 +21,10 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>Default@2X.png</string>
+				<string>Default.png</string>
 				<string>icon3_57x57.png</string>
 				<string>icon3_114x114.png</string>
-				<string>Icon-72.png</string>
-				<string>Icon-Small.png</string>
-				<string>Icon-Small-50.png</string>
-				<string>Icon-Small@2x.png</string>
 			</array>
 		</dict>
 	</dict>
@@ -35,12 +35,16 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
 </dict>
 </plist>

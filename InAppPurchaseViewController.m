@@ -16,6 +16,7 @@
 
 - (IBAction)done:(id)sender
 {
+    [SVProgressHUD dismiss];
     [self.delegate purchaseControllerDidFinish:self];
 }
 

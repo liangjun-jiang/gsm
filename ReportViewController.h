@@ -21,5 +21,6 @@
 @property (nonatomic, strong) NSMutableArray *accelormeterData;
 
 -(IBAction)done:(id)sender;
--(IBAction)sendFeedback:(id)sender;
+- (IBAction)removeAds:(id)sender;
+//-(IBAction)sendFeedback:(id)sender;
 @end
