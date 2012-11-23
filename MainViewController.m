@@ -280,7 +280,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (![defaults boolForKey:@"PURCHASED"]) {
-        NSLog(@"ads");
+//        NSLog(@"ads");
         self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 336.0, self.view.frame.size.width, 44.0)];
         self.bannerView.delegate = self;
     }
