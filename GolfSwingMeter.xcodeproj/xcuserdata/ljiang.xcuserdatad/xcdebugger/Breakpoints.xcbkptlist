@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MainViewController.m"
-         timestampString = "375326556.923923"
+         timestampString = "386793879.169638"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "378"
-         endingLineNumber = "378"
+         startingLineNumber = "379"
+         endingLineNumber = "379"
          landmarkName = "-setUpInstructionGuide"
          landmarkType = "5">
       </FileBreakpoint>
