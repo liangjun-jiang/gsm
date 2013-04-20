@@ -35,7 +35,6 @@
 		D6102E1D15A655D700B2F814 /* Sample-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1B15A655D700B2F814 /* Sample-1.png */; };
 		D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */ = {isa = PBXBuildFile; fileRef = D6102E1C15A655D700B2F814 /* Sample-4.png */; };
 		D66EAA21158E6EFA004AE8E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */; };
-		D67C000F15D31AE3000B1BBE /* geo_location_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = D67C000E15D31AE3000B1BBE /* geo_location_tab.png */; };
 		D67ED0F615AE05E600109E5A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0F515AE05E600109E5A /* CFNetwork.framework */; };
 		D67ED0F915AE05F100109E5A /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0F815AE05F100109E5A /* libsqlite3.0.dylib */; };
 		D67ED0FE15AE064D00109E5A /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67ED0FC15AE064D00109E5A /* libGoogleAnalytics.a */; };
@@ -99,7 +98,6 @@
 		D6102E1B15A655D700B2F814 /* Sample-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-1.png"; path = "images/Sample-1.png"; sourceTree = "<group>"; };
 		D6102E1C15A655D700B2F814 /* Sample-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Sample-4.png"; path = "images/Sample-4.png"; sourceTree = "<group>"; };
 		D66EAA20158E6EFA004AE8E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		D67C000E15D31AE3000B1BBE /* geo_location_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geo_location_tab.png; sourceTree = "<group>"; };
 		D67ED0F515AE05E600109E5A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		D67ED0F815AE05F100109E5A /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		D67ED0FB15AE064D00109E5A /* GANTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GANTracker.h; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D67C000E15D31AE3000B1BBE /* geo_location_tab.png */,
 				D67ED11115AE16D600109E5A /* EasyTracker.plist */,
 				D6102E1B15A655D700B2F814 /* Sample-1.png */,
 				D6102E1C15A655D700B2F814 /* Sample-4.png */,
@@ -359,7 +356,6 @@
 				D6102E1D15A655D700B2F814 /* Sample-1.png in Resources */,
 				D6102E1E15A655D700B2F814 /* Sample-4.png in Resources */,
 				D67ED11215AE16D600109E5A /* EasyTracker.plist in Resources */,
-				D67C000F15D31AE3000B1BBE /* geo_location_tab.png in Resources */,
 				D6A6F97A15D3FC9400783AE6 /* InAppPurchaseViewController.xib in Resources */,
 				D6FF320015F68CB50057FFD8 /* icon3_57x57.png in Resources */,
 				D6FF320315F68CD00057FFD8 /* icon3_114x114.png in Resources */,
@@ -438,6 +434,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -462,6 +459,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

@@ -86,13 +86,13 @@
 
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[InAPPIAPHelper sharedHelper].products count];
+    return (section ==0)?1:[[InAPPIAPHelper sharedHelper].products count];
 }
 
 
@@ -106,31 +106,43 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-	// Configure the cell.
-    SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:indexPath.row];
-
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
-    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [numberFormatter setLocale:product.priceLocale];
-    NSString *formattedString = [numberFormatter stringFromNumber:product.price];
-
-    cell.textLabel.text = product.localizedTitle;
-    cell.detailTextLabel.text = formattedString;
-
-    if ([[InAPPIAPHelper sharedHelper].purchasedProducts containsObject:product.productIdentifier]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        cell.accessoryView = nil;
-    } else {        
+    if (indexPath.section ==0) {
         UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        buyButton.frame = CGRectMake(0, 0, 72, 37);
-        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
+        buyButton.frame = CGRectMake(0, 0, 200, 37);
+        [buyButton setTitle:NSLocalizedString(@"Restore", @"Restore") forState:UIControlStateNormal];
         buyButton.tag = indexPath.row;
-        [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [buyButton addTarget:self action:@selector(restoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accessoryView = buyButton;     
-    }
+        cell.accessoryView = buyButton;
+        
+        
+    } else {
+    
+        // Configure the cell.
+        SKProduct *product = [[InAPPIAPHelper sharedHelper].products objectAtIndex:indexPath.row];
 
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+        [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [numberFormatter setLocale:product.priceLocale];
+        NSString *formattedString = [numberFormatter stringFromNumber:product.price];
+
+        cell.textLabel.text = product.localizedTitle;
+        cell.detailTextLabel.text = formattedString;
+
+        if ([[InAPPIAPHelper sharedHelper].purchasedProducts containsObject:product.productIdentifier]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.accessoryView = nil;
+        } else {        
+            UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            buyButton.frame = CGRectMake(0, 0, 72, 37);
+            [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
+            buyButton.tag = indexPath.row;
+            [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.accessoryView = buyButton;     
+        }
+    }
     
     return cell;
 }
@@ -149,6 +161,11 @@
     // Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
+- (IBAction)restoreButtonTapped:(id)sender
+{
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
+
 - (IBAction)buyButtonTapped:(id)sender {
     
     UIButton *buyButton = (UIButton *)sender;    
@@ -158,7 +175,7 @@
     
     [SVProgressHUD showWithStatus:@"Buying..."];
     
-    [self performSelector:@selector(timeout:) withObject:nil afterDelay:60*5];
+    [self performSelector:@selector(timeout:) withObject:nil afterDelay:60];
     
 }
 
@@ -166,8 +183,8 @@
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [SVProgressHUD dismiss];
-    NSString *productIdentifier = (NSString *) notification.object;
-    NSLog(@"Purchased: %@", productIdentifier);
+//    NSString *productIdentifier = (NSString *) notification.object;
+//    NSLog(@"Purchased: %@", productIdentifier);
     
     [self.mTable reloadData];    
     
@@ -188,8 +205,8 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchaseFailedNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchaseFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductPurchasedNotification object:nil];
 }
 
 @end

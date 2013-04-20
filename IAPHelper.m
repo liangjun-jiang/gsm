@@ -26,10 +26,10 @@
             
             if (productPurchased) {
                 [purchasedProducts addObject:obj];
-                NSLog(@"purchased: %@",obj);
+                DebugLog(@"purchased: %@",obj);
             }
             
-            NSLog(@"not purchased: %@",obj);
+            DebugLog(@"not purchased: %@",obj);
         }];
         
         self.purchasedProducts = purchasedProducts;
@@ -60,12 +60,12 @@
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     
-    NSLog(@"what's the error :%@",error.localizedDescription);
+    DebugLog(@"what's the error :%@",error.localizedDescription);
     
 }
 
 - (void)buyProductIdentifier:(NSString *)productIdentifier {
-    NSLog(@"Buying %@...", productIdentifier);
+    DebugLog(@"Buying %@...", productIdentifier);
 
     SKPayment *payment = [SKPayment paymentWithProductIdentifier:productIdentifier];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -84,7 +84,7 @@
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction{
-    NSLog(@"Complete transaction");
+    DebugLog(@"Complete transaction");
     [self recordTransaction:transaction];
     [self provideContent:transaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -92,7 +92,7 @@
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
-    NSLog(@"restore transaction");
+    DebugLog(@"restore transaction");
     [self recordTransaction:transaction];
     [self provideContent:transaction.originalTransaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -100,7 +100,7 @@
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
     if (transaction.error.code != SKErrorPaymentCancelled) {
-        NSLog(@"Transaction error: %@",transaction.error.localizedDescription);
+        DebugLog(@"Transaction error: %@",transaction.error.localizedDescription);
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kProductPurchaseFailedNotification object:transaction];
